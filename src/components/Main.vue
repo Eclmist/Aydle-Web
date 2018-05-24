@@ -2,7 +2,7 @@
   <div class="container has-text-centered">
     <transition appear name="slide-fade">
       <section>
-        <img src="/static/img/aydle-logo.png" alt="">
+        <img src="static/img/aydle-logo.png" alt="">
       </section>
     </transition>
     <lobby-select></lobby-select>
