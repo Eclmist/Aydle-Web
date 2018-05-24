@@ -1,0 +1,17 @@
+<template>
+  <div class="container has-text-light has-text-centered">
+    <p class="has-text-weight-light is-7">
+      Copyright &copy; Aydlesoft 2018 <br>
+      All Rights Reserved
+    </p>
+  </div>
+</template>
+
+<style scoped>
+p
+{
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

@@ -1,131 +1,92 @@
 <template>
   <div id="app">
-    <!-- Spinkit Spinner -->
-    <div class="spinner" v-if="!pageLoaded">
-      <div class="sk-folding-cube">
-        <div class="sk-cube1 sk-cube"></div>
-        <div class="sk-cube2 sk-cube"></div>
-        <div class="sk-cube4 sk-cube"></div>
-        <div class="sk-cube3 sk-cube"></div>
-      </div>
-    </div>
+    <!-- <transition name="fade">
+      <loader v-if="!this.$root.$data.pageLoaded"/>
+    </transition> -->
     <main>
-      
-    <router-view></router-view>
+      <div class="content hero is-fullheight is-dark">
+        <header-bar></header-bar>
+        <div class="hero-body">
+          <router-view></router-view>
+        </div>
+      </div>
     </main>
   </div>
 </template>
 
 <script>
+import Loader from './components/Loader'
+import Header from './components/HeaderBar'
+// import Footer from './components/FooterBar'
+
 export default {
   name: 'app',
-  data: function () {
+  mounted () {
+    // this.$root.$data.pageLoaded = true
+    // setTimeout(() => {
+    //   this.$root.$data.pageLoaded = true
+    // }, 1000)
+  },
+  data () {
     return {
-      pageLoaded: true
     }
+  },
+  components: {
+    'loader': Loader,
+    'header-bar': Header
+    // 'footer-bar': Footer
   }
 }
 </script>
 
 <style>
-/* Spinkit CSS */
-.spinner {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #4AB5C7;
-}
-.sk-folding-cube {
-  margin: auto;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  -webkit-transform: rotateZ(45deg);
-          transform: rotateZ(45deg);
+/* Transitions */
+.slide-fade-enter-active
+{
+  transition: all 1s;
 }
 
-.sk-folding-cube .sk-cube {
-  float: left;
-  width: 50%;
-  height: 50%;
-  position: relative;
-  -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1); 
-}
-.sk-folding-cube .sk-cube:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
-          animation: sk-foldCubeAngle 2.4s infinite linear both;
-  -webkit-transform-origin: 100% 100%;
-      -ms-transform-origin: 100% 100%;
-          transform-origin: 100% 100%;
-}
-.sk-folding-cube .sk-cube2 {
-  -webkit-transform: scale(1.1) rotateZ(90deg);
-          transform: scale(1.1) rotateZ(90deg);
-}
-.sk-folding-cube .sk-cube3 {
-  -webkit-transform: scale(1.1) rotateZ(180deg);
-          transform: scale(1.1) rotateZ(180deg);
-}
-.sk-folding-cube .sk-cube4 {
-  -webkit-transform: scale(1.1) rotateZ(270deg);
-          transform: scale(1.1) rotateZ(270deg);
-}
-.sk-folding-cube .sk-cube2:before {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s;
-}
-.sk-folding-cube .sk-cube3:before {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s; 
-}
-.sk-folding-cube .sk-cube4:before {
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
-}
-@-webkit-keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  } 
+.slide-fade-enter
+{
+  opacity: 0;
+  transform: translateY(30px);
 }
 
-@keyframes sk-foldCubeAngle {
-  0%, 10% {
-    -webkit-transform: perspective(140px) rotateX(-180deg);
-            transform: perspective(140px) rotateX(-180deg);
-    opacity: 0; 
-  } 25%, 75% {
-    -webkit-transform: perspective(140px) rotateX(0deg);
-            transform: perspective(140px) rotateX(0deg);
-    opacity: 1; 
-  } 90%, 100% {
-    -webkit-transform: perspective(140px) rotateY(180deg);
-            transform: perspective(140px) rotateY(180deg);
-    opacity: 0; 
-  }
+.slide-fade-down-enter-active
+{
+  transition: all 1s;
+}
+
+.slide-fade-down-enter
+{
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+/* End Transitions*/ 
+
+.hero 
+{
+  /* background: linear-gradient(141deg, #30b9c9 0%, #2c7ee8 100%); */
+  /* background-image: url('/static/img/background/welpbg.jpeg') !important */
+  
+  /* background: linear-gradient(205deg, #4f65f8, #c583e7, #c4e783);
+  background-size: 300% 300%; */
+  background: linear-gradient(205deg, #e78383, #dcc881, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78389);
+  background-size: 1000% 1000%;
+  -webkit-animation: background 15s ease infinite;
+  animation: background 15s ease infinite;
+}
+
+@-webkit-keyframes background {
+  0%{background-position:0% 42%}
+  50%{background-position:100% 59%}
+  100%{background-position:0% 42%}
+}
+
+@keyframes background { 
+  0%{background-position:0% 42%}
+  50%{background-position:100% 59%}
+  100%{background-position:0% 42%}
 }
 </style>
