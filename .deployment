@@ -1,2 +1,3 @@
-[config]
-project = dist
+@echo off
+echo Deploying Functions ...
+xcopy "%DEPLOYMENT_SOURCE%\dist" %DEPLOYMENT_TARGET% /Y /S
