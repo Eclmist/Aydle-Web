@@ -6,9 +6,9 @@
       </section>
     </transition>
     <lobby-select></lobby-select>
-    <nav class="navbar is-fixed-bottom">
+    <!-- <nav class="navbar is-fixed-bottom"> -->
       <footer-bar></footer-bar>
-    </nav>
+    <!-- </nav> -->
   </div>
 </template>
 
