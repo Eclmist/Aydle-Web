@@ -1,24 +1,17 @@
 <template>
-  <div class="container has-text-light has-text-centered">
+  <footer class="container has-text-light has-text-centered">
     <p class="has-text-weight-light is-7">
       Copyright &copy; Aydlesoft 2018 <br>
       All Rights Reserved
     </p>
-  </div>
+  </footer>
 </template>
 
 <style scoped>
 p
 {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   margin-left: auto;
   margin-right: auto;
-}
-
-.container
-{
-  position: absolute;
-  width: 100%;
-  bottom: -20vh;
 }
 </style>

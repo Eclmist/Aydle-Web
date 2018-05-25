@@ -85,6 +85,12 @@ export default {
 
   margin-left: auto !important;
   margin-right: auto !important;
+
+}
+.modal-content 
+{
+  /* min-height: 365.5px !important; */
+  overflow: visible !important;
 }
 
 .forget-pw

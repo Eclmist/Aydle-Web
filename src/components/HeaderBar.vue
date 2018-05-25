@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav v-bind:class="{ top: navbarPos + 'px' }" class="navbar is-transparent is-fixed-top">
+    <nav :style="{ top: navbarPos + 'px' }" class="navbar is-info is-fixed-top">
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <img src="https://i.stack.imgur.com/HQwHI.jpg">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </nav>
-    <b-modal :active.sync="loginModalActive">
+    <b-modal :active.sync="loginModalActive" has-modal-card>
       <login-modal></login-modal>
     </b-modal>
   </div>
@@ -39,7 +39,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: false,
+      loginModalActive: true,
       burgerEaten: false
     }
   },
@@ -69,11 +69,14 @@ export default {
 
 
 <style scoped>
-
 .username
 {
   margin-left: 0.5rem;
 }
 
+.navbar
+{
+  background-color: transparent;
+}
 
 </style>

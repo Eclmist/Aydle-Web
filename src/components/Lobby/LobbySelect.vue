@@ -1,6 +1,6 @@
 <template>
   <transition appear name="slide-fade-down">
-    <div class="section">
+    <section class="section">
       <div v-on:keyup="customFocus" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
         <div class="column">
           <input type="text" v-model="code[0]" maxlength="1" class="input c0 is-uppercase" placeholder="C">
@@ -19,7 +19,7 @@
       <!-- <div class="container">
         <a href="#">Host your own lobby</a>
       </div> -->
-    </div>
+    </section>
   </transition>
 </template>
 
@@ -90,29 +90,11 @@ export default {
 
 
 <style scoped>
-.column
-{
-  /* margin: 2px !important; */
-}
-
 input
 {
-  /* width: 10vw;
-  height: 10vw; */
-
-  /* max-width: 60px;
-  max-height: 60px;
-
-  min-width: 45px;
-  min-height: 45px; */
-
-  /* so that the placeholders dont get cut off */
-  
   padding: 0 0 !important; 
 
-  /* font-size-adjust: initial; */
   font-size: 150%;
-  /* font-size: 1.5rem; */
   text-align: center;
   color: grey;
 }
@@ -123,19 +105,13 @@ input
 
   max-width: 350px;
   min-width: 100px;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
   width: 72vw;
 }
 
 .button
 {
   height: 50px;
-  /* height: 10vw;
-  max-height: 60px;
-
-  width: 50vw;
-  max-width: 252px;
-  min-width: 192px; */
 }
 </style>

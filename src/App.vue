@@ -3,14 +3,8 @@
     <!-- <transition name="fade">
       <loader v-if="!this.$root.$data.pageLoaded"/>
     </transition> -->
-    <main>
-      <div class="content hero is-fullheight is-dark">
-        <header-bar></header-bar>
-        <div class="hero-body">
-          <router-view></router-view>
-        </div>
-      </div>
-    </main>
+    <header-bar></header-bar>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -40,6 +34,17 @@ export default {
 </script>
 
 <style>
+html, body
+{
+  height: 100%;
+  margin: 0;
+}
+
+#app
+{
+  height: 100%;
+}
+
 /* Transitions */
 .slide-fade-enter-active
 {
@@ -65,7 +70,7 @@ export default {
 
 /* End Transitions*/ 
 
-.hero 
+html
 {
   /* background: linear-gradient(141deg, #30b9c9 0%, #2c7ee8 100%); */
   /* background-image: url('/static/img/background/welpbg.jpeg') !important */
