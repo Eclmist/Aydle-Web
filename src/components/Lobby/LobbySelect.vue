@@ -1,18 +1,18 @@
 <template>
   <transition appear name="slide-fade-down">
     <section class="section">
-      <div v-on:keyup="customFocus" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
+      <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
         <div class="column">
-          <input type="text" v-model="code[0]" maxlength="1" class="input c0 is-uppercase" placeholder="C">
+          <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
         </div>
         <div class="column">
-          <input type="text" v-model="code[1]" maxlength="1" class="input c1 is-uppercase" placeholder="O">
+          <input type="text" maxlength="1" class="input is-uppercase" placeholder="O">
         </div>
         <div class="column">
-          <input type="text" v-model="code[2]" maxlength="1" class="input c2 is-uppercase" placeholder="D">
+          <input type="text" maxlength="1" class="input is-uppercase" placeholder="D">
         </div>
         <div class="column">
-          <input type="text" v-model="code[3]" maxlength="1" class="input c3 is-uppercase" placeholder="E">
+          <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
         </div>
       </div>
       <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as Guest</button>
@@ -27,35 +27,40 @@
 export default {
   data () {
     return {
-      code: [
-        '',
-        '',
-        '',
-        ''
-      ],
       loading: false
     }
   },
   methods: {
     customFocus () {
-      if (document.activeElement.value === '') {
-        return
-      }
-      if (document.activeElement.parentElement.nextElementSibling !== null) {
-        document.activeElement.parentElement.nextElementSibling.firstElementChild.focus()
+      var activeElement = document.activeElement
+
+      if (activeElement.value !== '') {
+        activeElement.value = activeElement.value.substring(0, 1)
+        if (activeElement.parentElement.nextElementSibling !== null) {
+          activeElement.parentElement.nextElementSibling.firstElementChild.focus()
+        }
       }
     },
     customFocusDelete () {
-      if (document.activeElement.value !== '') {
-        return
+      var activeElement = document.activeElement
+
+      if (activeElement.value === '') {
+        if (activeElement.parentElement.previousElementSibling !== null) {
+          activeElement.parentElement.previousElementSibling.firstElementChild.focus()
+        }
       }
-      if (document.activeElement.parentElement.previousElementSibling !== null) {
-        document.activeElement.parentElement.previousElementSibling.firstElementChild.focus()
-      }
+    },
+    maxlengthCheck () {
+      var activeElement = document.activeElement
+      activeElement.value = activeElement.value.substring(0, 1)
     },
     attemptJoinRoom () {
       var roomId = ''
-      roomId += this.code[0] + this.code[1] + this.code[2] + this.code[3]
+      var inputs = document.getElementsByClassName('input')
+      roomId += inputs[0].value
+      roomId += inputs[1].value
+      roomId += inputs[2].value
+      roomId += inputs[3].value
       this.loading = true
       var self = this
 
@@ -76,7 +81,7 @@ export default {
         self.loading = false
 
         self.$snackbar.open({
-          message: 'Cannot find room',
+          message: 'Cannot find room id ' + roomId,
           type: 'is-danger',
           position: 'is-bottom-right',
           queue: false
