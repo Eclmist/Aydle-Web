@@ -62,6 +62,7 @@ img
 }
 
 .wrapper > div{
+  padding-top: 3rem;
   flex:1;
   align-items: flex-end;
   justify-content: center;

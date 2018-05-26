@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav :style="{ top: navbarPos + 'px' }" class="navbar is-info is-fixed-top">
+    <nav :style="{ 'background-color': 'transparent' }" class="navbar is-transparent is-info is-fixed-top">
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <img src="https://i.stack.imgur.com/HQwHI.jpg">
@@ -39,7 +39,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: true,
+      loginModalActive: false,
       burgerEaten: false
     }
   },
@@ -72,11 +72,6 @@ export default {
 .username
 {
   margin-left: 0.5rem;
-}
-
-.navbar
-{
-  background-color: transparent;
 }
 
 </style>
