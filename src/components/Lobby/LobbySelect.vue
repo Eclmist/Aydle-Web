@@ -1,7 +1,7 @@
 <template>
   <transition appear name="slide-fade-down">
     <section class="section">
-      <form>
+      <form v-on:submit.prevent>
         <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ shake: errorShake }">
           <div class="column">
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
