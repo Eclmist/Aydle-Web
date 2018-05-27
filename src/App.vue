@@ -78,21 +78,21 @@ html
   
   /* background: linear-gradient(205deg, #4f65f8, #c583e7, #c4e783);
   background-size: 300% 300%; */
-  background: linear-gradient(205deg, #e78383, #dcc881, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78389);
-  background-size: 1000% 1000%;
-  -webkit-animation: background 15s ease infinite;
-  animation: background 15s ease infinite;
+  background: linear-gradient(0deg, #e78383, #dcc881, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78383);
+  background-size: 500% 500%;
+  -webkit-animation: background 120s ease infinite;
+  animation: background 120s ease infinite;
 }
 
 @-webkit-keyframes background {
-  0%{background-position:0% 42%}
-  50%{background-position:100% 59%}
-  100%{background-position:0% 42%}
+  0%{background-position:0% 0%}
+  /* 50%{background-position:0% 100%} */
+  100%{background-position:0% 500%}
 }
 
 @keyframes background { 
-  0%{background-position:0% 42%}
-  50%{background-position:100% 59%}
-  100%{background-position:0% 42%}
+  0%{background-position:0% 0%}
+  /* 50%{background-position:0% 100%} */
+  100%{background-position:0% 500%}
 }
 </style>
