@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div class="main-background"></div>
     <header-bar></header-bar>
     <router-view></router-view>
   </div>
@@ -69,6 +70,8 @@ html
   background-size: 500% 500%;
   -webkit-animation: background 150s ease infinite;
   animation: background 150s ease infinite;
+
+  /* mix-blend-mode:hard-light; */
 }
 
 @-webkit-keyframes background {
@@ -82,4 +85,19 @@ html
   /* 50%{background-position:0% 100%} */
   100%{background-position:0% 500%}
 }
+
+.main-background
+{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-image: url('/static/img/background/silhouette.jpg');
+  /* mix-blend-mode: difference; */
+  opacity: 0.5;
+  background-size: cover;
+}
+
 </style>
