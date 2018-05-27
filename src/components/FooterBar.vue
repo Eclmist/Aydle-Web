@@ -14,4 +14,9 @@ p
   margin-left: auto;
   margin-right: auto;
 }
+
+footer
+{
+  width: 100% !important;
+}
 </style>
