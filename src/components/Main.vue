@@ -8,11 +8,9 @@
       </transition>
       <lobby-select></lobby-select>
     </div>
-    <!-- <nav class="navbar is-fixed-bottom"> -->
     <footer>
       <footer-bar></footer-bar>
     </footer>
-    <!-- </nav> -->
   </div>
 </template>
 
@@ -31,8 +29,10 @@ export default {
 <style scoped>
 img
 { 
-  width: 80%;
+  width: 100%;
   max-width: 400px;
+  margin-left: 64px;
+  margin-right: 64px;
 }
 
 #main
