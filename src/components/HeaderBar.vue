@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <img src="https://i.stack.imgur.com/HQwHI.jpg">
-          <span class="username">Guest</span>
+          <span class="username">Sign In</span>
         </a>
         <a role="button" class="navbar-burger has-text-white" v-on:click="burgerEaten = !burgerEaten">
           <span aria-hidden="true"></span>
@@ -18,9 +18,9 @@
             Host a lobby
           </a>
           <hr class="navbar-divider">
-          <a href="#" class="navbar-item">
+          <!-- <a href="#" class="navbar-item">
             Logout
-          </a>
+          </a> -->
         </div>
       </div>
     </nav>
