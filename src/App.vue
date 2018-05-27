@@ -38,7 +38,7 @@ html, body
 {
   height: 100%;
   margin: 0;
-  overflow-y: auto;
+  overflow-y: auto !important;
 }
 
 #app
@@ -78,7 +78,7 @@ html
   
   /* background: linear-gradient(205deg, #4f65f8, #c583e7, #c4e783);
   background-size: 300% 300%; */
-  background: linear-gradient(0deg, #e78383, #dcc881, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78383);
+  background: linear-gradient(0deg, #e78383, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78383);
   background-size: 500% 500%;
   -webkit-animation: background 120s ease infinite;
   animation: background 120s ease infinite;
