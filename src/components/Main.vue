@@ -29,10 +29,9 @@ export default {
 <style scoped>
 img
 { 
-  width: 100%;
+  width: 75vw;
   max-width: 400px;
-  margin-left: 64px;
-  margin-right: 64px;
+  /* padding: 0 15%; */
 }
 
 #main
