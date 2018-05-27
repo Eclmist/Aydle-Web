@@ -2,7 +2,7 @@
   <transition appear name="slide-fade-down">
     <section class="section">
       <form>
-        <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
+        <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ shake: errorShake }">
           <div class="column">
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
           </div>
@@ -29,7 +29,8 @@
 export default {
   data () {
     return {
-      loading: false
+      loading: false,
+      errorShake: false
     }
   },
   methods: {
@@ -57,6 +58,7 @@ export default {
       activeElement.value = activeElement.value.substring(0, 1)
     },
     attemptJoinRoom () {
+      this.errorShake = false
       var roomId = ''
       var inputs = document.getElementsByClassName('input')
       roomId += inputs[0].value
@@ -68,20 +70,21 @@ export default {
 
       if (roomId.length < 4) {
         setTimeout(function () {
-          self.loading = false
-          self.$snackbar.open({
-            message: 'Invalid room code',
-            type: 'is-info',
-            position: 'is-bottom-right',
-            queue: false
-          })
-        }, 200)
+          self.errorShake = true
+        }, 1)
+        this.loading = false
+        this.$snackbar.open({
+          message: 'Invalid room code',
+          type: 'is-info',
+          position: 'is-bottom-right',
+          queue: false
+        })
         return
       }
 
       setTimeout(function () {
+        self.errorShake = true
         self.loading = false
-
         self.$snackbar.open({
           message: 'Cannot find room id ' + roomId,
           type: 'is-danger',
@@ -121,4 +124,5 @@ input
 {
   height: 50px;
 }
+
 </style>
