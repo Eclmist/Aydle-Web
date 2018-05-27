@@ -1,21 +1,23 @@
 <template>
   <transition appear name="slide-fade-down">
     <section class="section">
-      <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
-        <div class="column">
-          <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
+      <form>
+        <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile">
+          <div class="column">
+            <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
+          </div>
+          <div class="column">
+            <input type="text" maxlength="1" class="input is-uppercase" placeholder="O">
+          </div>
+          <div class="column">
+            <input type="text" maxlength="1" class="input is-uppercase" placeholder="D">
+          </div>
+          <div class="column">
+            <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
+          </div>
         </div>
-        <div class="column">
-          <input type="text" maxlength="1" class="input is-uppercase" placeholder="O">
-        </div>
-        <div class="column">
-          <input type="text" maxlength="1" class="input is-uppercase" placeholder="D">
-        </div>
-        <div class="column">
-          <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
-        </div>
-      </div>
-      <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as Guest</button>
+        <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as Guest</button>
+      </form>
       <!-- <div class="container">
         <a href="#">Host your own lobby</a>
       </div> -->

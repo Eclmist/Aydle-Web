@@ -1,34 +1,21 @@
 <template>
   <div id="app">
-    <!-- <transition name="fade">
-      <loader v-if="!this.$root.$data.pageLoaded"/>
-    </transition> -->
     <header-bar></header-bar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Loader from './components/Loader'
 import Header from './components/HeaderBar'
-// import Footer from './components/FooterBar'
 
 export default {
   name: 'app',
-  mounted () {
-    // this.$root.$data.pageLoaded = true
-    // setTimeout(() => {
-    //   this.$root.$data.pageLoaded = true
-    // }, 1000)
-  },
   data () {
     return {
     }
   },
   components: {
-    'loader': Loader,
     'header-bar': Header
-    // 'footer-bar': Footer
   }
 }
 </script>
@@ -78,10 +65,10 @@ html
   
   /* background: linear-gradient(205deg, #4f65f8, #c583e7, #c4e783);
   background-size: 300% 300%; */
-  background: linear-gradient(0deg, #e78383, #a5c96f, #6ecacd, #8390e7, #c183e7, #e78383);
+  background: linear-gradient(0deg, #e78383, #6ecacd, #8390e7, #c183e7, #e78383);
   background-size: 500% 500%;
-  -webkit-animation: background 120s ease infinite;
-  animation: background 120s ease infinite;
+  -webkit-animation: background 150s ease infinite;
+  animation: background 150s ease infinite;
 }
 
 @-webkit-keyframes background {
