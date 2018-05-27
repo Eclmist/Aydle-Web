@@ -2,7 +2,7 @@
   <div id="main" class="container has-text-centered">
     <div class="wrapper">
       <transition appear name="slide-fade">
-        <div>
+        <div class="animated pulse">
           <img src="/static/img/aydle-logo.png" alt="">
         </div>
       </transition>
