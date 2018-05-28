@@ -37,14 +37,10 @@ img
 #main
 {
   min-height: 100%;
+  height: 100%;
   flex-direction: column;
   display: flex;
   padding: 20px;
-}
-
-#main > div
-{
-  flex: 1 0 auto;
 }
 
 #main > footer
@@ -54,22 +50,25 @@ img
 
 .wrapper
 {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.wrapper > div{
+.wrapper > div
+{
   /* padding-top: 3rem; */
   flex:1;
   align-items: flex-end;
-  justify-content: center;
   display: flex;
+  flex-basis: auto;
 }
 
 .wrapper > .section
 {
   flex: 1;
+  flex-basis: auto;
 }
 </style>
