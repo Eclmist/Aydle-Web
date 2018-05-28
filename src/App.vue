@@ -72,7 +72,7 @@ html
   left: 0;
   right: 0;
 
-  background-image: url('/static/img/background/silhouette.webp');
+  background-image: url('/static/img/background/silhouette.jpg');
   /* mix-blend-mode: difference; */
   opacity: 0.5;
   background-size: cover;

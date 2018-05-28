@@ -3,7 +3,7 @@
     <div class="wrapper">
       <transition appear name="pulse">
         <div>
-          <img src="/static/img/aydle-logo.webp" alt="">
+          <img src="/static/img/aydle-logo.png" alt="">
         </div>
       </transition>
       <lobby-select></lobby-select>
