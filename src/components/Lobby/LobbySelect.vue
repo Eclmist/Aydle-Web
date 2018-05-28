@@ -1,8 +1,8 @@
 <template>
   <transition appear name="slide-fade-down">
     <section class="section">
-      <form v-on:submit.prevent>
-        <div v-on:keyup="customFocus" v-on:keydown="maxlengthCheck" v-on:keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ shake: errorShake }">
+      <form v-on:submit.prevent onClick="(function(){ scrollIntoView() })()">
+        <div onfocus="(function(){window.alert('hi')})()" @keyup="customFocus" @keydown="maxlengthCheck" @keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ shake: errorShake }">
           <div class="column">
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
           </div>
@@ -71,7 +71,7 @@ export default {
       if (roomId.length < 4) {
         setTimeout(function () {
           self.errorShake = true
-        }, 1)
+        }, 50)
         this.loading = false
         this.$snackbar.open({
           message: 'Invalid room code',

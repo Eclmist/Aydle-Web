@@ -21,6 +21,7 @@
       </div>
       <p class="has-text-centered is-7 title has-text-grey">- OR -</p>
 
+      <form @submit.prevent onClick="(function(){ scrollIntoView() })()">
         <b-field label="Email">
             <b-input
                 type="email"
@@ -53,7 +54,7 @@
             <button class="button is-primary">Login</button>
           </div>
         </div>
-      <!-- </div> -->
+      </form>
     </section>
     <!-- <footer class="modal-card-foot">
     </footer> -->

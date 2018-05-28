@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="moveIntoView(this)">
     <div class="main-background"></div>
     <header-bar></header-bar>
     <router-view></router-view>
@@ -17,6 +17,12 @@ export default {
   },
   components: {
     'header-bar': Header
+  },
+  methods: {
+    moveIntoView (element) {
+      element.scrollIntoView()
+      window.alert(element)
+    }
   }
 }
 </script>
