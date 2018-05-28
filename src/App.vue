@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="moveIntoView(this)">
+  <div id="app">
     <div class="main-background"></div>
     <header-bar></header-bar>
     <router-view></router-view>
@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style>
+
+/* @import './vue2-animate/dist/vue2-animate.min.css'; */
+
 html, body
 {
   height: 100%;
@@ -33,31 +36,6 @@ html, body
 {
   height: 100%;
 }
-
-/* Transitions */
-.slide-fade-enter-active
-{
-  transition: all 1s;
-}
-
-.slide-fade-enter
-{
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.slide-fade-down-enter-active
-{
-  transition: all 1s;
-}
-
-.slide-fade-down-enter
-{
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-/* End Transitions*/ 
 
 html
 {
@@ -94,7 +72,7 @@ html
   left: 0;
   right: 0;
 
-  background-image: url('/static/img/background/silhouette.jpg');
+  background-image: url('/static/img/background/silhouette.webp');
   /* mix-blend-mode: difference; */
   opacity: 0.5;
   background-size: cover;

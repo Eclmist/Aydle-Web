@@ -1,9 +1,9 @@
 <template>
   <div id="main" class="container has-text-centered">
     <div class="wrapper">
-      <transition appear name="slide-fade">
-        <div class="animated pulse">
-          <img src="/static/img/aydle-logo.png" alt="">
+      <transition appear name="pulse">
+        <div>
+          <img src="/static/img/aydle-logo.webp" alt="">
         </div>
       </transition>
       <lobby-select></lobby-select>

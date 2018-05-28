@@ -25,15 +25,23 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
     <!-- Loader -->
+    <style>
+      .spinner
+      {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      
+        z-index: 9999;
+        background: linear-gradient(0deg, #e78383, #6ecacd, #8390e7, #c183e7, #e78383);
+        background-size: 500%;
+      }
+    </style>
     <link rel="stylesheet" href="/static/css/loader.css" type="text/css">
-
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="/static/css/customAnimate.css" type="text/css">
   </head>
   <body>
     <noscript>

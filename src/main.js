@@ -5,9 +5,10 @@ import App from './App'
 import router from './router'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 Vue.use(Buefy, { defaultIconPack: 'fas' })
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 // global user data
 const user = {

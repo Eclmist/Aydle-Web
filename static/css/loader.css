@@ -1,18 +1,4 @@
 /* Spinkit CSS */
-.spinner {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  z-index: 9999;
-  /* color: white; */
-  
-  background: linear-gradient(0deg, #e78383, #6ecacd, #8390e7, #c183e7, #e78383);
-  background-size: 500%;
-}
-
 .centerspinner
 {
   position: absolute;
