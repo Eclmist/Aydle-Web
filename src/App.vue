@@ -17,12 +17,6 @@ export default {
   },
   components: {
     'header-bar': Header
-  },
-  methods: {
-    moveIntoView (element) {
-      element.scrollIntoView()
-      window.alert(element)
-    }
   }
 }
 </script>

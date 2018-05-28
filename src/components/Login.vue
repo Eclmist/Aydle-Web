@@ -21,7 +21,7 @@
       </div>
       <p class="has-text-centered is-7 title has-text-grey">- OR -</p>
 
-      <form @submit.prevent onClick="(function(){ scrollIntoView() })()">
+      <form @submit.prevent>
         <b-field label="Email">
             <b-input
                 type="email"

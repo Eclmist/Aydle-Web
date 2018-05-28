@@ -1,8 +1,8 @@
 <template>
   <transition appear name="slide-fade-down">
     <section class="section">
-      <form v-on:submit.prevent onClick="(function(){ scrollIntoView() })()">
-        <div onfocus="(function(){window.alert('hi')})()" @keyup="customFocus" @keydown="maxlengthCheck" @keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ shake: errorShake }">
+      <form v-on:submit.prevent>
+        <div @keyup="customFocus" @keydown="maxlengthCheck" @keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile animated" v-bind:class="{ blink: errorShake }">
           <div class="column">
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
           </div>

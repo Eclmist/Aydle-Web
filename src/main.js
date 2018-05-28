@@ -26,3 +26,8 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+// global onresize form handler
+window.onresize = function (event) {
+  document.activeElement.scrollIntoView()
+}
