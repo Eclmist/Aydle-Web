@@ -3,7 +3,7 @@
     <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info is-fixed-top">
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
-          <img src="https://i.stack.imgur.com/HQwHI.jpg">
+          <b-icon icon="account"/>
           <span class="username">Sign In</span>
         </a>
         <a role="button" class="navbar-burger has-text-white" v-on:click="burgerEaten = !burgerEaten">

@@ -4,10 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Buefy from 'buefy'
+import VueMaterial from 'vue-material'
 import 'buefy/lib/buefy.css'
 import 'vue2-animate/dist/vue2-animate.min.css'
+import 'vue-material/dist/vue-material.css'
+import 'mdi/css/materialdesignicons.min.css'
 
-Vue.use(Buefy, { defaultIconPack: 'fas' })
+var VueCookie = require('vue-cookie')
+Vue.use(Buefy)
+Vue.use(VueMaterial)
+Vue.use(VueCookie)
 // Vue.config.productionTip = false
 
 // global user data

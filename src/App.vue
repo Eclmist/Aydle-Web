@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="main-background"></div>
+    <dev-warning></dev-warning>
     <header-bar></header-bar>
     <router-view></router-view>
   </div>
@@ -8,6 +9,7 @@
 
 <script>
 import Header from './components/HeaderBar'
+import DevWarning from './components/DevelopmentWarning'
 
 export default {
   name: 'app',
@@ -16,7 +18,8 @@ export default {
     }
   },
   components: {
-    'header-bar': Header
+    'header-bar': Header,
+    'dev-warning': DevWarning
   }
 }
 </script>
@@ -44,7 +47,8 @@ html
   
   /* background: linear-gradient(205deg, #4f65f8, #c583e7, #c4e783);
   background-size: 300% 300%; */
-  background: linear-gradient(0deg, #e78383, #6ecacd, #8390e7, #c183e7, #e78383);
+  background: linear-gradient(0deg, #6ecacd, #8390e7, #c183e7, #e78383, #c183e7,
+  #8390e7, #6ecacd);
   background-size: 500% 500%;
   -webkit-animation: background 150s ease infinite;
   animation: background 150s ease infinite;
@@ -78,4 +82,8 @@ html
   background-size: cover;
 }
 
+.material-design-icon
+{
+  display: inline-flex !important;
+}
 </style>
