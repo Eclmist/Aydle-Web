@@ -6,16 +6,17 @@
           <b-icon icon="account"/>
           <span class="username">Sign In</span>
         </a>
-        <a role="button" class="navbar-burger has-text-white" v-on:click="burgerEaten = !burgerEaten">
+        <a role="button" class="navbar-burger has-text-white" @click="showSidepanel = !showSidepanel">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div class="navbar-menu" v-bind:class="{ 'is-active': burgerEaten }" id="nav-menu">
+      
+      <div class="navbar-menu" id="nav-menu">
         <div class="navbar-end">
           <a href="#" class="navbar-item">
-            Host a lobby
+              Host a Lobby
           </a>
           <hr class="navbar-divider">
           <!-- <a href="#" class="navbar-item">
@@ -24,9 +25,23 @@
         </div>
       </div>
     </nav>
+
     <b-modal :active.sync="loginModalActive" has-modal-card>
       <login-modal></login-modal>
     </b-modal>
+    
+    <md-drawer class="md-right md-fixed md-persistent" :md-active.sync="showSidepanel">
+      <md-toolbar class="md-transparent" md-elevation="0">
+        <span class="md-title">Aydle</span>
+      </md-toolbar>
+
+      <md-list>
+        <md-list-item>
+          <b-icon icon="duck"/>
+          <span class="md-list-item-text">Host a Lobby</span>
+        </md-list-item>
+      </md-list>
+    </md-drawer>
   </div>
 </template>
 
@@ -40,7 +55,7 @@ export default {
       scrollDelta: 0,
       navbarPos: 0,
       loginModalActive: false,
-      burgerEaten: false
+      showSidepanel: false
     }
   },
   created () {
@@ -78,4 +93,11 @@ a.navbar-item:hover
 {
   background-color: rgba(0,0,0,0.05) !important;
 }
+
+.md-right
+{
+  z-index: 100;
+  background-color: white;
+}
+
 </style>
