@@ -6,22 +6,16 @@
           <b-icon icon="account"/>
           <span class="username">Sign In</span>
         </a>
-        <a role="button" class="navbar-burger has-text-white" @click="showSidepanel = !showSidepanel">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
       </div>
       
       <div class="navbar-menu" id="nav-menu">
         <div class="navbar-end">
+          <a role="button" class="navbar-item is-flex-touch has-text-white" @click="showSidepanel = !showSidepanel">
+            <b-icon icon="dots-vertical"></b-icon>
+          </a>
           <a href="#" class="navbar-item">
               Host a Lobby
           </a>
-          <hr class="navbar-divider">
-          <!-- <a href="#" class="navbar-item">
-            Logout
-          </a> -->
         </div>
       </div>
     </nav>
@@ -29,24 +23,14 @@
     <b-modal :active.sync="loginModalActive" has-modal-card>
       <login-modal></login-modal>
     </b-modal>
-    
-    <md-drawer class="md-right md-fixed md-persistent" :md-active.sync="showSidepanel">
-      <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">Aydle</span>
-      </md-toolbar>
 
-      <md-list>
-        <md-list-item>
-          <b-icon icon="duck"/>
-          <span class="md-list-item-text">Host a Lobby</span>
-        </md-list-item>
-      </md-list>
-    </md-drawer>
+    <side-drawer v-bind:is-open="showSidepanel" v-on:drawerClosed="showSidepanel=false"></side-drawer>
   </div>
 </template>
 
 <script>
 import Login from './Login'
+import Drawer from './Drawer'
 
 export default {
   data () {
@@ -65,7 +49,8 @@ export default {
     window.removeEventListener('scroll', this.scrollEvent)
   },
   components: {
-    'login-modal': Login
+    'login-modal': Login,
+    'side-drawer': Drawer
   },
   methods: {
     scrollEvent () {

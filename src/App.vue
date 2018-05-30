@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <div class="main-background"></div>
-    <dev-warning></dev-warning>
     <header-bar></header-bar>
+    <dev-warning></dev-warning>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Header from './components/HeaderBar'
+import Header from './components/Header/HeaderBar'
 import DevWarning from './components/DevelopmentWarning'
 
 export default {
