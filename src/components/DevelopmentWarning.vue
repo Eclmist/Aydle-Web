@@ -1,7 +1,7 @@
 <template>
   <b-notification>
     <div class="content has-text-centered has-text-grey">
-      Closed Alpha v0.2
+      Currently Under Construction
       <br>
       <!-- Artworks belong to their respective artists. -->
     </div>
