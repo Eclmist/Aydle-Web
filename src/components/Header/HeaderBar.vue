@@ -6,13 +6,15 @@
           <b-icon icon="account"/>
           <span class="username">Sign In</span>
         </a>
+        <a role="button" class="navbar-burger has-text-white has-text-centered" @click="showSidepanel = !showSidepanel">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
       </div>
       
       <div class="navbar-menu" id="nav-menu">
         <div class="navbar-end">
-          <a role="button" class="navbar-item is-flex-touch has-text-white" @click="showSidepanel = !showSidepanel">
-            <b-icon icon="dots-vertical"></b-icon>
-          </a>
           <a href="#" class="navbar-item">
               Host a Lobby
           </a>
@@ -85,4 +87,11 @@ a.navbar-item:hover
   background-color: white;
 }
 
+.navbar-burger > span
+{
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  left: calc(50% - 3px);
+}
 </style>
