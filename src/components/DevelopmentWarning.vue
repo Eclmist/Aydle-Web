@@ -1,11 +1,7 @@
 <template>
-  <b-notification>
-    <div class="content has-text-centered has-text-grey">
-      Currently Under Construction
-      <br>
-      <!-- Artworks belong to their respective artists. -->
-    </div>
-  </b-notification>
+  <div class="content has-text-centered has-text-grey">
+    Currently Under Construction
+  </div>
 </template>
 
 <script>
@@ -30,11 +26,13 @@ export default {
 </script>
 
 <style scoped>
-.notification
+.content
 {
-  position: absolute;
+  position: fixed;
   z-index: 1;
-  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: repeating-linear-gradient(
     45deg,
     hsl(48, 100%, 67%),
@@ -47,7 +45,7 @@ export default {
   /* animation: scroll 5s linear infinite; */
 
   color: rgba(1, 1, 1, 0.2) !important;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .notification > .media > .media-content

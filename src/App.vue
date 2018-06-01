@@ -2,14 +2,12 @@
   <div id="app">
     <div class="main-background"></div>
     <header-bar></header-bar>
-    <dev-warning></dev-warning>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Header from './components/Header/HeaderBar'
-import DevWarning from './components/DevelopmentWarning'
 
 export default {
   name: 'app',
@@ -18,8 +16,7 @@ export default {
     }
   },
   components: {
-    'header-bar': Header,
-    'dev-warning': DevWarning
+    'header-bar': Header
   }
 }
 </script>

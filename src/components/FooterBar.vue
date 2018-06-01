@@ -4,8 +4,20 @@
       Copyright &copy; Aydlesoft 2018 <br>
       All Rights Reserved
     </p>
+    <dev-warning></dev-warning>
   </footer>
 </template>
+
+<script>
+import DevWarning from './DevelopmentWarning'
+
+export default {
+  components: {
+    'dev-warning': DevWarning
+  }
+}
+</script>
+
 
 <style scoped>
 p
