@@ -1,6 +1,5 @@
 <template>
   <div class="content has-text-centered has-text-grey">
-    Currently Under Construction
   </div>
 </template>
 
@@ -34,18 +33,25 @@ export default {
   right: 0;
   bottom: 0;
   background: repeating-linear-gradient(
-    45deg,
+    70deg,
     hsl(48, 100%, 67%),
     hsl(48, 100%, 67%) 50px,
-    hsl(48, 100%, 60%) 50px,
-    hsl(48, 100%, 60%) 100px
+    hsl(48, 90%, 50%) 50px,
+    hsl(48, 90%, 50%) 100px
   );
   /* background-size: 200%; */
 
+  height: 5px;
+
   /* animation: scroll 5s linear infinite; */
 
-  color: rgba(1, 1, 1, 0.2) !important;
+  color: rgba(1, 1, 1, 0.4) !important;
   font-size: 0.8rem;
+}
+
+.content > span
+{
+  position: relative;
 }
 
 .notification > .media > .media-content

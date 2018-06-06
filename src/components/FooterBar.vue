@@ -2,7 +2,8 @@
   <footer class="container has-text-light has-text-centered">
     <p class="has-text-weight-light is-7">
       Copyright &copy; Aydlesoft 2018 <br>
-      All Rights Reserved
+      All Rights Reserved <br>
+      <!-- Under Development -->
     </p>
     <dev-warning></dev-warning>
   </footer>
