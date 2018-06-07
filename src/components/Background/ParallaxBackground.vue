@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div id="background-root">
     <canvas id="background">
       <div id="fallback"></div>
     </canvas>
     <img class="bgelement" src="/static/img/background/sky.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image"> -->
     <img class="bgelement" src="/static/img/background/rocks.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/clouds_2.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/ground_1.png" alt="hidden-image">
@@ -22,15 +22,15 @@ export default {
       sprites: [],
       context: {},
       canvasWidth: 0,
-      canvasHeight: 0
+      canvasHeight: 0,
+      scallingCanvas: {}
     }
   },
   mounted () {
+    this.initialize()
     // maximize the canvas
     window.addEventListener('resize', this.maximizeCanvas)
     this.maximizeCanvas()
-
-    this.initialize()
 
     // update loop
     let self = this
@@ -45,15 +45,20 @@ export default {
       canvas.height = window.innerHeight
       this.canvasWidth = canvas.width
       this.canvasHeight = canvas.height
+
+      // this.scallingCanvas.width = canvas.width
+      this.scallingCanvas.height = canvas.height
     },
     initialize () {
       let canvas = document.getElementById('background')
       this.context = canvas.getContext('2d')
+      this.scallingCanvas = document.createElement('canvas')
 
       let images = document.getElementsByClassName('bgelement')
       for (var i = 0; i < images.length; i++) {
         let spriteRef = {
           pattern: {},
+          img: images[i],
           posX: 0,
           posY: 0
         }
@@ -61,7 +66,17 @@ export default {
         this.sprites.push(spriteRef)
         let self = this
         images[i].onload = function () {
-          spriteRef.pattern = self.context.createPattern(this, 'repeat-x')
+          self.scallingCanvas.width = this.width * (self.canvasHeight / this.height)
+
+          self.scallingCanvas.getContext('2d').drawImage(
+            this,
+            0,
+            0,
+            self.scallingCanvas.width,
+            self.canvasHeight
+          )
+
+          spriteRef.pattern = self.context.createPattern(self.scallingCanvas, 'repeat-x')
         }
       }
     },
@@ -71,15 +86,16 @@ export default {
       this.context.fillStyle = sprite.pattern
       // ptn
 
+      let xPos = sprite.posX
       this.context.save()
-      this.context.translate(sprite.posX, sprite.posY)
-      this.context.fillRect(-sprite.posX, -sprite.posY, this.canvasWidth, this.canvasHeight)
+      this.context.translate(xPos, sprite.posY)
+      this.context.fillRect(-xPos, -sprite.posY, this.canvasWidth, this.canvasHeight)
       this.context.restore()
     },
     update () {
       for (var i = 0; i < this.sprites.length; i++) {
         let sprite = this.sprites[i]
-        sprite.posX += i * 0.15
+        sprite.posX += i * -0.5
         this.drawSprite(sprite)
       }
     }
@@ -110,6 +126,12 @@ export default {
 .bgelement
 {
   display: none;
+  /* height: 100vh; */
+}
+
+#background-root
+{
+  height: 0;
 }
 </style>
 
