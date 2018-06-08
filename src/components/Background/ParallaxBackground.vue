@@ -1,8 +1,8 @@
 <template>
   <div id="background-root">
     <canvas id="background">
-      <div id="fallback"></div>
     </canvas>
+    <div id="fallback"></div>
     <img class="bgelement" src="/static/img/background/sky.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/rocks.png" alt="hidden-image">
@@ -23,7 +23,8 @@ export default {
       context: {},
       canvasWidth: 0,
       canvasHeight: 0,
-      scallingCanvas: {}
+      scallingCanvas: {},
+      allSpritesLoaded: false
     }
   },
   mounted () {
@@ -105,10 +106,21 @@ export default {
       this.context.restore()
     },
     update () {
-      for (var i = 0; i < this.sprites.length; i++) {
-        let sprite = this.sprites[i]
-        sprite.posX += i * -0.1
-        this.drawSprite(sprite)
+      if (this.allSpritesLoaded) {
+        for (let i = 0; i < this.sprites.length; i++) {
+          let sprite = this.sprites[i]
+          sprite.posX += i * -0.1
+          this.drawSprite(sprite)
+        }
+      } else {
+        let isAllLoaded = true
+        for (let i = 0; i < this.sprites.length; i++) {
+          if (!this.sprites[i].imageLoaded) {
+            isAllLoaded = false
+            break
+          }
+        }
+        this.allSpritesLoaded = isAllLoaded
       }
 
       window.requestAnimationFrame(this.update)
@@ -132,9 +144,11 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: -101;
 
   background: url('/static/img/background/fallback.png');
   background-position: center;
+  background-size: cover;
 }
 
 .bgelement
