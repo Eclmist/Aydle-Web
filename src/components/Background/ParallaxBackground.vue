@@ -58,12 +58,14 @@ export default {
           pattern: {},
           img: images[i],
           posX: 0,
-          posY: 0
+          posY: 0,
+          imageLoaded: false
         }
 
         this.sprites.push(spriteRef)
         let self = this
         images[i].onload = function () {
+          spriteRef.imageLoaded = true
           self.initSprite(spriteRef)
         }
       }
@@ -74,6 +76,10 @@ export default {
       }
     },
     initSprite (sprite) {
+      if (!sprite.imageLoaded) {
+        return
+      }
+
       this.scallingCanvas.width = sprite.img.width * (this.canvasHeight / sprite.img.height)
 
       this.scallingCanvas.getContext('2d').drawImage(
@@ -92,7 +98,7 @@ export default {
       this.context.fillStyle = sprite.pattern
       // ptn
 
-      let xPos = sprite.posX + (sprite.img.width - this.canvasWidth)
+      let xPos = sprite.posX - (this.scallingCanvas.width - this.canvasWidth) / 2
       this.context.save()
       this.context.translate(xPos, sprite.posY)
       this.context.fillRect(-xPos, -sprite.posY, this.canvasWidth, this.canvasHeight)
