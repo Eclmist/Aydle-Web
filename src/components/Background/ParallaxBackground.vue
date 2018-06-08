@@ -3,14 +3,14 @@
     <canvas id="background">
     </canvas>
     <div id="fallback"></div>
-    <img class="bgelement" src="/static/img/background/sky.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/rocks.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/clouds_2.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/ground_1.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/ground_2.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/ground_3.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/plant.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/1.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/2.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/3.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/4.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/5.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/6.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/7.png" alt="hidden-image">
+    <img class="bgelement" src="/static/img/background/night/8.png" alt="hidden-image">
   </div>
 </template>
 
@@ -24,7 +24,9 @@ export default {
       canvasWidth: 0,
       canvasHeight: 0,
       scallingCanvas: {},
-      allSpritesLoaded: false
+      allSpritesLoaded: false,
+      allowBackgroundAnimation: true,
+      isDay: false
     }
   },
   mounted () {
@@ -106,6 +108,11 @@ export default {
       this.context.restore()
     },
     update () {
+      if (!this.allowBackgroundAnimation) {
+        window.requestAnimationFrame(this.update)
+        return
+      }
+
       if (this.allSpritesLoaded) {
         for (let i = 0; i < this.sprites.length; i++) {
           let sprite = this.sprites[i]
