@@ -4,7 +4,7 @@
       <div id="fallback"></div>
     </canvas>
     <img class="bgelement" src="/static/img/background/sky.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image"> -->
+    <img class="bgelement" src="/static/img/background/clouds_1.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/rocks.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/clouds_2.png" alt="hidden-image">
     <img class="bgelement" src="/static/img/background/ground_1.png" alt="hidden-image">
@@ -92,7 +92,7 @@ export default {
       this.context.fillStyle = sprite.pattern
       // ptn
 
-      let xPos = sprite.posX
+      let xPos = sprite.posX + (sprite.img.width - this.canvasWidth)
       this.context.save()
       this.context.translate(xPos, sprite.posY)
       this.context.fillRect(-xPos, -sprite.posY, this.canvasWidth, this.canvasHeight)
