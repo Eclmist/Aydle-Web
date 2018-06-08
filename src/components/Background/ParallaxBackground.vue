@@ -45,6 +45,7 @@ export default {
 
       // this.scallingCanvas.width = canvas.width
       this.scallingCanvas.height = canvas.height
+      this.initAllSprites()
     },
     initialize () {
       let canvas = document.getElementById('background')
@@ -63,19 +64,27 @@ export default {
         this.sprites.push(spriteRef)
         let self = this
         images[i].onload = function () {
-          self.scallingCanvas.width = this.width * (self.canvasHeight / this.height)
-
-          self.scallingCanvas.getContext('2d').drawImage(
-            this,
-            0,
-            0,
-            self.scallingCanvas.width,
-            self.canvasHeight
-          )
-
-          spriteRef.pattern = self.context.createPattern(self.scallingCanvas, 'repeat-x')
+          self.initSprite(spriteRef)
         }
       }
+    },
+    initAllSprites () {
+      for (let i = 0; i < this.sprites.length; i++) {
+        this.initSprite(this.sprites[i])
+      }
+    },
+    initSprite (sprite) {
+      this.scallingCanvas.width = sprite.img.width * (this.canvasHeight / sprite.img.height)
+
+      this.scallingCanvas.getContext('2d').drawImage(
+        sprite.img,
+        0,
+        0,
+        this.scallingCanvas.width,
+        this.canvasHeight
+      )
+
+      sprite.pattern = this.context.createPattern(this.scallingCanvas, 'repeat-x')
     },
     drawSprite (sprite) {
       // this.context.drawImage(i, x, 0, this.canvasWidth, this.canvasHeight, 0, 0, this.canvasWidth, this.canvasHeight)
