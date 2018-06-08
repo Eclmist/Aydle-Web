@@ -25,7 +25,11 @@ const store = new Vuex.Store({
       name: ''
     }
   },
-  mutations: {}
+  mutations: {
+    onGoogleSignIn (googleUser) {
+      alert('google logged in')
+    }
+  }
 })
 
 /* eslint-disable no-new */

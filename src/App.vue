@@ -24,9 +24,6 @@ export default {
 </script>
 
 <style>
-
-/* @import './vue2-animate/dist/vue2-animate.min.css'; */
-
 html, body
 {
   height: 100%;

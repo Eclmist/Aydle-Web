@@ -4,12 +4,7 @@
     </header> -->
     <section class="modal-card-body">
       <div class="level">
-        <a class="button is-fullwidth">
-          <span class="icon">
-            <i class="fab fa-google"></i>
-          </span>
-          <span>Google</span>
-        </a>
+        <div id="gsignin2"></div>
       </div>
       <div class="level">
         <a class="button is-info is-fullwidth">
@@ -67,6 +62,30 @@ export default {
     return {
       email: '',
       password: ''
+    }
+  },
+  created () {},
+  mounted () {
+    window.gapi.load('auth2', () => {
+      window.gapi.auth2.init({
+        client_id: '372832993527-gkhpru5bgqb5sb1g3rejsuvk9edaknuk.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin'
+      })
+
+      window.gapi.signin2.render('gsignin2', {
+        scope: 'email',
+        width: 300,
+        height: 50,
+        longtitle: true,
+        theme: 'light',
+        onsuccess: this.onGoogleSignIn,
+        onfailure: () => { alert('google signin failed') }
+      })
+    })
+  },
+  methods: {
+    onGoogleSignIn () {
+      this.$store.onGoogleSignIn()
     }
   }
 }
