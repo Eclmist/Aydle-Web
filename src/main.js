@@ -15,20 +15,10 @@ Vue.use(VueCookie)
 Vue.use(VueKonva)
 // Vue.config.productionTip = false
 
-// global user data
-const user = {
-  username: 'Guest',
-  userId: 0
-}
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  data: {
-    pageLoaded: false,
-    user
-  },
   template: '<App/>',
   components: { App }
 })
