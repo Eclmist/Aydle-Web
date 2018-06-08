@@ -77,7 +77,6 @@ export default {
 .modal-card-body
 {
   padding: 30px;
-  border-radius: 1%;
 }
 
 .modal-card

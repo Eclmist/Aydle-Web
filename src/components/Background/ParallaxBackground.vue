@@ -33,10 +33,7 @@ export default {
     this.maximizeCanvas()
 
     // update loop
-    let self = this
-    setInterval(function () {
-      self.update()
-    }, 16)
+    window.requestAnimationFrame(this.update)
   },
   methods: {
     maximizeCanvas () {
@@ -95,9 +92,11 @@ export default {
     update () {
       for (var i = 0; i < this.sprites.length; i++) {
         let sprite = this.sprites[i]
-        sprite.posX += i * -0.5
+        sprite.posX += i * -0.1
         this.drawSprite(sprite)
       }
+
+      window.requestAnimationFrame(this.update)
     }
   }
 }
