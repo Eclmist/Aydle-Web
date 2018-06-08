@@ -153,7 +153,7 @@ export default {
   right: 0;
   z-index: -101;
 
-  background: url('/static/img/background/fallback.png');
+  background: url('/static/img/background/night/fallback.png');
   background-position: center;
   background-size: cover;
 }
