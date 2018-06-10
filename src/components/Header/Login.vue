@@ -86,8 +86,27 @@ export default {
   methods: {
     onGoogleSignIn (googleUser) {
       this.$parent.close()
-      this.$store.onGoogleSignIn(googleUser)
       this.isLoading = false
+
+      let profile = googleUser.getBasicProfile()
+
+      let uName = profile.getName()
+      let uAvatar = new Image()
+      uAvatar.src = profile.getImageUrl()
+      let uEmail = profile.getEmail()
+
+      let activeUser = {
+        name: uName,
+        avatar: uAvatar,
+        email: uEmail
+      }
+
+      this.$store.commit('onGoogleSignIn', activeUser)
+
+      this.$toast.open({
+        message: 'Logged in as ' + uName,
+        type: 'is-success'
+      })
     },
     onSignInFailure () {
       this.$toast.open({

@@ -23,24 +23,8 @@ const store = new Vuex.Store({
     user: null
   },
   mutations: {
-    onGoogleSignIn (googleUser) {
-      let profile = googleUser.getBasicProfile()
-
-      let uName = profile.getName()
-      let uAvatar = new Image()
-      uAvatar.src = profile.getImageUrl()
-      let uEmail = profile.getEmail()
-
-      this.user = {
-        name: uName,
-        avatar: uAvatar,
-        email: uEmail
-      }
-
-      this.$toast.open({
-        message: 'Logged in as ' + uName,
-        type: 'is-success'
-      })
+    onGoogleSignIn (state, activeUser) {
+      state.user = activeUser
     }
   }
 })
