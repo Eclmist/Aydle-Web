@@ -20,14 +20,22 @@ Vue.use(VueKonva)
 const store = new Vuex.Store({
   state: {
     loggedIn: false,
-    user: {
-      id: -1,
-      name: ''
-    }
+    user: null
   },
   mutations: {
     onGoogleSignIn (googleUser) {
-      alert('google logged in')
+      let profile = googleUser.getBasicProfile()
+
+      let uName = profile.getName()
+      let uAvatar = new Image()
+      uAvatar.src = profile.getImageUrl()
+      let uEmail = profile.getEmail()
+
+      this.user = {
+        name: uName,
+        avatar: uAvatar,
+        email: uEmail
+      }
     }
   }
 })

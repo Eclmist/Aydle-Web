@@ -4,7 +4,7 @@
     </header> -->
     <section class="modal-card-body">
       <div class="level">
-        <div id="gsignin2"></div>
+        <div id="gsignin2" @click="SignInLoading"></div>
       </div>
       <div class="level">
         <a class="button is-info is-fullwidth">
@@ -50,9 +50,8 @@
           </div>
         </div>
       </form>
+      <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
     </section>
-    <!-- <footer class="modal-card-foot">
-    </footer> -->
   </div>
 </template>
 
@@ -60,6 +59,7 @@
 export default {
   data () {
     return {
+      isLoading: false,
       email: '',
       password: ''
     }
@@ -74,18 +74,34 @@ export default {
 
       window.gapi.signin2.render('gsignin2', {
         scope: 'email',
-        width: 300,
+        width: 240,
         height: 50,
         longtitle: true,
         theme: 'light',
         onsuccess: this.onGoogleSignIn,
-        onfailure: () => { alert('google signin failed') }
+        onfailure: this.onSignInFailure
       })
     })
   },
   methods: {
-    onGoogleSignIn () {
-      this.$store.onGoogleSignIn()
+    onGoogleSignIn (googleUser) {
+      this.$parent.close()
+      this.$toast.open({
+        message: 'Logged in as Eclmist',
+        type: 'is-success'
+      })
+      this.$store.onGoogleSignIn(googleUser)
+      this.isLoading = false
+    },
+    onSignInFailure () {
+      this.$toast.open({
+        message: 'Failed to login',
+        type: 'is-danger'
+      })
+      this.isLoading = false
+    },
+    SignInLoading () {
+      this.isLoading = true
     }
   }
 }
