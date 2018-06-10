@@ -91,8 +91,7 @@ export default {
       let profile = googleUser.getBasicProfile()
 
       let uName = profile.getName()
-      let uAvatar = new Image()
-      uAvatar.src = profile.getImageUrl()
+      let uAvatar = profile.getImageUrl()
       let uEmail = profile.getEmail()
 
       let activeUser = {

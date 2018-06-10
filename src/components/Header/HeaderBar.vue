@@ -4,6 +4,11 @@
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <b-icon icon="account"/>
+          <figure id="avatar" class="image is-32x32" v-if="isSignedIn">
+            <img v-attr="src: " alt="avatar" height="32">
+v-attr="src: imageLink"
+            v-attr="src: imageLink"
+          </figure>
           <span class="username">{{ username }}</span>
         </a>
         <a role="button" class="navbar-burger has-text-white has-text-centered" @click="showSidepanel = !showSidepanel">
@@ -72,6 +77,15 @@ export default {
         return 'Sign In'
       }
       return this.$store.state.user.name
+    },
+    avatar () {
+      if (this.$store.state.user === null) {
+        return ''
+      }
+      return this.$store.state.user.avatar
+    },
+    isSignedIn () {
+      return (this.$store.state.user !== null)
     }
   }
 }
@@ -101,5 +115,22 @@ a.navbar-item:hover
   height: 3px;
   border-radius: 50%;
   left: calc(50% - 3px);
+}
+
+#avatar
+{
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+
+#avatar > img
+{
+  position: absolute;
+  top: 2px;
+  left: -2px;
+  width: 28px;
+  padding: 0;
+  margin: 0;
 }
 </style>
