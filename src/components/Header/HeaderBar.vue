@@ -68,6 +68,9 @@ export default {
   },
   computed: {
     username () {
+      if (this.$store.state.user === null) {
+        return 'Sign In'
+      }
       return this.$store.state.user.name
     }
   }
