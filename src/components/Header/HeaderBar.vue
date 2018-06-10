@@ -5,9 +5,7 @@
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <b-icon icon="account"/>
           <figure id="avatar" class="image is-32x32" v-if="isSignedIn">
-            <img v-attr="src: " alt="avatar" height="32">
-v-attr="src: imageLink"
-            v-attr="src: imageLink"
+            <img v-bind:src="avatar" alt="avatar" height="32">
           </figure>
           <span class="username">{{ username }}</span>
         </a>
