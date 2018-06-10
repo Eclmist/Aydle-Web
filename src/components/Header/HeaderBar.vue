@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <a class="navbar-item" v-on:click="loginModalActive = true">
           <b-icon icon="account"/>
-          <span class="username">Sign In</span>
+          <span class="username">{{ username }}</span>
         </a>
         <a role="button" class="navbar-burger has-text-white has-text-centered" @click="showSidepanel = !showSidepanel">
           <span></span>
@@ -64,6 +64,11 @@ export default {
 
       // dont touch
       this.previousFrameWindowYOffset = window.pageYOffset
+    }
+  },
+  computed: {
+    username () {
+      return this.$store.state.user.name
     }
   }
 }
