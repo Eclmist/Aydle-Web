@@ -2,15 +2,7 @@
   <div id="background-root">
     <canvas id="background">
     </canvas>
-    <div id="fallback"></div>
-    <img class="bgelement" src="/static/img/background/night/1.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/2.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/3.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/4.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/5.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/6.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/7.png" alt="hidden-image">
-    <img class="bgelement" src="/static/img/background/night/8.png" alt="hidden-image">
+    <div id="fallback" v-bind:class="{ day: isDay }"></div>
   </div>
 </template>
 
@@ -20,6 +12,27 @@ export default {
   data () {
     return {
       sprites: [],
+      spriteSrc: [
+        [
+          '/static/img/background/night/1.png',
+          '/static/img/background/night/2.png',
+          '/static/img/background/night/3.png',
+          '/static/img/background/night/4.png',
+          '/static/img/background/night/5.png',
+          '/static/img/background/night/6.png',
+          '/static/img/background/night/7.png',
+          '/static/img/background/night/8.png'
+        ],
+        [
+          '/static/img/background/day/1.png',
+          '/static/img/background/day/2.png',
+          '/static/img/background/day/3.png',
+          '/static/img/background/day/4.png',
+          '/static/img/background/day/5.png',
+          '/static/img/background/day/6.png',
+          '/static/img/background/day/7.png'
+        ]
+      ],
       context: {},
       canvasWidth: 0,
       canvasHeight: 0,
@@ -27,6 +40,31 @@ export default {
       allSpritesLoaded: false,
       allowBackgroundAnimation: true,
       isDay: false
+    }
+  },
+  created () {
+    const hours = new Date().getHours()
+    this.isDay = hours > 6 && hours < 20
+    let spriteSource = this.isDay ? this.spriteSrc[1] : this.spriteSrc[0]
+
+    for (var i = 0; i < spriteSource.length; i++) {
+      let newImg = new Image()
+      newImg.src = spriteSource[i]
+
+      let spriteRef = {
+        pattern: {},
+        img: newImg,
+        posX: 0,
+        posY: 0,
+        imageLoaded: false
+      }
+
+      this.sprites.push(spriteRef)
+      let self = this
+      newImg.onload = function () {
+        spriteRef.imageLoaded = true
+        self.initSprite(spriteRef)
+      }
     }
   },
   mounted () {
@@ -54,24 +92,6 @@ export default {
       let canvas = document.getElementById('background')
       this.context = canvas.getContext('2d')
       this.scallingCanvas = document.createElement('canvas')
-
-      let images = document.getElementsByClassName('bgelement')
-      for (var i = 0; i < images.length; i++) {
-        let spriteRef = {
-          pattern: {},
-          img: images[i],
-          posX: 0,
-          posY: 0,
-          imageLoaded: false
-        }
-
-        this.sprites.push(spriteRef)
-        let self = this
-        images[i].onload = function () {
-          spriteRef.imageLoaded = true
-          self.initSprite(spriteRef)
-        }
-      }
     },
     initAllSprites () {
       for (let i = 0; i < this.sprites.length; i++) {
@@ -153,9 +173,13 @@ export default {
   right: 0;
   z-index: -101;
 
-  background: url('/static/img/background/night/fallback.png');
   background-position: center;
   background-size: cover;
+}
+
+.day
+{
+  background-image: url('/static/img/background/day/fallback.png') !important;
 }
 
 .bgelement
