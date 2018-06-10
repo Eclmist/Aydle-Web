@@ -36,6 +36,11 @@ const store = new Vuex.Store({
         avatar: uAvatar,
         email: uEmail
       }
+
+      this.$toast.open({
+        message: 'Logged in as ' + uName,
+        type: 'is-success'
+      })
     }
   }
 })

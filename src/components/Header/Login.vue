@@ -86,10 +86,6 @@ export default {
   methods: {
     onGoogleSignIn (googleUser) {
       this.$parent.close()
-      this.$toast.open({
-        message: 'Logged in as Eclmist',
-        type: 'is-success'
-      })
       this.$store.onGoogleSignIn(googleUser)
       this.isLoading = false
     },
