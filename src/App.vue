@@ -9,6 +9,7 @@
 <script>
 import Header from './components/Header/HeaderBar'
 import Background from './components/Background/ParallaxBackground.vue'
+import Ascii from './components/Misc/Ascii'
 
 export default {
   name: 'app',
@@ -18,7 +19,8 @@ export default {
   },
   components: {
     'header-bar': Header,
-    'background': Background
+    'background': Background,
+    'ascii': Ascii
   }
 }
 </script>
