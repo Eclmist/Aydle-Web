@@ -2,7 +2,7 @@
   <div>
     <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info is-fixed-top">
       <div class="navbar-brand">
-        <a class="navbar-item" v-on:click="loginModalActive = true">
+        <a class="navbar-item" @click="loginModalActive = true">
           <b-icon icon="account"/>
           <figure id="avatar" class="image is-32x32" v-if="isSignedIn">
             <img v-bind:src="avatar" alt="avatar" height="32">
@@ -26,16 +26,16 @@
     </nav>
 
     <b-modal :active.sync="loginModalActive" has-modal-card>
-      <login-modal></login-modal>
+      <account-modal v-if="loginModalActive" />      
     </b-modal>
 
-    <side-drawer v-bind:is-open="showSidepanel" v-on:drawerClosed="showSidepanel=false"></side-drawer>
+    <side-drawer v-bind:is-open="showSidepanel" @drawerClosed="showSidepanel=false"></side-drawer>
   </div>
 </template>
 
 <script>
-import Login from './Login'
 import Drawer from './Drawer'
+import Account from './Account/Account'
 
 export default {
   data () {
@@ -43,7 +43,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: false,
+      loginModalActive: true,
       showSidepanel: false
     }
   },
@@ -54,8 +54,8 @@ export default {
     window.removeEventListener('scroll', this.scrollEvent)
   },
   components: {
-    'login-modal': Login,
-    'side-drawer': Drawer
+    'side-drawer': Drawer,
+    'account-modal': Account
   },
   methods: {
     scrollEvent () {
@@ -67,6 +67,9 @@ export default {
 
       // dont touch
       this.previousFrameWindowYOffset = window.pageYOffset
+    },
+    changeModalState (target) {
+      this.loginModalState = target
     }
   },
   computed: {
