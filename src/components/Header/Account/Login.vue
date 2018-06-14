@@ -4,7 +4,7 @@
       Log In      
     </h1>
 
-    <form @submit.prevent>
+    <form @submit="signin">
       <b-field>
           <b-input
               placeholder="Email"
@@ -29,17 +29,11 @@
       </div>
 
       <div class="level">
-        <a @click.prevent="signin" class="button media-btn btn-email is-primary is-fullwidth">
+        <button @click.prevent="signin" class="button media-btn btn-email is-primary is-fullwidth">
           <span>Log In</span>
-          </a>
+        </button>
       </div>
     </form>
-
-    <div class="has-text-centered or">
-      <hr />
-      <div class="or-span">OR</div>
-      <hr />
-    </div>
 
     <social-btns></social-btns>
     <p class="has-text-centered has-text-grey-light is-size-7">
@@ -50,6 +44,7 @@
 
 <script>
 import Social from './Social'
+
 export default {
   data () {
     return {
@@ -83,6 +78,11 @@ export default {
 {
   position: relative;
   top: -16px
+}
+
+.button
+{
+  height: 46px;
 }
 </style>
 

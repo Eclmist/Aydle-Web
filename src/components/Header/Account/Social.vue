@@ -1,20 +1,33 @@
 <template>
-  <div class="social">
-    <a href="" class="button media-btn btn-google is-medium is-outlined">
-      <img width="18" src="/static/img/icons/identity/google/google-32.png" class="icon" alt="google icon">
-      <span>Google</span>
-    </a>
+  <div>
+    <or></or>
+    <div class="social">
+      <a href="" class="button media-btn btn-google is-medium is-outlined">
+        <img width="18" src="/static/img/icons/identity/google/google-32.png" class="icon" alt="google icon">
+        <span>Google</span>
+      </a>
 
-    <a href="" class="button media-btn btn-facebook is-medium is-info">
-      <b-icon class="icon" icon="facebook-box" style="margin:0"/>
-      <span>
-        Facebook
-      </span>
-    </a>
+      <a href="" class="button media-btn btn-facebook is-medium is-info">
+        <b-icon class="icon" icon="facebook-box" style="margin:0"/>
+        <span>
+          Facebook
+        </span>
+      </a>
+    </div>
   </div>
 </template>
 
-<style>
+<script>
+import Or from './Or'
+export default {
+  components: {
+    'or': Or
+  }
+}
+</script>
+
+
+<style scoped>
 @font-face {
   font-family: Roboto;
   src: url(/static/font/Roboto-Medium.ttf);
@@ -48,5 +61,12 @@
 {
   background-color: #4267b2 !important;
   color: white;
+}
+
+.media-btn
+{
+  padding: 8px !important;
+  font-size: 14px !important;
+  height: 46px;
 }
 </style>

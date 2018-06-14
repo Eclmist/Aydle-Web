@@ -44,12 +44,6 @@
       </div>
     </form>
 
-    <div class="has-text-centered or">
-      <hr />
-      <div class="or-span">OR</div>
-      <hr />
-    </div>
-
     <social-btns></social-btns>
 
     <p class="already has-text-centered has-text-grey-light is-size-7">
@@ -65,6 +59,7 @@
 
 <script>
 import Social from './Social'
+
 export default {
   data () {
     return {
@@ -83,5 +78,10 @@ export default {
 .already
 {
   margin-bottom: 10px;
+}
+
+.button
+{
+  height: 46px;
 }
 </style>

@@ -43,9 +43,17 @@ export default {
   },
   methods: {
     emailSignIn (email, pw) {
-      this.isLoading = true
+      if (email === '' || pw === '') {
+        return
+      }
+
       let self = this
-      firebase.auth().signInWithEmailAndPassword(email, pw).catch(function (error) {
+      this.isLoading = true
+
+      firebase.auth().signInWithEmailAndPassword(email, pw).then(function () {
+        self.isLoading = false
+        self.onSignInSuccess()
+      }).catch(function (error) {
         if (error.code === 'auth/user-disabled') {
           self.$toast.open({
             message: 'This account has been disabled',
@@ -53,14 +61,12 @@ export default {
           })
         } else {
           self.$toast.open({
-            message: 'Username or password is incorrect',
-            type: 'is-danger',
-            duration: 10000
+            message: 'Email or password is incorrect',
+            type: 'is-danger'
           })
         }
+        self.isLoading = false
       })
-
-      self.isLoading = false
     },
     firebaseAuth () {
       // let provider = new firebase.auth.GoogleAuthProvider()
@@ -81,14 +87,14 @@ export default {
       //   var credential = error.credential;
       // })
     },
-    onSignInSuccess () {
+    onSignInSuccess (user) {
       this.$emit('close')
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .modal-content 
 {
   /* min-height: 365.5px !important; */
@@ -107,38 +113,4 @@ export default {
 {
   padding: 30px;
 }
-
-.media-btn
-{
-  padding: 8px !important;
-  font-size: 14px !important;
-  height: 46px;
-}
-.or
-{
-  margin: 10px 0 !important;
-  display: flex;
-}
-
-.or > hr, div
-{
-  flex: 1;
-  flex-basis: auto;
-
-  /* margin-top: 0.5rem; */
-  /* margin-bottom: 0.5rem; */
-}
-
-.or > .or-span
-{
-  flex: 0.5;
-  margin-top: auto;
-  margin-bottom: auto;
-  vertical-align: middle;
-  font-size: 12px;
-  color: #aaa;
-  justify-content: center;
-  align-items: center;
-}
-
 </style>
