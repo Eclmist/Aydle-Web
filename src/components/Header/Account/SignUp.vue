@@ -20,6 +20,14 @@
       </a>
     </div>
     
+
+    <div class="level">
+      <a href="" class="button btn-email is-primary is-fullwidth">
+        <b-icon class="icon" icon="email" />
+        <span>Sign up with Email</span>
+        </a>
+    </div>
+
     <div class="has-text-centered or">
       <hr />
       <div class="or-span">OR</div>
@@ -27,14 +35,15 @@
     </div>
 
     <div class="level">
-      <a href="" class="button btn-email is-success is-fullwidth">
-        <b-icon class="icon" icon="email" />
-        <span>Sign up with Email</span>
+      <a @click.prevent="$emit('showLogin')" class="button btn-email is-success is-fullwidth">
+        <!-- <b-icon class="icon" icon="email" /> -->
+        <span>Already have an account?</span>
         </a>
     </div>
 
     <p class="has-text-centered has-text-weight-light has-text-grey-light is-size-7">
       By signing up, you agree to Aydle's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+      <br>
     </p>
   </div>
 </template>
@@ -132,5 +141,12 @@ export default {
   vertical-align: middle;
   font-size: 12px;
   color: #aaa;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-login
+{
+  padding-top: 1rem;
 }
 </style>

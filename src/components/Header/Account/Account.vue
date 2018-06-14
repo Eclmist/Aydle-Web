@@ -1,8 +1,10 @@
 <template>
   <div class="modal-card">
     <section class="modal-card-body">
-      <login-modal v-if="modalState === 'Login'" />
-      <signup-modal v-if="modalState === 'SignUp'" />
+      <transition name="fade">
+        <login-modal v-if="modalState === 'Login'" />
+      </transition>
+      <signup-modal v-if="modalState === 'SignUp'" @showLogin="modalState = 'Login'" />
       <forgetpw-modal v-if="modalState === 'Forget'" />
     </section>
   </div>
@@ -38,5 +40,11 @@ export default {
 .modal-card-body
 {
   padding: 30px;
+}
+
+.logo
+{
+  position: absolute;
+  box-shadow: 1 1 1 1;
 }
 </style>
