@@ -1,61 +1,58 @@
 <template>
   <div>
-    <div class="level">
-      <div id="gsignin2" @click="showSignInLoader"></div>
-    </div>
-    <div class="level">
-      <a class="button is-info is-fullwidth">
-        <span class="icon">
-          <i class="fab fa-facebook"></i>
-        </span>
-        <span>Facebook</span>
-      </a>
-    </div>
-    <p class="has-text-centered is-7 title has-text-grey">- OR -</p>
+    <h1 class="title is-5 has-text-centered has-text-weight-light">
+      Log In      
+    </h1>
 
     <form @submit.prevent>
-      <b-field label="Email">
+      <b-field>
           <b-input
-              type="email"
-              :value="email"
-              placeholder="you@example.org"
-              required>
+              placeholder="Email"
+              v-model="email"
+              icon="account"
+              >
           </b-input>
       </b-field>
 
-      <b-field label="Password">
+      <b-field>
           <b-input
               type="password"
-              :value="password"
-              placeholder="********"
-              required>
+              v-model="password"
+              placeholder="Password"
+              icon="lock"
+              >
           </b-input>
       </b-field>
-      <a href="#" @click.prevent="signUp" class="forget-pw is-pulled-left is-size-7">
-              Don't have an account yet?
-      </a>
-      <a href="#" @click.prevent="forget" class="forget-pw is-pulled-right has-text-right is-size-7">forgot?</a>
-      <br>
 
-      <div class="level is-mobile">
-        <div class="level-left">
-          <div class="level-item">
-          </div>
-        </div>
-        <div class="level-right">
-          <button class="button is-primary">Login</button>
-        </div>
+      <div class="level-right">
+        <a href="#" @click.prevent="forget" class="forget-pw is-pulled-right has-text-right is-size-7">Forgot Password?</a>
+      </div>
+
+      <div class="level">
+        <a @click.prevent="signin" class="button media-btn btn-email is-primary is-fullwidth">
+          <span>Log In</span>
+          </a>
       </div>
     </form>
-    <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
+
+    <div class="has-text-centered or">
+      <hr />
+      <div class="or-span">OR</div>
+      <hr />
+    </div>
+
+    <social-btns></social-btns>
+    <p class="has-text-centered has-text-grey-light is-size-7">
+      Don't have an account? <a @click.prevent="$emit('signup')">Sign Up</a>
+    </p>
   </div>
 </template>
 
 <script>
+import Social from './Social'
 export default {
   data () {
     return {
-      isLoading: false,
       email: '',
       password: ''
     }
@@ -64,28 +61,22 @@ export default {
   mounted () {
   },
   methods: {
-    showSignInLoader () {
-      this.isLoading = true
-    },
-    signUp () {
-      this.$emit.changeState('change-modal-state', 'SignUp')
+    signin () {
+      this.$emit('signin', this.email, this.password)
     }
+  },
+  components: {
+    'social-btns': Social
   }
 }
 </script>
 
 <style scoped>
-
-.modal-content 
-{
-  /* min-height: 365.5px !important; */
-  overflow: visible !important;
-}
-
 .forget-pw
 {
   position: relative;
   top: -8px;
+  padding-bottom: 16px;
 }
 
 #signup
