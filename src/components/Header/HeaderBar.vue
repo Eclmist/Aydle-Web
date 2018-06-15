@@ -43,7 +43,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: true,
+      loginModalActive: false,
       showSidepanel: false
     }
   },

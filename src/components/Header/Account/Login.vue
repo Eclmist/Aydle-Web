@@ -10,6 +10,7 @@
               placeholder="Email"
               v-model="email"
               icon="account"
+              size="is-medium"
               >
           </b-input>
       </b-field>
@@ -20,12 +21,13 @@
               v-model="password"
               placeholder="Password"
               icon="lock"
+              size="is-medium"
               >
           </b-input>
       </b-field>
 
       <div class="level-right">
-        <a href="#" @click.prevent="forget" class="forget-pw is-pulled-right has-text-right is-size-7">Forgot Password?</a>
+        <a href="#" @click.prevent="$emit('forget')" class="forget-pw is-pulled-right has-text-right is-size-7">Forgot Password?</a>
       </div>
 
       <div class="level">

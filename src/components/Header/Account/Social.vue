@@ -30,7 +30,7 @@ export default {
 <style scoped>
 @font-face {
   font-family: Roboto;
-  src: url(/static/font/Roboto-Medium.ttf);
+  src: url(/static/fonts/Roboto-Medium.ttf);
 }
 
 .social

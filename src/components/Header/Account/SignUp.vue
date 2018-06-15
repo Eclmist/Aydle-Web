@@ -4,13 +4,14 @@
       Account Creation
     </h1>
 
-    <form @submit.prevent>
+    <form @submit.prevent="signup">
       <b-field>
           <b-input
               type="email"
               :value="email"
               placeholder="Email"
               icon="account"
+              size="is-medium"
               required>
           </b-input>
       </b-field>
@@ -21,6 +22,7 @@
               :value="password"
               placeholder="Password"
               icon="lock"
+              size="is-medium"
               required>
           </b-input>
       </b-field>
@@ -31,6 +33,7 @@
               :value="password"
               placeholder="Confirm password"
               icon="lock"
+              size="is-medium"
               required>
           </b-input>
       </b-field>

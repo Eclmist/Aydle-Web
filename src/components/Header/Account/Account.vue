@@ -5,6 +5,7 @@
       <login-modal 
         v-if="modalState === 'Login'" 
         @signup="modalState = 'SignUp'"
+        @forget="modalState = 'Forget'"
         @signin="emailSignIn"
       />
 
@@ -15,6 +16,8 @@
 
       <forgetpw-modal 
         v-if="modalState === 'Forget'" 
+        @login="modalState = 'Login'"
+        @reset="onPasswordReset"
       />
 
     </section>
@@ -39,7 +42,7 @@ export default {
   components: {
     'login-modal': Login,
     'signup-modal': SignUp,
-    'forgetww-modal': ForgetPw
+    'forgetpw-modal': ForgetPw
   },
   methods: {
     emailSignIn (email, pw) {
@@ -55,12 +58,12 @@ export default {
         self.onSignInSuccess()
       }).catch(function (error) {
         if (error.code === 'auth/user-disabled') {
-          self.$toast.open({
+          self.$snackbar.open({
             message: 'This account has been disabled',
             type: 'is-danger'
           })
         } else {
-          self.$toast.open({
+          self.$snackbar.open({
             message: 'Email or password is incorrect',
             type: 'is-danger'
           })
@@ -88,7 +91,48 @@ export default {
       // })
     },
     onSignInSuccess (user) {
-      this.$emit('close')
+      this.$snackbar.open({
+        message: 'Signed in successfully',
+        type: 'is-success'
+      })
+      this.$parent.close()
+    },
+    onPasswordReset (email) {
+      this.isLoading = true
+
+      var auth = firebase.auth()
+      let self = this
+      auth.sendPasswordResetEmail(email).then(function () {
+        // Email sent.
+        self.onPasswordResetSuccess()
+      }).catch(function (error) {
+        if (error.code === 'auth/user-not-found') {
+          self.onPasswordResetSuccess()
+          return
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          self.$snackbar.open({
+            message: 'The email is invalid.',
+            type: 'is-danger'
+          })
+        } else {
+          self.$snackbar.open({
+            message: error.message,
+            type: 'is-danger'
+          })
+        }
+
+        self.isLoading = false
+      })
+    },
+    onPasswordResetSuccess () {
+      this.isLoading = false
+      this.$snackbar.open({
+        message: 'Password reset link sent!',
+        type: 'is-info'
+      })
+      this.$parent.close()
     }
   }
 }
