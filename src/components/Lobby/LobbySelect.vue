@@ -16,7 +16,7 @@
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
           </div>
         </div>
-        <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as Guest</button>
+        <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as {{ displayName }}</button>
       </form>
       <!-- <div class="container">
         <a href="#">Host your own lobby</a>
@@ -31,6 +31,11 @@ export default {
     return {
       loading: false,
       errorShake: false
+    }
+  },
+  computed: {
+    displayName () {
+      return this.$store.state.user === null ? 'Guest' : this.$store.state.user.displayName
     }
   },
   methods: {

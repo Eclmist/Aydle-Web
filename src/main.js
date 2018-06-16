@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import Buefy from 'buefy'
 import Firebase from 'firebase'
+import Lodash from 'vue-lodash'
 import 'buefy/lib/buefy.css'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import 'mdi/css/materialdesignicons.min.css'
@@ -14,6 +15,7 @@ var VueCookie = require('vue-cookie')
 Vue.use(Vuex)
 Vue.use(Buefy)
 Vue.use(VueCookie)
+Vue.use(Lodash)
 // Vue.config.productionTip = false
 
 // firebase
@@ -27,17 +29,17 @@ var config = {
 }
 
 Firebase.initializeApp(config)
+Firebase.auth().onAuthStateChanged(function (user) {
+  store.commit('onUserStateChanged', user)
+})
 
 const store = new Vuex.Store({
   state: {
-    loggedIn: false,
-    user: null,
-    loginType: null
+    user: null
   },
   mutations: {
-    onGoogleSignIn (state, activeUser) {
-      state.user = activeUser
-      state.loginType = 'google'
+    onUserStateChanged (state, user) {
+      state.user = user
     }
   }
 })

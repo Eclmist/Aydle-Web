@@ -5,43 +5,48 @@
     </h1>
 
     <form @submit.prevent="signup">
-      <b-field>
+      <b-field
+        :message="emailTooltip"
+        :type="emailTooltipType">
           <b-input
-              type="email"
-              :value="email"
+              v-model="email"
               placeholder="Email"
               icon="account"
               size="is-medium"
-              required>
+              maxlength="256"
+              :has-counter="false"
+              :loading="isLoading">
           </b-input>
+      </b-field>
+
+      <b-field>
+        <b-input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            icon="lock"
+            size="is-medium"
+            maxlength="256"
+            :has-counter="false">
+        </b-input>
       </b-field>
 
       <b-field>
           <b-input
               type="password"
-              :value="password"
-              placeholder="Password"
-              icon="lock"
-              size="is-medium"
-              required>
-          </b-input>
-      </b-field>
-
-      <b-field>
-          <b-input
-              type="password"
-              :value="password"
+              v-model="password2"
               placeholder="Confirm password"
               icon="lock"
               size="is-medium"
-              required>
+              maxlength="256"
+              :has-counter="false">
           </b-input>
       </b-field>
 
       <br>
 
       <div class="level">
-        <a @click.prevent class="button media-btn btn-email is-primary is-fullwidth">
+        <a @click.prevent="signup" class="button media-btn btn-email is-primary is-fullwidth">
           <span>Sign Up</span>
           </a>
       </div>
@@ -64,15 +69,37 @@
 import Social from './Social'
 
 export default {
+  props: {
+    'emailTooltip': String,
+    'emailTooltipType': String,
+    'isLoading': Boolean
+  },
   data () {
     return {
-      authType: ''
+      email: '',
+      password: '',
+      password2: ''
     }
   },
-  meathods: {
+  methods: {
+    signup () {
+      this.$emit('signup', this.email, this.password)
+    },
+    validateEmail () {
+      this.$emit('validateEmail', this.email)
+    }
   },
   components: {
     'social-btns': Social
+  },
+  created () {
+    this.validateEmail = this._.debounce(this.validateEmail, 500)
+  },
+  watch: {
+    email: function (newEmail, oldEmail) {
+      this.$emit('validationLoad')
+      this.validateEmail()
+    }
   }
 }
 </script>

@@ -12,6 +12,10 @@
       <signup-modal 
         v-if="modalState === 'SignUp'" 
         @showLogin="modalState = 'Login'" 
+        @signup="signUp"
+        @validateEmail="validateEmail"
+        @validationLoad="setValidationLoader"
+        v-bind="signupValidation"
       />
 
       <forgetpw-modal 
@@ -36,7 +40,12 @@ export default {
   data () {
     return {
       modalState: 'Login',
-      isLoading: false
+      isLoading: false,
+      signupValidation: {
+        'emailTooltip': '',
+        'emailTooltipType': '',
+        'isLoading': false
+      }
     }
   },
   components: {
@@ -45,13 +54,43 @@ export default {
     'forgetpw-modal': ForgetPw
   },
   methods: {
-    emailSignIn (email, pw) {
-      if (email === '' || pw === '') {
+    setValidationLoader () {
+      this.signupValidation.isLoading = true
+    },
+    validateEmail (email) {
+      if (email === '') {
+        this.signupValidation.emailTooltip = ''
+        this.signupValidation.emailTooltipType = ''
+        this.signupValidation.isLoading = false
         return
       }
 
+      firebase.auth().fetchSignInMethodsForEmail(email)
+        .then((values) => {
+          if (values[0] !== undefined) {
+            this.signupValidation.emailTooltip = 'This email is already in use!'
+            this.signupValidation.emailTooltipType = 'is-warning'
+          } else {
+            this.signupValidation.emailTooltip = ''
+            this.signupValidation.emailTooltipType = 'is-success'
+          }
+          this.signupValidation.isLoading = false
+        })
+        .catch((error) => {
+          if (error.code === 'auth/invalid-email') {
+            this.signupValidation.emailTooltip = 'This email is invalid!'
+            this.signupValidation.emailTooltipType = 'is-danger'
+            this.signupValidation.isLoading = false
+          }
+        })
+    },
+    emailSignIn (email, pw) {
       let self = this
       this.isLoading = true
+      // firebase.auth().currentUser.updateProfile({
+      //   displayName: 'Eclmist',
+      //   photoURL: 'https://is2-ssl.mzstatic.com/image/thumb/Purple71/v4/df/05/13/df051372-bcfc-bacb-ea96-c54a498ab50c/source/256x256bb.jpg'
+      // })
 
       firebase.auth().signInWithEmailAndPassword(email, pw).then(function () {
         self.isLoading = false
@@ -60,37 +99,20 @@ export default {
         if (error.code === 'auth/user-disabled') {
           self.$snackbar.open({
             message: 'This account has been disabled',
-            type: 'is-danger'
+            type: 'is-danger',
+            queue: false
           })
         } else {
           self.$snackbar.open({
             message: 'Email or password is incorrect',
-            type: 'is-danger'
+            type: 'is-danger',
+            queue: false
           })
         }
         self.isLoading = false
       })
     },
-    firebaseAuth () {
-      // let provider = new firebase.auth.GoogleAuthProvider()
-
-      // firebase.auth().signInWithPopup(provider).then(function (result) {
-      //   // This gives you a Google Access Token. You can use it to access the Google API.
-      //   var token = result.credential.accessToken
-      //   // The signed-in user info.
-      //   var user = result.user
-      //   // ...
-      // }).catch(function(error) {
-      //   // Handle Errors here.
-      //   var errorCode = error.code
-      //   var errorMessage = error.message
-      //   // The email of the user's account used.
-      //   var email = error.email;
-      //   // The firebase.auth.AuthCredential type that was used.
-      //   var credential = error.credential;
-      // })
-    },
-    onSignInSuccess (user) {
+    onSignInSuccess () {
       this.$snackbar.open({
         message: 'Signed in successfully',
         type: 'is-success'
@@ -133,6 +155,33 @@ export default {
         type: 'is-info'
       })
       this.$parent.close()
+    },
+    signUp (email, password) {
+      this.isLoading = true
+
+      let self = this
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(function () {
+          self.$parent.close()
+          self.isLoading = false
+
+          firebase.auth().currentUser.updateProfile({
+            displayName: email.substr(0, email.indexOf('@'))
+          })
+        })
+        .catch(function (error) {
+          if (error.code === 'auth/weak-password') {
+            self.signupValidation = {
+
+            }
+          } else if (error.code === 'auth/invalid-email') {
+            self.signupValidation = {
+              'emailTooltip': 'Email is invalid!',
+              'emailTooltipType': 'is-danger'
+            }
+          }
+          self.isLoading = false
+        })
     }
   }
 }

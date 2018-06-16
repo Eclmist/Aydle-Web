@@ -4,8 +4,8 @@
       <div class="navbar-brand">
         <a class="navbar-item" @click="loginModalActive = true">
           <b-icon icon="account"/>
-          <figure id="avatar" class="image is-32x32" v-if="isSignedIn">
-            <img v-bind:src="avatar" alt="avatar" height="32">
+          <figure id="avatar" class="image is-32x32" v-if="isSignedIn && avatar !== null">
+            <img v-bind:src="avatar" alt="avatar">
           </figure>
           <span class="username">{{ username }}</span>
         </a>
@@ -43,7 +43,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: false,
+      loginModalActive: true,
       showSidepanel: false
     }
   },
@@ -74,16 +74,16 @@ export default {
   },
   computed: {
     username () {
-      if (this.$store.state.user === null) {
+      if (!this.isSignedIn) {
         return 'Sign In'
       }
-      return this.$store.state.user.name
+      return this.$store.state.user.displayName
     },
     avatar () {
-      if (this.$store.state.user === null) {
-        return ''
+      if (!this.isSignedIn) {
+        return null
       }
-      return this.$store.state.user.avatar
+      return this.$store.state.user.photoURL
     },
     isSignedIn () {
       return (this.$store.state.user !== null)
@@ -128,10 +128,13 @@ a.navbar-item:hover
 #avatar > img
 {
   position: absolute;
-  top: 2px;
-  left: -2px;
-  width: 28px;
+  top: 0px;
+  left: -6.5px;
+  width: 32px !important;
+  height: 32px !important;
+  max-height: 32px !important;
   padding: 0;
   margin: 0;
+  border-radius: 50%;
 }
 </style>

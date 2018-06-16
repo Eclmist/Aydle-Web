@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: Roboto;
+  font-family: Roboto-Medium;
   src: url(/static/fonts/Roboto-Medium.ttf);
 }
 
@@ -52,13 +52,14 @@ export default {
 
 .btn-google
 {
-  font-family: Roboto !important;
+  font-family: Roboto-Medium !important;
   color: rgba(0, 0, 0, .54);
   margin-right: 1rem;
 }
 
 .btn-facebook
 {
+  font-family: Roboto-Medium !important;
   background-color: #4267b2 !important;
   color: white;
 }
