@@ -35,11 +35,41 @@ Firebase.auth().onAuthStateChanged(function (user) {
 
 const store = new Vuex.Store({
   state: {
-    user: null
+    firebaseNativeUser: {},
+    user: {
+      isSignedIn: false,
+      displayName: '',
+      email: '',
+      emailVerified: '',
+      photoURL: '',
+      phoneNumber: ''
+    }
   },
   mutations: {
     onUserStateChanged (state, user) {
-      state.user = user
+      state.firebaseNativeUser = user
+      state.user = {
+        isSignedIn: true,
+        displayName: user.displayName,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        photoURL: user.photoURL,
+        phoneNumber: user.phoneNumber
+      }
+    },
+    changeDisplayName (state, name) {
+      state.user.displayName = name
+    }
+  },
+  getters: {
+    isSignedIn: state => {
+      return state.user.isSignedIn
+    },
+    photoURL: state => {
+      return state.user.isSignedIn ? state.user.photoURL : ''
+    },
+    username: state => {
+      return state.user.isSignedIn ? state.user.displayName : 'Guest'
     }
   }
 })

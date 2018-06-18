@@ -19,7 +19,9 @@
           </b-input>
       </b-field>
 
-      <b-field>
+      <b-field
+        :message="passwordTooltip.tooltip"
+        :type="passwordTooltip.type">
         <b-input
             type="password"
             v-model="password"
@@ -31,7 +33,9 @@
         </b-input>
       </b-field>
 
-      <b-field>
+      <b-field
+        :message="password2Tooltip.tooltip"
+        :type="password2Tooltip.type">
           <b-input
               type="password"
               v-model="password2"
@@ -78,11 +82,18 @@ export default {
     return {
       email: '',
       password: '',
-      password2: ''
+      password2: '',
+      passwordTooltip: {},
+      password2Tooltip: {}
     }
   },
   methods: {
     signup () {
+      if (this.passwordTooltip.type !== 'is-success' ||
+        this.password2Tooltip.type !== 'is-success' ||
+        this.emailTooltipType !== 'is-success') {
+        return
+      }
       this.$emit('signup', this.email, this.password)
     },
     validateEmail () {
@@ -99,6 +110,48 @@ export default {
     email: function (newEmail, oldEmail) {
       this.$emit('validationLoad')
       this.validateEmail()
+    },
+    password: function (newPass, oldPass) {
+      if (newPass === '' && oldPass !== '') {
+        this.passwordTooltip = {
+          tooltip: 'Password cannot be blank!',
+          type: 'is-danger'
+        }
+
+        return
+      }
+
+      if (newPass.length < 6) {
+        this.passwordTooltip = {
+          tooltip: 'Password needs to be at least 6 characters long',
+          type: 'is-danger'
+        }
+      } else {
+        this.passwordTooltip = {
+          tooltip: '',
+          type: 'is-success'
+        }
+
+        if (newPass === this.password2) {
+          this.password2Tooltip = {
+            tooltip: '',
+            type: 'is-success'
+          }
+        }
+      }
+    },
+    password2: function (newPass, oldPass) {
+      if (newPass !== this.password) {
+        this.password2Tooltip = {
+          tooltip: 'Passwords does not match!',
+          type: 'is-danger'
+        }
+      } else {
+        this.password2Tooltip = {
+          tooltip: '',
+          type: 'is-success'
+        }
+      }
     }
   }
 }

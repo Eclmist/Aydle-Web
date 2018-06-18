@@ -57,10 +57,50 @@ export default {
     setValidationLoader () {
       this.signupValidation.isLoading = true
     },
+    signUp (email, password) {
+      this.isLoading = true
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          let tempDisplayName = email.substr(0, email.indexOf('@'))
+
+          firebase.auth().currentUser.updateProfile({
+            displayName: tempDisplayName
+          }).then(() => {
+            this.$store.commit('changeDisplayName', tempDisplayName)
+            this.isLoading = false
+            this.$parent.close()
+            this.$snackbar.open({
+              message: 'Account created successfully!',
+              type: 'is-success'
+            })
+          })
+        })
+        .catch(function (error) {
+          if (error.code === 'auth/weak-password') {
+            self.signupValidation = {
+
+            }
+          } else if (error.code === 'auth/invalid-email') {
+            self.signupValidation = {
+              'emailTooltip': 'Email is invalid!',
+              'emailTooltipType': 'is-danger'
+            }
+          }
+          self.isLoading = false
+        })
+    },
     validateEmail (email) {
       if (email === '') {
         this.signupValidation.emailTooltip = ''
         this.signupValidation.emailTooltipType = ''
+        this.signupValidation.isLoading = false
+        return
+      }
+
+      if (this.checkEmailFormat(email) === false) {
+        this.signupValidation.emailTooltip = 'This email is invalid!'
+        this.signupValidation.emailTooltipType = 'is-danger'
         this.signupValidation.isLoading = false
         return
       }
@@ -83,6 +123,10 @@ export default {
             this.signupValidation.isLoading = false
           }
         })
+    },
+    checkEmailFormat (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(String(email).toLowerCase())
     },
     emailSignIn (email, pw) {
       let self = this
@@ -155,33 +199,6 @@ export default {
         type: 'is-info'
       })
       this.$parent.close()
-    },
-    signUp (email, password) {
-      this.isLoading = true
-
-      let self = this
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(function () {
-          self.$parent.close()
-          self.isLoading = false
-
-          firebase.auth().currentUser.updateProfile({
-            displayName: email.substr(0, email.indexOf('@'))
-          })
-        })
-        .catch(function (error) {
-          if (error.code === 'auth/weak-password') {
-            self.signupValidation = {
-
-            }
-          } else if (error.code === 'auth/invalid-email') {
-            self.signupValidation = {
-              'emailTooltip': 'Email is invalid!',
-              'emailTooltipType': 'is-danger'
-            }
-          }
-          self.isLoading = false
-        })
     }
   }
 }

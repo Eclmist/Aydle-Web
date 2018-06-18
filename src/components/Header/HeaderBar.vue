@@ -4,10 +4,12 @@
       <div class="navbar-brand">
         <a class="navbar-item" @click="loginModalActive = true">
           <b-icon icon="account"/>
-          <figure id="avatar" class="image is-32x32" v-if="isSignedIn && avatar !== null">
-            <img v-bind:src="avatar" alt="avatar">
+          <figure id="avatar" class="image is-32x32" 
+            v-if="$store.getters.isSignedIn &&
+            $store.getters.photoURL !== null">
+            <img v-bind:src="$store.getters.photoURL" alt="avatar">
           </figure>
-          <span class="username">{{ username }}</span>
+          <span class="username">{{ $store.getters.username }}</span>
         </a>
         <a role="button" class="navbar-burger has-text-white has-text-centered" @click="showSidepanel = !showSidepanel">
           <span></span>
@@ -43,7 +45,7 @@ export default {
       previousFrameWindowYOffset: 0,
       scrollDelta: 0,
       navbarPos: 0,
-      loginModalActive: true,
+      loginModalActive: false,
       showSidepanel: false
     }
   },
@@ -73,21 +75,6 @@ export default {
     }
   },
   computed: {
-    username () {
-      if (!this.isSignedIn) {
-        return 'Sign In'
-      }
-      return this.$store.state.user.displayName
-    },
-    avatar () {
-      if (!this.isSignedIn) {
-        return null
-      }
-      return this.$store.state.user.photoURL
-    },
-    isSignedIn () {
-      return (this.$store.state.user !== null)
-    }
   }
 }
 </script>
