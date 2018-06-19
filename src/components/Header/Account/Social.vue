@@ -7,7 +7,7 @@
         <span>Google</span>
       </a>
 
-      <a href="" class="button media-btn btn-facebook is-medium is-info">
+      <a @click="signInWithFacebook" class="button media-btn btn-facebook is-medium is-info">
         <b-icon class="icon" icon="facebook-box" style="margin:0"/>
         <span>
           Facebook
@@ -46,6 +46,32 @@ export default {
         type: 'is-success'
       })
       this.$parent.$parent.$parent.close()
+    },
+    signInWithFacebook () {
+      var provider = new firebase.auth.FacebookAuthProvider()
+
+      firebase.auth().signInWithPopup(provider).then(result => {
+        this.onSignInSuccess()
+      }).catch(error => {
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          this.$snackbar.open({
+            message: 'An account with the associated email already exist. Please sign in with email and password.',
+            type: 'is-danger',
+            queue: false,
+            duration: 5000
+          })
+
+          return
+        }
+
+        var errorMessage = error.message
+
+        this.$snackbar.open({
+          message: errorMessage,
+          type: 'is-danger',
+          queue: false
+        })
+      })
     }
   }
 }
