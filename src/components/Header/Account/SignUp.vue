@@ -50,9 +50,9 @@
       <br>
 
       <div class="level">
-        <a @click.prevent="signup" class="button media-btn btn-email is-primary is-fullwidth">
+        <button @click.prevent="signup" class="button media-btn btn-email is-primary is-fullwidth">
           <span>Sign Up</span>
-          </a>
+          </button>
       </div>
     </form>
 
