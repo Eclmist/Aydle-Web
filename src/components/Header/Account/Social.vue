@@ -45,7 +45,7 @@ export default {
         message: 'Signed in successfully',
         type: 'is-success'
       })
-      this.$parent.close()
+      this.$parent.$parent.$parent.close()
     }
   }
 }
