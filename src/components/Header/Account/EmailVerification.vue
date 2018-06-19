@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <b-notification type="is-info" :active.sync="isActive">
+    <b-notification class="is-info" :active.sync="isActive">
       <p v-if="!linkSent" class="has-text-centered">Email address not verified. Please verify your email. 
         <a @click="resendLink()">Resend verification link</a>
       </p>
@@ -44,5 +44,6 @@ export default {
   left: 0;
   right: 0;
   z-index: 999;
+  opacity: 0.8;
 }
 </style>
