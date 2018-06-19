@@ -40,7 +40,7 @@ const store = new Vuex.Store({
       isSignedIn: false,
       displayName: '',
       email: '',
-      emailVerified: '',
+      emailVerified: false,
       photoURL: '',
       phoneNumber: ''
     }
@@ -48,13 +48,20 @@ const store = new Vuex.Store({
   mutations: {
     onUserStateChanged (state, user) {
       state.firebaseNativeUser = user
-      state.user = {
-        isSignedIn: true,
-        displayName: user.displayName,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        photoURL: user.photoURL,
-        phoneNumber: user.phoneNumber
+
+      if (user !== null) {
+        state.user = {
+          isSignedIn: true,
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          photoURL: user.photoURL,
+          phoneNumber: user.phoneNumber
+        }
+      } else {
+        state.user = {
+          isSignedIn: false
+        }
       }
     },
     changeDisplayName (state, name) {
@@ -70,6 +77,9 @@ const store = new Vuex.Store({
     },
     username: state => {
       return state.user.isSignedIn ? state.user.displayName : 'Guest'
+    },
+    isEmailVerified: state => {
+      return state.user.isSignedIn ? state.user.emailVerified : true
     }
   }
 })

@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     displayName () {
-      return this.$store.state.user === null ? 'Guest' : this.$store.state.user.displayName
+      return this.$store.getters.username
     }
   },
   methods: {

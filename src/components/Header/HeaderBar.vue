@@ -27,6 +27,8 @@
       </div>
     </nav>
 
+    <email-verification></email-verification>
+
     <b-modal :active.sync="loginModalActive" has-modal-card>
       <account-modal v-if="loginModalActive" />      
     </b-modal>
@@ -38,6 +40,7 @@
 <script>
 import Drawer from './Drawer'
 import Account from './Account/Account'
+import EmailVerification from './Account/EmailVerification'
 
 export default {
   data () {
@@ -57,7 +60,8 @@ export default {
   },
   components: {
     'side-drawer': Drawer,
-    'account-modal': Account
+    'account-modal': Account,
+    'email-verification': EmailVerification
   },
   methods: {
     scrollEvent () {
