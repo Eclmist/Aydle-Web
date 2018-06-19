@@ -2,7 +2,7 @@
   <div>
     <or></or>
     <div class="social">
-      <a href="" class="button media-btn btn-google is-medium is-outlined">
+      <a @click="signInWithGoogle" class="button media-btn btn-google is-medium is-outlined">
         <img width="18" src="/static/img/icons/identity/google/google-32.png" class="icon" alt="google icon">
         <span>Google</span>
       </a>
@@ -19,9 +19,34 @@
 
 <script>
 import Or from './Or'
+import firebase from 'firebase'
 export default {
   components: {
     'or': Or
+  },
+  methods: {
+    signInWithGoogle () {
+      var provider = new firebase.auth.GoogleAuthProvider()
+
+      firebase.auth().signInWithPopup(provider).then(result => {
+        this.onSignInSuccess()
+      }).catch(error => {
+        var errorMessage = error.message
+
+        this.$snackbar.open({
+          message: errorMessage,
+          type: 'is-danger',
+          queue: false
+        })
+      })
+    },
+    onSignInSuccess () {
+      this.$snackbar.open({
+        message: 'Signed in successfully',
+        type: 'is-success'
+      })
+      this.$parent.close()
+    }
   }
 }
 </script>
