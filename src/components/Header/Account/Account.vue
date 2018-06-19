@@ -7,6 +7,7 @@
         @signup="modalState = 'SignUp'"
         @forget="modalState = 'Forget'"
         @signin="emailSignIn"
+        @googleSignIn="signInWithGoogle"
       />
 
       <signup-modal 
@@ -63,7 +64,7 @@ export default {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
           let tempDisplayName = email.substr(0, email.indexOf('@'))
-
+          firebase.auth().currentUser.sendEmailVerification()
           firebase.auth().currentUser.updateProfile({
             displayName: tempDisplayName
           }).then(() => {
@@ -199,6 +200,21 @@ export default {
         type: 'is-info'
       })
       this.$parent.close()
+    },
+    signInWithGoogle () {
+      var provider = new firebase.auth.GoogleAuthProvider()
+
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        this.onSignInSuccess()
+      }).catch(function (error) {
+        var errorMessage = error.message
+
+        this.$snackbar.open({
+          message: errorMessage,
+          type: 'is-danger',
+          queue: false
+        })
+      })
     }
   }
 }
