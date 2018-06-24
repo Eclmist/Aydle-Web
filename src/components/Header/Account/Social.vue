@@ -1,16 +1,16 @@
 <template>
   <div>
-    <or></or>
+    <or :text=compDividerText></or>
     <div class="social">
       <a @click="signInWithGoogle" class="button media-btn btn-google is-medium is-outlined">
         <img width="18" src="/static/img/icons/identity/google/google-32.png" class="icon" alt="google icon">
-        <span>Google</span>
+        <span>{{ googleBtnText }}</span>
       </a>
 
       <a @click="signInWithFacebook" class="button media-btn btn-facebook is-medium is-info">
         <b-icon class="icon" icon="facebook-box" style="margin:0"/>
         <span>
-          Facebook
+          {{ facebookBtnText }}
         </span>
       </a>
     </div>
@@ -21,6 +21,9 @@
 import Or from './Or'
 import firebase from 'firebase'
 export default {
+  props: {
+    'dividerText': String
+  },
   components: {
     'or': Or
   },
@@ -72,6 +75,27 @@ export default {
           queue: false
         })
       })
+    }
+  },
+  computed: {
+    compDividerText () {
+      return this.dividerText === undefined ? 'OR' : this.dividerText
+    },
+    googleBtnText () {
+      if (this.$store.getters.isSignedIn) {
+        // TODO: CHECK PROVIDER AVAILABILITY
+        return 'Connected'
+      } else {
+        return 'Google'
+      }
+    },
+    facebookBtnText () {
+      if (this.$store.getters.isSignedIn) {
+        // TODO: CHECK PROVIDER AVAILABILITY
+        return 'Connected'
+      } else {
+        return 'Facebook'
+      }
     }
   }
 }

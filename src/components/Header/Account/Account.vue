@@ -3,15 +3,14 @@
     <section class="modal-card-body">
 
       <login-modal 
-        v-if="modalState === 'Login'" 
+        v-if="compModalState === 'Login'" 
         @signup="modalState = 'SignUp'"
         @forget="modalState = 'Forget'"
         @signin="emailSignIn"
-        @googleSignIn="signInWithGoogle"
       />
 
       <signup-modal 
-        v-if="modalState === 'SignUp'" 
+        v-if="compModalState === 'SignUp'" 
         @showLogin="modalState = 'Login'" 
         @signup="signUp"
         @validateEmail="validateEmail"
@@ -20,9 +19,14 @@
       />
 
       <forgetpw-modal 
-        v-if="modalState === 'Forget'" 
+        v-if="compModalState === 'Forget'" 
         @login="modalState = 'Login'"
         @reset="onPasswordReset"
+      />
+
+      <profile-modal 
+        v-if="compModalState === 'Profile'"
+        @logout="logout"
       />
 
     </section>
@@ -34,6 +38,7 @@
 import Login from './Login'
 import SignUp from './SignUp'
 import ForgetPw from './ForgetPassword'
+import Profile from './Profile'
 
 import firebase from 'firebase'
 
@@ -52,7 +57,8 @@ export default {
   components: {
     'login-modal': Login,
     'signup-modal': SignUp,
-    'forgetpw-modal': ForgetPw
+    'forgetpw-modal': ForgetPw,
+    'profile-modal': Profile
   },
   methods: {
     setValidationLoader () {
@@ -201,20 +207,22 @@ export default {
       })
       this.$parent.close()
     },
-    signInWithGoogle () {
-      var provider = new firebase.auth.GoogleAuthProvider()
-
-      firebase.auth().signInWithPopup(provider).then(function (result) {
-        this.onSignInSuccess()
-      }).catch(function (error) {
-        var errorMessage = error.message
-
-        this.$snackbar.open({
-          message: errorMessage,
-          type: 'is-danger',
-          queue: false
-        })
+    logout () {
+      firebase.auth().signOut()
+      this.$snackbar.open({
+        message: 'Succesfully logged out',
+        type: 'is-info'
       })
+      this.$parent.close()
+    }
+  },
+  computed: {
+    compModalState () {
+      if (this.$store.getters.isSignedIn) {
+        return 'Profile'
+      } else {
+        return this.modalState
+      }
     }
   }
 }

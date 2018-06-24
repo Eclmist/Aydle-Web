@@ -75,8 +75,17 @@ const store = new Vuex.Store({
     photoURL: state => {
       return state.user.isSignedIn ? state.user.photoURL : ''
     },
+    email: state => {
+      return state.user.isSignedIn ? state.user.email : 'email@example.com'
+    },
     username: state => {
       return state.user.isSignedIn ? state.user.displayName : 'Guest'
+    },
+    groups: state => {
+      return [
+        ['Admin', 'is-danger'],
+        ['Alpha-Tester', 'is-info']
+      ]
     },
     isEmailVerified: state => {
       return state.user.isSignedIn ? state.user.emailVerified : true

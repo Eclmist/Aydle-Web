@@ -1,8 +1,9 @@
 <template>
   <div>
     <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info is-fixed-top">
-      <div class="navbar-brand">
-        <a class="navbar-item" @click="loginModalActive = true">
+      <div class="navbar-brand"
+        ref="menuBtn">
+        <a class="navbar-item" @click="accountModalActive = true">
           <b-icon icon="account"/>
           <figure id="avatar" class="image is-32x32" 
             v-if="$store.getters.isSignedIn &&
@@ -11,17 +12,20 @@
           </figure>
           <span class="username">{{ $store.getters.username }}</span>
         </a>
-        <a role="button" class="navbar-burger has-text-white has-text-centered" @click="showSidepanel = !showSidepanel">
+        <a role="button" :class="{ 'is-active': menuActive }" 
+          @click="menuActive = !menuActive" 
+          class="navbar-burger has-text-white has-text-centered" 
+          data-target="nav-menu">
           <span></span>
           <span></span>
           <span></span>
         </a>
       </div>
       
-      <div class="navbar-menu" id="nav-menu">
+      <div ref="dropdownMenu" class="navbar-menu" :class="{ 'is-active': menuActive}" id="nav-menu">
         <div class="navbar-end">
           <a href="#" class="navbar-item">
-              Host a Lobby
+            Host a Lobby
           </a>
         </div>
       </div>
@@ -29,11 +33,9 @@
 
     <email-verification></email-verification>
 
-    <b-modal :active.sync="loginModalActive" has-modal-card>
-      <account-modal v-if="loginModalActive" />      
+    <b-modal :active.sync="accountModalActive" has-modal-card>
+      <account-modal v-if="accountModalActive" />      
     </b-modal>
-
-    <side-drawer v-bind:is-open="showSidepanel" @drawerClosed="showSidepanel=false"></side-drawer>
   </div>
 </template>
 
@@ -43,20 +45,17 @@ import Account from './Account/Account'
 import EmailVerification from './Account/EmailVerification'
 
 export default {
-  data () {
-    return {
-      previousFrameWindowYOffset: 0,
-      scrollDelta: 0,
-      navbarPos: 0,
-      loginModalActive: false,
-      showSidepanel: false
-    }
-  },
   created () {
-    window.addEventListener('scroll', this.scrollEvent)
+    document.addEventListener('click', this.documentClick)
   },
   destroyed () {
-    window.removeEventListener('scroll', this.scrollEvent)
+    document.removeEventListener('click', this.documentClick)
+  },
+  data () {
+    return {
+      accountModalActive: true,
+      menuActive: false
+    }
   },
   components: {
     'side-drawer': Drawer,
@@ -64,21 +63,14 @@ export default {
     'email-verification': EmailVerification
   },
   methods: {
-    scrollEvent () {
-      this.scrollDelta = window.pageYOffset - this.previousFrameWindowYOffset
+    documentClick (e) {
+      let menuBtn = this.$refs.menuBtn
 
-      this.navbarPos = Math.min(0, Math.max(-51, (this.navbarPos - this.scrollDelta)))
-
-      // this.navbarPos = 10000
-
-      // dont touch
-      this.previousFrameWindowYOffset = window.pageYOffset
-    },
-    changeModalState (target) {
-      this.loginModalState = target
+      let target = e.target
+      if (target !== menuBtn && !menuBtn.contains(target)) {
+        this.menuActive = false
+      }
     }
-  },
-  computed: {
   }
 }
 </script>
@@ -93,20 +85,6 @@ export default {
 a.navbar-item:hover
 {
   background-color: rgba(0,0,0,0.05) !important;
-}
-
-.md-right
-{
-  z-index: 100;
-  background-color: white;
-}
-
-.navbar-burger > span
-{
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  left: calc(50% - 3px);
 }
 
 #avatar

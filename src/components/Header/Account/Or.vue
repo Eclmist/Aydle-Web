@@ -1,14 +1,14 @@
 <template>
   <div class="has-text-centered or">
     <hr />
-    <div class="or-span">OR</div>
+    <div class="or-span">{{ text }}</div>
     <hr />
   </div>
 </template>
 
 <script>
 export default {
-
+  props: ['text']
 }
 </script>
 
@@ -30,9 +30,13 @@ export default {
 
 .or > .or-span
 {
-  flex: 0.5;
+  flex: 1;
+  flex-basis: auto;
+  flex-grow: 0;
   margin-top: auto;
   margin-bottom: auto;
+  padding-left: 12px;
+  padding-right: 12px;
   vertical-align: middle;
   font-size: 12px;
   color: #aaa;

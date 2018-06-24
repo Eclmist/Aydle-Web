@@ -29,7 +29,6 @@
               icon="lock"
               size="is-medium"
               maxlength="256"
-              minlength="6"
               :has-counter="false"
               >
           </b-input>
