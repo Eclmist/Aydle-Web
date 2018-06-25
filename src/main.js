@@ -43,7 +43,8 @@ const store = new Vuex.Store({
       emailVerified: false,
       photoURL: '',
       phoneNumber: ''
-    }
+    },
+    socketConnection: null
   },
   mutations: {
     onUserStateChanged (state, user) {
@@ -66,6 +67,9 @@ const store = new Vuex.Store({
     },
     changeDisplayName (state, name) {
       state.user.displayName = name
+    },
+    setSocketConnectionObject (state, socket) {
+      state.socket = socket
     }
   },
   getters: {
@@ -89,6 +93,9 @@ const store = new Vuex.Store({
     },
     isEmailVerified: state => {
       return state.user.isSignedIn ? state.user.emailVerified : true
+    },
+    socket: state => {
+      return state.socketConnection
     }
   }
 })

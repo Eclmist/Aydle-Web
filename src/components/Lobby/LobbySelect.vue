@@ -38,6 +38,8 @@ export default {
       return this.$store.getters.username
     }
   },
+  mounted () {
+  },
   methods: {
     customFocus () {
       var activeElement = document.activeElement
@@ -62,6 +64,18 @@ export default {
       var activeElement = document.activeElement
       activeElement.value = activeElement.value.substring(0, 1)
     },
+    onFailedJoinRoom () {
+      setTimeout(() => {
+        this.errorShake = true
+      }, 50)
+      this.loading = false
+      this.$snackbar.open({
+        message: 'Invalid room code',
+        type: 'is-danger',
+        position: 'is-bottom-right',
+        queue: false
+      })
+    },
     attemptJoinRoom () {
       this.errorShake = false
       var roomId = ''
@@ -70,34 +84,19 @@ export default {
       roomId += inputs[1].value
       roomId += inputs[2].value
       roomId += inputs[3].value
+      roomId = roomId.toUpperCase()
       this.loading = true
-      var self = this
 
       if (roomId.length < 4) {
-        setTimeout(function () {
-          self.errorShake = true
-        }, 50)
-        this.loading = false
-        this.$snackbar.open({
-          message: 'Invalid room code',
-          type: 'is-info',
-          position: 'is-bottom-right',
-          queue: false
+        this.onFailedJoinRoom()
+      } else {
+        // do some check for room id
+        // this.onFailedJoinRoom()
+        // vuex set socket object
+        this.$router.push({
+          path: '/lobby/' + roomId
         })
-        return
       }
-
-      setTimeout(function () {
-        self.errorShake = true
-        self.loading = false
-        self.$snackbar.open({
-          message: 'Cannot find room id ' + roomId,
-          type: 'is-danger',
-          position: 'is-bottom-right',
-          queue: false
-          // actionText: null
-        })
-      }, 1000)
     }
   }
 }

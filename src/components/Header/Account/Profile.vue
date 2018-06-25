@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title is-5 has-text-centered has-text-weight-light">
-      Account
+      Account (Draft)
     </h1>
     <div class="media">
       <div class="media-left">
@@ -16,16 +16,13 @@
           {{ $store.getters.username }}
         </p>
         <p>
-          Level: 1
+          <progress class="has-text-centerd exp progress title is-primary" value="50" text="325/5000" max="100" />
         </p>
-      </div>
-      <div classspan="media-right">
-        <a @click.prevent>(edit)</a>
       </div>
     </div>
     
     <div class="section">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, aliquam.
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
     </div>
 
     <div class="tags">
@@ -72,6 +69,28 @@ export default {
 
 .button
 {
-  height:46px;
+  height:46px
+}
+
+.media-content > p
+{
+  margin-bottom: 5px !important;
+}
+
+.exp {
+  position: relative;
+  text-align: center;
+  text-shadow: 1px 1px gray;
+  /* font-weight: lighter; */
+  color: white;
+  font-size: 0.8rem;
+}
+
+.exp:after {
+  content: attr(text);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
 }
 </style>

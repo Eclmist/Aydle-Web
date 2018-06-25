@@ -53,7 +53,7 @@ export default {
   },
   data () {
     return {
-      accountModalActive: true,
+      accountModalActive: false,
       menuActive: false
     }
   },
