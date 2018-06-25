@@ -97,10 +97,13 @@ export default {
         let url = 'api.aydle.com/room/' + roomId
 
         res.onreadystatechange = (response) => {
-          if (this.readyState === 4 && this.status === 200) {
-            let result = JSON.parse(response).result
+          if (res.readyState === 4 && res.status === 200) {
+            let result = response.result
 
             if (result === true) {
+              this.$snackbar.open({
+                message: 'yey'
+              })
               // let clientSocket = new ClientSocket()
               // let roomManager = new RoomManager(clientSocket)
 
