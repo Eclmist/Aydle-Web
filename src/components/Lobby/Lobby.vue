@@ -1,11 +1,15 @@
 <template>
-  
+  <div class="container">
+    asdfsdfa
+  </div>
 </template>
 
 <script>
 export default {
   created () {
     // let roomId = this.$route.params.id
+    return
+    /* eslint-disable no-unreachable */
     if (this.$store.getters.socket === null) {
       this.$router.push({
         path: '/'
@@ -22,5 +26,9 @@ export default {
 </script>
 
 <style>
+.container
+{
+  height: 100%;
+}
 
 </style>

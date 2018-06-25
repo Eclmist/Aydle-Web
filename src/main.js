@@ -7,6 +7,7 @@ import router from './router'
 import Buefy from 'buefy'
 import Firebase from 'firebase'
 import Lodash from 'vue-lodash'
+// import 'bulma/css/bulma.css'
 import 'buefy/lib/buefy.css'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import 'mdi/css/materialdesignicons.min.css'
@@ -69,7 +70,7 @@ const store = new Vuex.Store({
       state.user.displayName = name
     },
     setSocketConnectionObject (state, socket) {
-      state.socket = socket
+      state.socketConnection = socket
     }
   },
   getters: {

@@ -43,6 +43,8 @@ export default {
     }
   },
   created () {
+    this.debouncedMaximizeCanvas = this._.debounce(this.maximizeCanvas, 100)
+
     const hours = new Date().getHours()
     this.isDay = hours > 6 && hours < 20
     let spriteSource = this.isDay ? this.spriteSrc[1] : this.spriteSrc[0]
@@ -70,7 +72,7 @@ export default {
   mounted () {
     this.initialize()
     // maximize the canvas
-    window.addEventListener('resize', this.maximizeCanvas)
+    window.addEventListener('resize', this.debouncedMaximizeCanvas)
     this.maximizeCanvas()
 
     // update loop

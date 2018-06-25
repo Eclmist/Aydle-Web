@@ -93,9 +93,14 @@ export default {
         // do some check for room id
         // this.onFailedJoinRoom()
         // vuex set socket object
-        this.$router.push({
-          path: '/lobby/' + roomId
-        })
+        if (roomId === '1234') {
+          this.$store.commit('setSocketConnectionObject', {yo: true})
+          this.$router.push({
+            path: '/lobby/' + roomId
+          })
+        } else {
+          this.onFailedJoinRoom()
+        }
       }
     }
   }
