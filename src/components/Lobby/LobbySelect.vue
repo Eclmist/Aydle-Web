@@ -16,7 +16,7 @@
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
           </div>
         </div>
-        <button class="button is-fullwidth is-inverted is-link is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as {{ displayName }}</button>
+        <button class="button is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as {{ displayName }}</button>
       </form>
       <!-- <div class="container">
         <a href="#">Host your own lobby</a>
@@ -26,6 +26,9 @@
 </template>
 
 <script>
+// import ClientSocket from '@/js/ClientSocket'
+// import RoomManager from '@/js/RoomManager'
+
 export default {
   data () {
     return {
@@ -90,17 +93,31 @@ export default {
       if (roomId.length < 4) {
         this.onFailedJoinRoom()
       } else {
-        // do some check for room id
-        // this.onFailedJoinRoom()
-        // vuex set socket object
-        if (roomId === '1234') {
-          this.$store.commit('setSocketConnectionObject', {yo: true})
-          this.$router.push({
-            path: '/lobby/' + roomId
-          })
-        } else {
-          this.onFailedJoinRoom()
+        let res = new XMLHttpRequest()
+        let url = 'api.aydle.com/room/' + roomId
+
+        res.onreadystatechange = (response) => {
+          if (this.readyState === 4 && this.status === 200) {
+            let result = JSON.parse(response).result
+
+            if (result === true) {
+              // let clientSocket = new ClientSocket()
+              // let roomManager = new RoomManager(clientSocket)
+
+              // roomManager.joinRoom(roomId)
+
+              this.$store.commit('setSocketConnectionObject', {})
+              this.$router.push({
+                path: '/lobby/' + roomId
+              })
+            } else {
+              this.onFailedJoinRoom()
+            }
+          }
         }
+
+        res.open('GET', url, true)
+        res.send()
       }
     }
   }

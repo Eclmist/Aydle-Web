@@ -51,9 +51,10 @@ html, body
 $primary: hsl(171, 100%, 41%);
 $primary-invert: findColorInvert($primary);
 
+
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
-    "white": ($white, $black),
+  "white": ($white, $black),
     "black": ($black, $white),
     "light": ($light, $light-invert),
     "dark": ($dark, $dark-invert),
@@ -61,12 +62,12 @@ $colors: (
     "info": ($info, $info-invert),
     "success": ($success, $success-invert),
     "warning": ($warning, $warning-invert),
-    "danger": ($danger, $danger-invert),
+    "danger": ($danger, $danger-invert)
 );
 
 // Links
-$link: $primary;
-$link-invert: $primary-invert;
+$link: hsl(217, 71%, 53%);
+$link-invert: findColorInvert($link);
 $link-focus-border: $primary;
 
 // Import Bulma and Buefy styles
