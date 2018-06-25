@@ -42,6 +42,11 @@ html, body
 {
   display: inline-flex !important;
 }
+
+.button
+{
+  height: 46px !important;
+}
 </style>
 
 <style lang="scss">
