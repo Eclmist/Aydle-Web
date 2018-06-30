@@ -33,10 +33,10 @@ export default class ClientSocket {
       socket = io('http://localhost:2000/')
       socket.on('onConnected', callback)
 
-      // When a user has set his name
+      // When a new user has joined
       // Use this to update the client's player list
-      socket.on('notifyJoin', function (playerObjectThatChangedName) {
-        callbacks.onOtherPlayerSetName(playerObjectThatChangedName)
+      socket.on('notifyJoin', newPlayerObject => {
+        callbacks.onOtherPlayerJoin(newPlayerObject)
       })
 
       // When the user successfully connects but have not set his name yet
@@ -45,9 +45,17 @@ export default class ClientSocket {
         callbacks.onJoin(roomObject, this.socket)
       })
 
+      socket.on('onPlayerUpdate', playerObject => {
+        callbacks.onPlayerUpdate(playerObject)
+      })
+
+      socket.on('onJoinFail', () => {
+        callbacks.onJoinFail()
+      })
+
       // When the user has successfully hosted a room
-      socket.on('onHostCode', function (roomObject) {
-        callback.onHost(roomObject)
+      socket.on('onHostCode', roomObject => {
+        callbacks.onHost(roomObject)
       })
     }
   }
