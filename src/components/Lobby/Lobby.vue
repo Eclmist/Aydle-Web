@@ -61,10 +61,6 @@ export default {
         type: 'is-info'
       })
     }
-
-    setInterval(() => {
-      this.players.push({name: 'adsf', id: '0'})
-    }, 1000)
   }
 }
 </script>
