@@ -1,26 +1,33 @@
 /* eslint-disable no-unused-vars */
-function RoomManager (clientSocket) {
-  let tempCode
-  let tempPlayerID
-  RoomManager.prototype.JoinRoom = function (code, playerID) {
-    tempCode = code
-    clientSocket.InitSocketConnection(TryJoinRoom)
-  }
+export default class RoomManager {
+  constructor (clientSocket) {
+    let tempCode
+    let tempPlayerID
+    let tempName
 
-  function TryJoinRoom () {
-    clientSocket.GetSocket().emit('requestJoin', tempCode)
-  }
+    RoomManager.prototype.joinRoom = function (code, playerID, name) {
+      tempCode = code
+      tempPlayerID = playerID
+      tempName = name
+      clientSocket.initSocketConnection(tryJoinRoom)
+    }
 
-  RoomManager.prototype.HostRoom = (playerID) => {
-    tempPlayerID = playerID
-    clientSocket.InitSocketConnection(TryHostRoom)
-  }
+    function tryJoinRoom () {
+      clientSocket.getSocket().emit('requestJoin', tempCode, tempPlayerID, tempName)
+    }
 
-  function TryHostRoom () {
-    clientSocket.GetSocket().emit('requestHost', tempPlayerID)
-  }
+    RoomManager.prototype.hostRoom = (playerID, name) => {
+      tempPlayerID = playerID
+      tempName = name
+      clientSocket.initSocketConnection(tryHostRoom)
+    }
 
-  RoomManager.prototype.SetName = name => {
-    clientSocket.GetSocket().emit('enterRoomAs', name)
+    function tryHostRoom () {
+      clientSocket.getSocket().emit('requestHost', tempPlayerID, tempName)
+    }
+
+    RoomManager.prototype.SetName = name => {
+      clientSocket.getSocket().emit('setName', name)
+    }
   }
-} // end RoomManager
+}

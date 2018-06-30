@@ -8,7 +8,7 @@
         </span>
       </p>
       <h1 class="title is-3 has-text-white has-text-centered">
-        {{ hostName }}'s Lobby
+        {{ lobbyName }}
       </h1>
       <div>
         <p class="has-text-white has-text-centered">
@@ -39,18 +39,19 @@ export default {
     return {
       lobbyCode: '',
       lobbyName: '',
-      hostName: 'Mist',
-      players: [
-        { name: 'Mist', id: '0001' },
-        { name: 'Other Player', id: '0002' }
-      ]
+      hostName: '',
+      players: []
     }
   },
   created () {
-    this.lobbyCode = this.$route.params.id
-    return
-    /* eslint-disable no-unreachable */
-    if (this.$store.getters.socket === null) {
+    let room = this.$route.query.data
+    this.lobbyCode = room.code
+    this.players = room.players
+    this.hostName = room.players[0].name
+    this.lobbyName = this.hostName + '\'s Lobby'
+
+    if (this.$store.getters.socket === null ||
+      this.$store.getters.socket.connected === false) {
       this.$router.push({
         path: '/'
       })

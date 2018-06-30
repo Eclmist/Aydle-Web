@@ -26,14 +26,15 @@
 </template>
 
 <script>
-// import ClientSocket from '@/js/ClientSocket'
-// import RoomManager from '@/js/RoomManager'
+import ClientSocket from '@/js/ClientSocket'
+import RoomManager from '@/js/RoomManager'
 
 export default {
   data () {
     return {
       loading: false,
-      errorShake: false
+      errorShake: false,
+      temp: {}
     }
   },
   computed: {
@@ -79,40 +80,42 @@ export default {
         queue: false
       })
     },
+    onJoinRoomSuccess (roomObject, socket) {
+      this.$store.commit('setSocketConnectionObject', socket)
+      this.$router.push({
+        path: '/lobby/' + roomObject.code,
+        query: {
+          data: roomObject
+        }
+      })
+    },
     attemptJoinRoom () {
       this.errorShake = false
-      var roomId = ''
+      var lobbyId = ''
       var inputs = document.getElementsByClassName('input')
-      roomId += inputs[0].value
-      roomId += inputs[1].value
-      roomId += inputs[2].value
-      roomId += inputs[3].value
-      roomId = roomId.toUpperCase()
+      lobbyId += inputs[0].value
+      lobbyId += inputs[1].value
+      lobbyId += inputs[2].value
+      lobbyId += inputs[3].value
+      lobbyId = lobbyId.toUpperCase()
       this.loading = true
 
-      if (roomId.length < 4) {
+      if (lobbyId.length < 4) {
         this.onFailedJoinRoom()
       } else {
         let res = new XMLHttpRequest()
-        let url = 'api.aydle.com/room/' + roomId
+        let url = 'http://localhost:2000/room/' + lobbyId
 
-        res.onreadystatechange = (response) => {
+        res.onreadystatechange = () => {
           if (res.readyState === 4 && res.status === 200) {
-            let result = response.result
-
-            if (result === true) {
-              this.$snackbar.open({
-                message: 'yey'
+            let responseObject = JSON.parse(res.responseText)
+            if (responseObject.result === true) {
+              let clientSocket = new ClientSocket({
+                onJoin: this.onJoinRoomSuccess,
+                onFailed: this.onFailedJoinRoom
               })
-              // let clientSocket = new ClientSocket()
-              // let roomManager = new RoomManager(clientSocket)
-
-              // roomManager.joinRoom(roomId)
-
-              this.$store.commit('setSocketConnectionObject', {})
-              this.$router.push({
-                path: '/lobby/' + roomId
-              })
+              let roomManager = new RoomManager(clientSocket)
+              roomManager.joinRoom(lobbyId)
             } else {
               this.onFailedJoinRoom()
             }
