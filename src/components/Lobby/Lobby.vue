@@ -99,6 +99,8 @@ export default {
       this.establishConnectionToLobbyServer(name)
     },
     onJoinRoomSuccess (lobbyObject, socket) {
+      this.namePicked = true
+      this.namePickerLoad = false
       this.$store.commit('setSocketConnectionObject', socket)
 
       this.players = lobbyObject.players
@@ -119,7 +121,7 @@ export default {
     establishConnectionToLobbyServer (name) {
       let clientSocket = new ClientSocket({
         onJoin: this.onJoinRoomSuccess,
-        onFailed: () => {
+        onFailure: () => {
           this.$router.push({
             path: '/'
           })

@@ -1,13 +1,12 @@
 <template>
   <div class="section has-text-centered">
-    <h1 class="title is-2 has-text-white has-text-weight-light">
-      Choose <br> a nickname
+    <h1 class="title is-1 has-text-white has-text-weight-light">
+      Pick <br> a nickname
     </h1>
     <br>
     <form @submit.prevent>
       <input class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
       <button 
-        :style="{ height : buttonHeight() }" 
         class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
         v-bind:class="{'is-loading': isLoading}">
         Continue as <br v-show="finalName().length > 8"> {{ finalName() }}
@@ -36,9 +35,6 @@ export default {
       }
 
       return this.$store.getters.username
-    },
-    buttonHeight () {
-      return this.finalName().length > 8 ? '3rem !important' : '46px !important'
     }
   }
 
@@ -70,12 +66,18 @@ export default {
 .section > form > *
 {
   margin-bottom: 20px;
+  height: 50px !important;
 }
 
 .button
 {
   line-height: 1rem;
   padding: 0 auto;
+}
+
+.section > form
+{
+  width: 100%;
 }
 
 @media screen and (max-height: 480px) {

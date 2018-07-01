@@ -29,8 +29,8 @@ export default class ClientSocket {
     }
 
     ClientSocket.prototype.initSocketConnection = (callback) => {
-      // socket = io('https://api.aydle.com/')
-      socket = io('http://localhost:2000/')
+      socket = io('https://api.aydle.com/')
+      // socket = io('http://localhost:2000/')
       socket.on('onConnected', callback)
 
       // When a new user has joined
@@ -50,7 +50,7 @@ export default class ClientSocket {
       })
 
       socket.on('onJoinFail', () => {
-        callbacks.onJoinFail()
+        callbacks.onFailure()
       })
 
       // When the user has successfully hosted a room
