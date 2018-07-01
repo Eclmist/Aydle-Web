@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <transition appear name="fade">
-      <name-picker v-if="!namePicked" @setName="setNameAndJoinLobby"/>
+      <name-picker 
+        v-if="!namePicked" 
+        :is-loading="namePickerLoad" 
+        @setName="setNameAndJoinLobby"/>
     </transition>
     <div v-if="namePicked" class="section">
       <div class="wrapper">
@@ -47,6 +50,7 @@ export default {
   data () {
     return {
       namePicked: false,
+      namePickerLoad: false,
       lobbyCode: '',
       lobbyName: '',
       hostName: '',
@@ -70,7 +74,6 @@ export default {
       if (lobbyId === '2711') {
         return
       }
-
       // check if lobby is valid again, to account for people entering
       // aydle.com/lobby/code directly (invite links, etc)
       let res = new XMLHttpRequest()
@@ -92,7 +95,7 @@ export default {
   },
   methods: {
     setNameAndJoinLobby (name) {
-      this.namePicked = true
+      this.namePickerLoad = true
       this.establishConnectionToLobbyServer(name)
     },
     onJoinRoomSuccess (lobbyObject, socket) {

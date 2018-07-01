@@ -1,11 +1,11 @@
 <template>
   <div class="section has-text-centered">
     <h1 class="title is-2 has-text-white has-text-weight-light">
-      Choose a nickname
+      Choose <br> a nickname
     </h1>
     <br>
     <form @submit.prevent>
-      <input class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20">
+      <input class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
       <button 
         :style="{ height : buttonHeight() }" 
         class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
@@ -18,15 +18,17 @@
 
 <script>
 export default {
+  props: {
+    'isLoading': Boolean
+  },
   data () {
     return {
-      nameInput: '',
-      isLoading: false
+      nameInput: ''
     }
   },
   methods: {
     attemptJoinLobbyWithName () {
-      this.$emit('setName', this.targetName)
+      this.$emit('setName', this.finalName())
     },
     finalName () {
       if (this.nameInput !== '') {
@@ -62,6 +64,7 @@ export default {
 .section > h1
 {
   transition: 1s;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5)
 }
 
 .section > form > *
