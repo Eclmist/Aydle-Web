@@ -156,7 +156,7 @@ export default {
         }
       })
       let roomManager = new RoomManager(clientSocket)
-      roomManager.joinRoom(this.lobbyCode, '0', name)
+      roomManager.joinRoom(this.lobbyCode, this.$store.getters.uid, name)
     }
   },
   components: {
