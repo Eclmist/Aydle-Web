@@ -29,9 +29,7 @@ export default class ClientSocket {
     }
 
     ClientSocket.prototype.initSocketConnection = (callback) => {
-      socket = io('https://api.aydle.com/', {
-        transports: ['websocket', 'xhr-polling']
-      })
+      socket = io('52.187.52.94', {})
       // socket = io('http://localhost:2000/')
       socket.on('onConnected', callback)
 
