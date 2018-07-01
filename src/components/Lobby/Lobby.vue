@@ -1,6 +1,8 @@
 <template>
   <div class="content">
-    <name-picker v-if="!namePicked" @setName="setNameAndJoinLobby"/>
+    <transition appear name="fade">
+      <name-picker v-if="!namePicked" @setName="setNameAndJoinLobby"/>
+    </transition>
     <div v-if="namePicked" class="section">
       <div class="wrapper">
         <p class="has-text-centered has-text-white is-5">
@@ -30,7 +32,7 @@
         </div>
       </transition-group>
 
-      <div class="button is-fullwidth is-primary">Start</div>
+      <div class="button is-medium is-fullwidth is-primary">Start</div>
 
     </div>
   </div>
@@ -64,6 +66,11 @@ export default {
     if (this.$store.getters.cameFromFrontPage) {
       this.$store.commit('cameFromFrontPage', false)
     } else {
+      // Check for debug lobby
+      if (lobbyId === '2711') {
+        return
+      }
+
       // check if lobby is valid again, to account for people entering
       // aydle.com/lobby/code directly (invite links, etc)
       let res = new XMLHttpRequest()

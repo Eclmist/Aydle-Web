@@ -1,7 +1,8 @@
 <template>
   <footer class="container has-text-light has-text-centered">
     <p class="has-text-weight-light is-7">
-      Copyright &copy; Aydlesoft 2018
+      Copyright &copy; Aydlesoft 2018 <br>
+      All rights reserved
       <!-- Under Development -->
     </p>
     <dev-warning></dev-warning>

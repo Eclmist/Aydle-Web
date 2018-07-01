@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info is-fixed-top">
+    <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info">
       <div class="navbar-brand"
         ref="menuBtn">
         <a class="navbar-item" @click="accountModalActive = true">

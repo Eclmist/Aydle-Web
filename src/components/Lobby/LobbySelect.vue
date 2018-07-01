@@ -4,16 +4,16 @@
       <form @submit.prevent>
         <div @keyup="customFocus" @keydown="maxlengthCheck" @keydown.delete="customFocusDelete" class="input-group columns is-1 is-variable is-mobile" v-bind:class="{ shake: errorShake }">
           <div class="column">
-            <input type="text" maxlength="1" class="input is-uppercase" placeholder="C">
+            <input maxlength="1" class="input is-uppercase" placeholder="C">
           </div>
           <div class="column">
-            <input type="text" maxlength="1" class="input is-uppercase" placeholder="O">
+            <input maxlength="1" class="input is-uppercase" placeholder="O">
           </div>
           <div class="column">
-            <input type="text" maxlength="1" class="input is-uppercase" placeholder="D">
+            <input maxlength="1" class="input is-uppercase" placeholder="D">
           </div>
           <div class="column">
-            <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
+            <input maxlength="1" class="input is-uppercase" placeholder="E">
           </div>
         </div>
         <button class="button is-fullwidth is-primary is-outlined" v-on:click="checkLobbyExists" v-bind:class="{'is-loading': loading}">
@@ -38,6 +38,9 @@ export default {
     }
   },
   methods: {
+    setType (element, type) {
+      element.setAttribute('type', type)
+    },
     customFocus () {
       var activeElement = document.activeElement
 

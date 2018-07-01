@@ -50,4 +50,8 @@ export default {
 </script>
 
 <style scoped>
+form
+{
+  margin-bottom: 1em;
+}
 </style>

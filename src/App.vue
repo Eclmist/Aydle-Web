@@ -49,7 +49,8 @@ html, body
 
 .router-style
 {
-  height: calc(100% - 34px);
+  /* 52px for header, 46px for footer 5px dev bar*/
+  height: calc(100% - 103px);
 }
 
 .material-design-icon
@@ -60,7 +61,17 @@ html, body
 @media screen and (max-height: 480px) {
   .footer-style
   {
-    display: none;
+    opacity: 0;
+  }
+
+  /* .header-style
+  {
+    opacity: 0;
+  } */
+
+  #app
+  {
+    overflow-y: hidden !important;
   }
 }
 </style>

@@ -80,6 +80,9 @@ export default {
   },
   methods: {
     maximizeCanvas () {
+      if (window.innerHeight < 550) {
+        return
+      }
       let canvas = document.getElementById('background')
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -120,7 +123,7 @@ export default {
     drawSprite (sprite) {
       // this.context.drawImage(i, x, 0, this.canvasWidth, this.canvasHeight, 0, 0, this.canvasWidth, this.canvasHeight)
       // let ptn = this.context.createPattern(sprite.image, 'repeat-x')
-      this.context.filter = 'blur(3px)'
+      // this.context.filter = 'blur(3px)'
       this.context.fillStyle = sprite.pattern
       // ptn
 

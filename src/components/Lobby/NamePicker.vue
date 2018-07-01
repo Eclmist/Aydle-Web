@@ -1,11 +1,17 @@
 <template>
   <div class="section has-text-centered">
-    <h1 class="title is-4 has-text-white">
+    <h1 class="title is-2 has-text-white has-text-weight-light">
       Choose a nickname
     </h1>
+    <br>
     <form @submit.prevent>
-      <input type="text" class="input is-medium" placeholder="Display Name" v-model="targetName" maxlength="20">
-      <button class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" v-bind:class="{'is-loading': isLoading}">Continue as {{ targetName }}</button>
+      <input class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20">
+      <button 
+        :style="{ height : buttonHeight() }" 
+        class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
+        v-bind:class="{'is-loading': isLoading}">
+        Continue as <br v-show="finalName().length > 8"> {{ finalName() }}
+      </button>
     </form>
   </div>
 </template>
@@ -14,19 +20,30 @@
 export default {
   data () {
     return {
-      targetName: '',
+      nameInput: '',
       isLoading: false
     }
   },
   methods: {
     attemptJoinLobbyWithName () {
       this.$emit('setName', this.targetName)
+    },
+    finalName () {
+      if (this.nameInput !== '') {
+        return this.nameInput
+      }
+
+      return this.$store.getters.username
+    },
+    buttonHeight () {
+      return this.finalName().length > 8 ? '3rem !important' : '46px !important'
     }
   }
+
 }
 </script>
 
-<style>
+<style scoped>
 .section
 {
   max-width: 400px;
@@ -37,8 +54,14 @@ export default {
   margin: 0 auto;
 }
 
-.section > *
+.input.is-medium
 {
+  padding-left: 9px !important
+}
+
+.section > h1
+{
+  transition: 1s;
 }
 
 .section > form > *
@@ -46,4 +69,15 @@ export default {
   margin-bottom: 20px;
 }
 
+.button
+{
+  line-height: 1rem;
+  padding: 0 auto;
+}
+
+@media screen and (max-height: 480px) {
+  h1 {
+    opacity: 0.6;
+  }
+}
 </style>

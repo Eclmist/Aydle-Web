@@ -27,6 +27,7 @@ img
   width: 75vw;
   max-width: 400px;
   /* padding: 0 15%; */
+  transition: 1s;
 }
 
 #main
@@ -65,8 +66,8 @@ img
 @media screen and (max-height: 480px) {
   img
   {
-    opacity: 0;
-    width: 45px;
+    opacity: 0.6;
+    /* width: 70vw; */
   }
 }
 </style>
