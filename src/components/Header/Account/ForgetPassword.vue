@@ -50,8 +50,4 @@ export default {
 </script>
 
 <style scoped>
-.title
-{
-  /* margin-bottom: 0.5em; */
-}
 </style>

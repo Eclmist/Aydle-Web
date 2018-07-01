@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header">
     <nav :style="{ 'background-color': 'transparent' }" class="navbar is-info is-fixed-top">
       <div class="navbar-brand"
         ref="menuBtn">
@@ -106,4 +106,5 @@ a.navbar-item:hover
   margin: 0;
   border-radius: 50%;
 }
+
 </style>

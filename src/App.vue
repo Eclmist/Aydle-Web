@@ -1,11 +1,15 @@
 <template>
   <div id="app">
     <background></background>
-    <header-bar></header-bar>
-    <router-view></router-view>
-    <footer>
+    <div class="header-style">
+      <header-bar></header-bar>
+    </div>
+    <div class="router-style">
+      <router-view></router-view>
+    </div>
+    <div class="footer-style">
       <footer-bar></footer-bar>
-    </footer>
+    </div>
   </div>
 </template>
 
@@ -43,9 +47,21 @@ html, body
   height: 100%;
 }
 
+.router-style
+{
+  height: calc(100% - 34px);
+}
+
 .material-design-icon
 {
   display: inline-flex !important;
+}
+
+@media screen and (max-height: 480px) {
+  .footer-style
+  {
+    display: none;
+  }
 }
 </style>
 
@@ -85,6 +101,14 @@ $link-focus-border: $primary;
 .button.is-medium {
   font-size: 1rem !important;
   height: 46px !important;
+}
+
+.button.is-primary.is-outlined.is-loading:hover {
+  background-color: transparent;
+}
+
+.button.is-primary.is-outlined.is-loading:after {
+  border-color: transparent transparent #fff #fff !important;
 }
 
 // Import Bulma and Buefy styles

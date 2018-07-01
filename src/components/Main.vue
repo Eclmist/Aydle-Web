@@ -38,11 +38,6 @@ img
   padding: 20px;
 }
 
-#main > footer
-{
-  flex-shrink: 0;
-}
-
 .wrapper
 {
   flex: 1 0 auto;
@@ -65,5 +60,13 @@ img
 {
   flex: 1;
   flex-basis: auto;
+}
+
+@media screen and (max-height: 480px) {
+  img
+  {
+    opacity: 0;
+    width: 45px;
+  }
 }
 </style>

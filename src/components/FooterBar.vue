@@ -1,8 +1,7 @@
 <template>
   <footer class="container has-text-light has-text-centered">
     <p class="has-text-weight-light is-7">
-      Copyright &copy; Aydlesoft 2018 <br>
-      All Rights Reserved <br>
+      Copyright &copy; Aydlesoft 2018
       <!-- Under Development -->
     </p>
     <dev-warning></dev-warning>
@@ -21,9 +20,17 @@ export default {
 
 
 <style scoped>
+.container
+{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 p
 {
-  /* margin-bottom: 20px; */
+  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
 }

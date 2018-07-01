@@ -16,7 +16,7 @@
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
           </div>
         </div>
-        <button class="button is-fullwidth is-primary is-primary is-outlined" v-on:click="checkLobbyExists" v-bind:class="{'is-loading': loading}">
+        <button class="button is-fullwidth is-primary is-outlined" v-on:click="checkLobbyExists" v-bind:class="{'is-loading': loading}">
           Join Lobby
         </button>
       </form>
