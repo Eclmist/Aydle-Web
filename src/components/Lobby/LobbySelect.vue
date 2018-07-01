@@ -16,33 +16,26 @@
             <input type="text" maxlength="1" class="input is-uppercase" placeholder="E">
           </div>
         </div>
-        <button class="button is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinRoom" v-bind:class="{'is-loading': loading}">Continue as {{ displayName }}</button>
+        <button class="button is-fullwidth is-primary is-primary is-outlined" v-on:click="checkLobbyExists" v-bind:class="{'is-loading': loading}">
+          Join Lobby
+        </button>
       </form>
-      <!-- <div class="container">
-        <a href="#">Host your own lobby</a>
-      </div> -->
     </section>
   </transition>
 </template>
 
 <script>
-import ClientSocket from '@/js/ClientSocket'
-import RoomManager from '@/js/RoomManager'
-
 export default {
   data () {
     return {
       loading: false,
-      errorShake: false,
-      temp: {}
+      errorShake: false
     }
   },
   computed: {
     displayName () {
       return this.$store.getters.username
     }
-  },
-  mounted () {
   },
   methods: {
     customFocus () {
@@ -80,16 +73,14 @@ export default {
         queue: false
       })
     },
-    onJoinRoomSuccess (roomObject, socket) {
-      this.$store.commit('setSocketConnectionObject', socket)
+    promptDisplayName (code) {
+      this.$store.commit('cameFromFrontPage', true)
       this.$router.push({
-        path: '/lobby/' + roomObject.code,
-        query: {
-          data: roomObject
-        }
+        path: '/lobby/' + code
       })
     },
-    attemptJoinRoom () {
+    checkLobbyExists () {
+      // Getting the target room id
       this.errorShake = false
       var lobbyId = ''
       var inputs = document.getElementsByClassName('input')
@@ -98,32 +89,32 @@ export default {
       lobbyId += inputs[2].value
       lobbyId += inputs[3].value
       lobbyId = lobbyId.toUpperCase()
+
+      // Setting up animations
       this.loading = true
 
+      // Prelim checks
       if (lobbyId.length < 4) {
         this.onFailedJoinRoom()
       } else {
+        /* eslint-disable no-unreachable */
+        // Soft check lobby exists
         let res = new XMLHttpRequest()
-        let url = 'http://localhost:2000/room/' + lobbyId
+        let url = 'https://api.aydle.com/room/' + lobbyId
+        res.open('GET', url, true)
+        res.send()
 
         res.onreadystatechange = () => {
           if (res.readyState === 4 && res.status === 200) {
             let responseObject = JSON.parse(res.responseText)
             if (responseObject.result === true) {
-              let clientSocket = new ClientSocket({
-                onJoin: this.onJoinRoomSuccess,
-                onFailed: this.onFailedJoinRoom
-              })
-              let roomManager = new RoomManager(clientSocket)
-              roomManager.joinRoom(lobbyId)
+              // Room exists, change prompt for displayname
+              this.promptDisplayName(lobbyId)
             } else {
               this.onFailedJoinRoom()
             }
           }
         }
-
-        res.open('GET', url, true)
-        res.send()
       }
     }
   }
@@ -139,6 +130,12 @@ input
   font-size: 150%;
   text-align: center;
   color: grey;
+}
+
+.nameField
+{
+  width: 100%;
+  height: 46px;
 }
 
 .section

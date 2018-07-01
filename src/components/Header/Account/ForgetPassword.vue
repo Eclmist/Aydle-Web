@@ -53,12 +53,5 @@ export default {
 .title
 {
   /* margin-bottom: 0.5em; */
-  padding-bottom: 0.5em;
-}
-
-.button
-{
-  height: 46px;
-  margin-bottom: 1rem;
 }
 </style>

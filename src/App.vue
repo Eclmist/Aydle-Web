@@ -75,6 +75,13 @@ $link: hsl(217, 71%, 53%);
 $link-invert: findColorInvert($link);
 $link-focus-border: $primary;
 
+.input.is-medium, .taginput .is-medium.taginput-container.is-focusable,
+.textarea.is-medium {
+  font-size: 1rem !important;
+  height: 46px !important;
+  padding-left: 2.5rem !important;
+}
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

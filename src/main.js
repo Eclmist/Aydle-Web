@@ -45,7 +45,8 @@ const store = new Vuex.Store({
       photoURL: '',
       phoneNumber: ''
     },
-    socketConnection: null
+    socketConnection: null,
+    cameFromFrontPage: false
   },
   mutations: {
     onUserStateChanged (state, user) {
@@ -71,6 +72,9 @@ const store = new Vuex.Store({
     },
     setSocketConnectionObject (state, socket) {
       state.socketConnection = socket
+    },
+    cameFromFrontPage (state, val) {
+      state.cameFromFrontPage = val
     }
   },
   getters: {
@@ -97,6 +101,9 @@ const store = new Vuex.Store({
     },
     socket: state => {
       return state.socketConnection
+    },
+    cameFromFrontPage: state => {
+      return state.cameFromFrontPage
     }
   }
 })

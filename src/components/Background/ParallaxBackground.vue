@@ -43,7 +43,7 @@ export default {
     }
   },
   created () {
-    this.debouncedMaximizeCanvas = this._.debounce(this.maximizeCanvas, 100)
+    this.debouncedMaximizeCanvas = this._.debounce(this.maximizeCanvas, 50)
 
     const hours = new Date().getHours()
     this.isDay = hours > 6 && hours < 20
@@ -120,6 +120,7 @@ export default {
     drawSprite (sprite) {
       // this.context.drawImage(i, x, 0, this.canvasWidth, this.canvasHeight, 0, 0, this.canvasWidth, this.canvasHeight)
       // let ptn = this.context.createPattern(sprite.image, 'repeat-x')
+      this.context.filter = 'blur(3px)'
       this.context.fillStyle = sprite.pattern
       // ptn
 

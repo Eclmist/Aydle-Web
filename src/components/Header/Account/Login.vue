@@ -120,10 +120,5 @@ export default {
   position: relative;
   top: -16px
 }
-
-.button
-{
-  height: 46px;
-}
 </style>
 

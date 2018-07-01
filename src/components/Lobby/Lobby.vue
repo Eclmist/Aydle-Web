@@ -1,42 +1,50 @@
 <template>
-  <div class="section">
-    <div class="wrapper">
-      <p class="has-text-centered has-text-white is-5">
-        code: 
-        <span class="is-uppercase">
-          {{ lobbyCode }}
-        </span>
-      </p>
-      <h1 class="title is-3 has-text-white has-text-centered">
-        {{ lobbyName }}
-      </h1>
-      <div>
-        <p class="has-text-white has-text-centered">
-          Waiting for players
+  <div>
+    <name-picker v-if="!namePicked" @setName="setNameAndJoinLobby"/>
+    <div v-if="namePicked" class="section">
+      <div class="wrapper">
+        <p class="has-text-centered has-text-white is-5">
+          code: 
+          <span class="is-uppercase">
+            {{ lobbyCode }}
+          </span>
         </p>
-        <div class="spinner2">
-          <div class="bounce1"></div>
-          <div class="bounce2"></div>
-          <div class="bounce3"></div>
+        <h1 class="title is-3 has-text-white has-text-centered">
+          {{ lobbyName }}
+        </h1>
+        <div>
+          <p class="has-text-white has-text-centered">
+            Waiting for players
+          </p>
+          <div class="spinner2">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
         </div>
       </div>
+      <transition-group appear name="pulse" tag="div" class="tags is-centered">
+        <div transition="pulse" v-for="(player, index) in players" :key="index" 
+        class="pulse tag is-medium is-info">
+          {{ player.name }}
+        </div>
+      </transition-group>
+
+      <div class="button is-fullwidth is-primary">Start</div>
+
     </div>
-    <transition-group appear name="pulse" tag="div" class="tags is-centered">
-      <div transition="pulse" v-for="(player, index) in players" :key="index" 
-      class="pulse tag is-medium is-info">
-        {{ player.name }}
-      </div>
-    </transition-group>
-
-    <div class="button is-fullwidth is-primary">Start</div>
-
   </div>
 </template>
 
 <script>
+import NamePicker from './NamePicker'
+import ClientSocket from '@/js/ClientSocket'
+import RoomManager from '@/js/RoomManager'
+
 export default {
   data () {
     return {
+      namePicked: false,
       lobbyCode: '',
       lobbyName: '',
       hostName: '',
@@ -44,14 +52,50 @@ export default {
     }
   },
   created () {
-    let room = this.$route.query.data
-    this.lobbyCode = room.code
-    this.players = room.players
-    this.hostName = room.players[0].name
-    this.lobbyName = this.hostName + '\'s Lobby'
+    let lobbyId = this.$route.params.id
+    this.lobbyCode = lobbyId
 
-    if (this.$store.getters.socket === null ||
-      this.$store.getters.socket.connected === false) {
+    // check if lobby id is valid
+    if (lobbyId.length > 4) {
+      this.onJoinRoomFailure()
+      return
+    }
+
+    if (this.$store.getters.cameFromFrontPage) {
+      this.$store.commit('cameFromFrontPage', false)
+    } else {
+      // check if lobby is valid again, to account for people entering
+      // aydle.com/lobby/code directly (invite links, etc)
+      let res = new XMLHttpRequest()
+      let url = 'https://api.aydle.com/room/' + lobbyId
+      res.open('GET', url, true)
+      res.send()
+
+      res.onreadystatechange = () => {
+        if (res.readyState === 4 && res.status === 200) {
+          let responseObject = JSON.parse(res.responseText)
+          if (responseObject.result === true) {
+            // Room exists
+          } else {
+            this.onJoinRoomFailure()
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    setNameAndJoinLobby (name) {
+      this.namePicked = true
+      this.establishConnectionToLobbyServer(name)
+    },
+    onJoinRoomSuccess (lobbyObject, socket) {
+      this.$store.commit('setSocketConnectionObject', socket)
+
+      this.players = lobbyObject.players
+      this.hostName = lobbyObject.players[0].name
+      this.lobbyName = this.hostName + '\'s Lobby'
+    },
+    onJoinRoomFailure () {
       this.$router.push({
         path: '/'
       })
@@ -61,7 +105,26 @@ export default {
         message: 'The invite link is invalid or has already expired',
         type: 'is-info'
       })
+    },
+    establishConnectionToLobbyServer (name) {
+      let clientSocket = new ClientSocket({
+        onJoin: this.onJoinRoomSuccess,
+        onFailed: () => {
+          this.$router.push({
+            path: '/'
+          })
+          this.$snackbar.open({
+            message: 'Something went wrong! Please try again later',
+            type: 'is-info'
+          })
+        }
+      })
+      let roomManager = new RoomManager(clientSocket)
+      roomManager.joinRoom(this.lobbyCode, '0', name)
     }
+  },
+  components: {
+    'name-picker': NamePicker
   }
 }
 </script>

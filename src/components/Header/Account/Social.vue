@@ -143,6 +143,5 @@ export default {
 {
   padding: 8px !important;
   font-size: 14px !important;
-  height: 46px;
 }
 </style>
