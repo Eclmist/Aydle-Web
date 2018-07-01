@@ -29,6 +29,7 @@ export default class ClientSocket {
     }
 
     ClientSocket.prototype.initSocketConnection = (callback) => {
+      io.Manager.reconnectionAttempts(5)
       socket = io('https://api.aydle.com/')
       // socket = io('http://localhost:2000/')
       socket.on('onConnected', callback)
