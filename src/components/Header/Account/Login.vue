@@ -39,7 +39,7 @@
       </div>
 
       <div class="level">
-        <button @click.prevent="signin" class="button media-btn btn-email is-primary is-fullwidth">
+        <button @click.prevent="signin" class="is-medium button media-btn btn-email is-primary is-fullwidth">
           <span>Log In</span>
         </button>
       </div>

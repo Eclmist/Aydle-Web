@@ -50,7 +50,7 @@
       <br>
 
       <div class="level">
-        <button @click.prevent="signup" class="button media-btn btn-email is-primary is-fullwidth">
+        <button @click.prevent="signup" class="is-medium button media-btn btn-email is-primary is-fullwidth">
           <span>Sign Up</span>
           </button>
       </div>

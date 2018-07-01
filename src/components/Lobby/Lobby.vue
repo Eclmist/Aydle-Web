@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <name-picker v-if="!namePicked" @setName="setNameAndJoinLobby"/>
     <div v-if="namePicked" class="section">
       <div class="wrapper">
@@ -130,6 +130,12 @@ export default {
 </script>
 
 <style scoped>
+.content
+{
+  padding: 20px;
+  height: 100%;
+}
+
 .section
 {
   padding-top: 20px;

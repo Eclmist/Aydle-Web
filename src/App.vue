@@ -3,6 +3,9 @@
     <background></background>
     <header-bar></header-bar>
     <router-view></router-view>
+    <footer>
+      <footer-bar></footer-bar>
+    </footer>
   </div>
 </template>
 
@@ -10,6 +13,7 @@
 import Header from './components/Header/HeaderBar'
 import Background from './components/Background/ParallaxBackground.vue'
 import Ascii from './components/Misc/Ascii'
+import Footer from './components/FooterBar'
 
 export default {
   name: 'app',
@@ -20,7 +24,8 @@ export default {
   components: {
     'header-bar': Header,
     'background': Background,
-    'ascii': Ascii
+    'ascii': Ascii,
+    'footer-bar': Footer
   }
 }
 </script>
@@ -41,11 +46,6 @@ html, body
 .material-design-icon
 {
   display: inline-flex !important;
-}
-
-.button
-{
-  height: 46px !important;
 }
 </style>
 
@@ -80,6 +80,11 @@ $link-focus-border: $primary;
   font-size: 1rem !important;
   height: 46px !important;
   padding-left: 2.5rem !important;
+}
+
+.button.is-medium {
+  font-size: 1rem !important;
+  height: 46px !important;
 }
 
 // Import Bulma and Buefy styles

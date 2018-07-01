@@ -8,20 +8,15 @@
       </transition>
       <lobby-select></lobby-select>
     </div>
-    <footer>
-      <footer-bar></footer-bar>
-    </footer>
   </div>
 </template>
 
 <script>
 import Lobby from './Lobby/LobbySelect'
-import Footer from './FooterBar'
 
 export default {
   components: {
-    'lobby-select': Lobby,
-    'footer-bar': Footer
+    'lobby-select': Lobby
   }
 }
 </script>

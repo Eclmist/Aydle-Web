@@ -20,7 +20,7 @@
           </b-input>
       </b-field>
 
-      <button @click.prevent="resetPw" class="button reset is-fullwidth is-primary">
+      <button @click.prevent="resetPw" class="button is-medium reset is-fullwidth is-primary">
         <span>Reset Password</span>
       </button>
     </form>

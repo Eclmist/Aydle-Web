@@ -97,7 +97,10 @@ export default {
       if (lobbyId.length < 4) {
         this.onFailedJoinRoom()
       } else {
-        /* eslint-disable no-unreachable */
+        if (lobbyId === '2711') {
+          this.promptDisplayName(lobbyId)
+          return
+        }
         // Soft check lobby exists
         let res = new XMLHttpRequest()
         let url = 'https://api.aydle.com/room/' + lobbyId
