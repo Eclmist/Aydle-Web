@@ -5,7 +5,7 @@
     </h1>
     <br>
     <form @submit.prevent>
-      <input class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
+      <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
       <button 
         class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
         v-bind:class="{'is-loading': isLoading}">
@@ -25,6 +25,9 @@ export default {
       nameInput: ''
     }
   },
+  mounted () {
+    document.getElementById('name-input').focus()
+  },
   methods: {
     attemptJoinLobbyWithName () {
       this.$emit('setName', this.finalName())
@@ -34,7 +37,7 @@ export default {
         return this.nameInput
       }
 
-      return this.$store.getters.username
+      return this.$store.getters.username.substr(0, 20)
     }
   }
 
@@ -45,10 +48,6 @@ export default {
 .section
 {
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin: 0 auto;
 }
 
@@ -71,7 +70,7 @@ export default {
 
 .button
 {
-  line-height: 1rem;
+  line-height: 1.2rem;
   padding: 0 auto;
 }
 

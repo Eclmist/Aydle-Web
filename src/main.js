@@ -46,7 +46,7 @@ const store = new Vuex.Store({
       phoneNumber: ''
     },
     socketConnection: null,
-    cameFromFrontPage: false
+    routeParams: ''
   },
   mutations: {
     onUserStateChanged (state, user) {
@@ -81,8 +81,8 @@ const store = new Vuex.Store({
     setSocketConnectionObject (state, socket) {
       state.socketConnection = socket
     },
-    cameFromFrontPage (state, val) {
-      state.cameFromFrontPage = val
+    setRouteParams (state, val) {
+      state.routeParams = val
     }
   },
   getters: {
@@ -113,8 +113,8 @@ const store = new Vuex.Store({
     socket: state => {
       return state.socketConnection
     },
-    cameFromFrontPage: state => {
-      return state.cameFromFrontPage
+    routeParams: state => {
+      return state.routeParams
     }
   }
 })

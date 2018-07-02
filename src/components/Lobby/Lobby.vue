@@ -1,43 +1,52 @@
 <template>
   <div class="content">
-    <transition appear name="fade">
-      <name-picker 
-        v-if="!namePicked" 
-        :is-loading="namePickerLoad" 
-        @setName="setNameAndJoinLobby"/>
-    </transition>
-    <div v-if="namePicked" class="section">
-      <div class="wrapper">
-        <p class="has-text-centered has-text-white is-5">
-          code: 
-          <span class="is-uppercase">
-            {{ lobbyCode }}
-          </span>
-        </p>
-        <h1 class="title is-3 has-text-white has-text-centered">
-          {{ lobbyName }}
-        </h1>
-        <div>
-          <p class="has-text-white has-text-centered">
-            Waiting for players
+    <name-picker 
+      v-if="!namePicked" 
+      :is-loading="namePickerLoad" 
+      @setName="setNameAndJoinLobby"/>
+    <transition name="fade" enter-active-class="fadeIn" leave-active-class="none">
+      <div v-if="namePicked" class="section lobby">
+        <div class="wrapper">
+          <p class="has-text-centered has-text-white">
+            code: 
+            <span class="is-uppercase">
+              {{ lobbyID }}
+            </span>
           </p>
+          <h1 class="title is-3 has-text-white has-text-weight-light has-text-centered">
+            {{ lobbyName }}
+          </h1>
+        </div>
+        <div class="tags-container">
+          <transition-group appear name="bounceUp" tag="div" class="tags">
+            <div v-for="(player, index) in players" :key="index" 
+            class="pulse tags player-tag" :class="{ 'has-addons': player.isHost }">
+              <span v-if="player.isHost" class="tag is-medium is-warning">
+                <b-icon icon="star" size="is-small" />
+              </span>
+              <span class="tag is-medium is-info">
+                {{ player.name }}
+              </span>
+            </div>
+          </transition-group>
+        </div>
+
+        <button v-if="self.isHost" class="button is-medium is-fullwidth is-primary">
+          <span>Start Game!</span>
+        </button>
+        <div class="has-text-centered" v-if="!self.isHost">
+          <span class="has-text-white has-text-centered">
+            Waiting for players
+          </span>
           <div class="spinner2">
             <div class="bounce1"></div>
             <div class="bounce2"></div>
             <div class="bounce3"></div>
           </div>
         </div>
+
       </div>
-      <transition-group appear name="pulse" tag="div" class="tags is-centered">
-        <div transition="pulse" v-for="(player, index) in players" :key="index" 
-        class="pulse tag is-medium is-info">
-          {{ player.name }}
-        </div>
-      </transition-group>
-
-      <div class="button is-medium is-fullwidth is-primary">Start</div>
-
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -51,15 +60,16 @@ export default {
     return {
       namePicked: false,
       namePickerLoad: false,
-      lobbyCode: '',
+      lobbyID: '',
       lobbyName: '',
       hostName: '',
-      players: []
+      players: [],
+      self: {}
     }
   },
   created () {
     let lobbyId = this.$route.params.id
-    this.lobbyCode = lobbyId
+    this.lobbyID = lobbyId
 
     // check if lobby id is valid
     if (lobbyId.length > 4) {
@@ -67,11 +77,12 @@ export default {
       return
     }
 
-    if (this.$store.getters.cameFromFrontPage) {
-      this.$store.commit('cameFromFrontPage', false)
+    if (this.$store.getters.routeParams !== '') {
+      this.$store.commit('setRouteParams', '')
     } else {
       // Check for debug lobby
       if (lobbyId === '2711') {
+        this.setNameAndJoinLobby('Debugger')
         return
       }
       // check if lobby is valid again, to account for people entering
@@ -96,7 +107,17 @@ export default {
   methods: {
     setNameAndJoinLobby (name) {
       this.namePickerLoad = true
-      this.establishConnectionToLobbyServer(name)
+
+      if (this.lobbyID === '2711') {
+        this.onJoinRoomSuccess({
+          players: [
+            {name: name, uid: this.$store.getters.uid, isHost: true},
+            {name: 'placeholder', uid: '0', isHost: false}
+          ]
+        }, {})
+      } else {
+        this.establishConnectionToLobbyServer(name)
+      }
     },
     onJoinRoomSuccess (lobbyObject, socket) {
       this.namePicked = true
@@ -105,7 +126,18 @@ export default {
 
       this.players = lobbyObject.players
       this.hostName = lobbyObject.players[0].name
+      this.lobbyID = lobbyObject.code
       this.lobbyName = this.hostName + '\'s Lobby'
+
+      this.players.forEach(element => {
+        if (element.uid === this.$store.getters.uid) {
+          this.self = element
+
+          if (lobbyObject.isPlaying === true) {
+            this.self.isSpectator = true
+          }
+        }
+      })
     },
     onPeerUpdate (player) {
       for (let i = 0; i < this.players.length; i++) {
@@ -116,7 +148,7 @@ export default {
           }
 
           // SocketID
-          this.players[i].socketID = ('socketID' in player) ? player.socketID : this.players[i].isHost
+          this.players[i].socketID = ('socketID' in player) ? player.socketID : this.players[i].socketID
 
           // Is Host
           this.players[i].isHost = ('isHost' in player) ? player.isHost : this.players[i].isHost
@@ -129,6 +161,9 @@ export default {
           return
         }
       }
+
+      // player does not exist
+      this.players.push(player)
     },
     onJoinRoomFailure () {
       this.$router.push({
@@ -156,7 +191,12 @@ export default {
         }
       })
       let roomManager = new RoomManager(clientSocket)
-      roomManager.joinRoom(this.lobbyCode, this.$store.getters.uid, name)
+
+      if (this.$store.getters.routeParams === 'host') {
+        roomManager.hostRoom(this.$store.getters.uid, name)
+      } else {
+        roomManager.joinRoom(this.lobbyID, this.$store.getters.uid, name)
+      }
     }
   },
   components: {
@@ -170,53 +210,56 @@ export default {
 {
   padding: 20px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.section
+.lobby
 {
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  padding: 0 1.5rem !important;
 }
 
-.section > .button
+.lobby > .button
 {
   flex-shrink: 0; 
   align-self: flex-end;
 }
 
-.section > .wrapper
-{
-  flex: 1;
-  flex-grow: 0;
-  align-items: flex-end;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-basis: auto;
-}
-
-.section > .tags
+.tags-container
 {
   min-width: 100%;
-  align-self: flex-start;
-  /* align-items: center; */
-  /* justify-content: center; */
   flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center !important;
 }
 
+.player-tag
+{
+  margin: 5px;
+}
+.wrapper > h1, p
+{
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 0;
+}
+
+/* Spinners */
+
 .spinner2 {
-  margin: 100px auto 0;
-  width: 70px;
-  margin-top: 5px;
+  margin: 0 auto;
+  width: 50px;
   text-align: center;
 }
 
 .spinner2 > div {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #fff;
 
   border-radius: 100%;

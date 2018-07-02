@@ -29,12 +29,19 @@ export default class ClientSocket {
     }
 
     ClientSocket.prototype.initSocketConnection = (callback) => {
-      socket = io('52.187.52.94', {})
+      socket = io('https://api.aydle.com', {})
       // socket = io('http://localhost:2000/')
+
+      // YP's own callback, dont touch
       socket.on('onConnected', callback)
 
       socket.on('onPeerUpdate', playerObject => {
         callbacks.onPeerUpdate(playerObject)
+      })
+
+      // on your ownself join
+      socket.on('onJoin', roomObject => {
+        callbacks.onJoin(roomObject, this.socket)
       })
 
       socket.on('onJoinFail', () => {

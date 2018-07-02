@@ -4,7 +4,7 @@
       <div class="navbar-brand"
         ref="menuBtn">
         <a class="navbar-item" @click="accountModalActive = true">
-          <b-icon icon="account"/>
+          <b-icon icon="account-circle"/>
           <figure id="avatar" class="image is-32x32" 
             v-if="$store.getters.isSignedIn &&
             $store.getters.photoURL !== null">
@@ -22,9 +22,9 @@
         </a>
       </div>
       
-      <div ref="dropdownMenu" class="navbar-menu" :class="{ 'is-active': menuActive}" id="nav-menu">
+      <div ref="dropdownMenu" class="navbar-menu" id="nav-menu">
         <div class="navbar-end">
-          <a href="#" class="navbar-item">
+          <a @click="hostLobby" class="navbar-item">
             Host a Lobby
           </a>
         </div>
@@ -70,6 +70,9 @@ export default {
       if (target !== menuBtn && !menuBtn.contains(target)) {
         this.menuActive = false
       }
+    },
+    hostLobby () {
+      this.$router.push('/host/')
     }
   }
 }
@@ -79,7 +82,7 @@ export default {
 <style scoped>
 .username
 {
-  margin-left: 0.5rem;
+  margin-left: 10px;
 }
 
 a.navbar-item:hover

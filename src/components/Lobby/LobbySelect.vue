@@ -77,7 +77,7 @@ export default {
       })
     },
     promptDisplayName (code) {
-      this.$store.commit('cameFromFrontPage', true)
+      this.$store.commit('setRouteParams', 'join')
       this.$router.push({
         path: '/lobby/' + code
       })

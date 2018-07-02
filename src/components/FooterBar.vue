@@ -34,6 +34,7 @@ p
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.2rem;
 }
 
 footer

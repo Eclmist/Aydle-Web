@@ -5,7 +5,9 @@
       <header-bar></header-bar>
     </div>
     <div class="router-style">
-      <router-view></router-view>
+      <transition name="fade" enter-active-class="fadeIn" leave-active-class="">
+        <router-view></router-view>
+      </transition>
     </div>
     <div class="footer-style">
       <footer-bar></footer-bar>
@@ -39,7 +41,7 @@ html, body
 {
   height: 100%;
   margin: 0;
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
 }
 
 #app
