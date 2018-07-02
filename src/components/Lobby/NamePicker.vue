@@ -1,7 +1,7 @@
 <template>
   <div class="section has-text-centered">
     <h1 class="title is-1 has-text-white has-text-weight-light">
-      Pick <br> a nickname
+      Enter a nickname
     </h1>
     <br>
     <form @submit.prevent>

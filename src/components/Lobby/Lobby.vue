@@ -107,6 +107,29 @@ export default {
       this.hostName = lobbyObject.players[0].name
       this.lobbyName = this.hostName + '\'s Lobby'
     },
+    onPeerUpdate (player) {
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i].playerID === player.playerID) {
+          if ('hasDisconnected' in player) {
+            this.players.splice(i, 1)
+            return
+          }
+
+          // SocketID
+          this.players[i].socketID = ('socketID' in player) ? player.socketID : this.players[i].isHost
+
+          // Is Host
+          this.players[i].isHost = ('isHost' in player) ? player.isHost : this.players[i].isHost
+
+          // Score
+          this.players[i].score = ('score' in player) ? player.score : this.players[i].score
+
+          // name
+          this.players[i].name = ('name' in player) ? player.name : this.players[i].name
+          return
+        }
+      }
+    },
     onJoinRoomFailure () {
       this.$router.push({
         path: '/'
@@ -121,6 +144,7 @@ export default {
     establishConnectionToLobbyServer (name) {
       let clientSocket = new ClientSocket({
         onJoin: this.onJoinRoomSuccess,
+        onPeerUpdate: this.onPeerUpdate,
         onFailure: () => {
           this.$router.push({
             path: '/'
@@ -132,7 +156,7 @@ export default {
         }
       })
       let roomManager = new RoomManager(clientSocket)
-      roomManager.joinRoom(this.lobbyCode, '0', name)
+      roomManager.joinRoom(this.lobbyCode, this.$store.getters.uid, name)
     }
   },
   components: {

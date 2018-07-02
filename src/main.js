@@ -7,10 +7,9 @@ import router from './router'
 import Buefy from 'buefy'
 import Firebase from 'firebase'
 import Lodash from 'vue-lodash'
-// import 'bulma/css/bulma.css'
-// import 'buefy/lib/buefy.css'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import 'mdi/css/materialdesignicons.min.css'
+import GUID from '@/js/GUID'
 
 var VueCookie = require('vue-cookie')
 Vue.use(Vuex)
@@ -39,6 +38,7 @@ const store = new Vuex.Store({
     firebaseNativeUser: {},
     user: {
       isSignedIn: false,
+      uid: '',
       displayName: '',
       email: '',
       emailVerified: false,
@@ -55,6 +55,7 @@ const store = new Vuex.Store({
       if (user !== null) {
         state.user = {
           isSignedIn: true,
+          uid: user.uid,
           displayName: user.displayName,
           email: user.email,
           emailVerified: user.emailVerified,
@@ -62,8 +63,15 @@ const store = new Vuex.Store({
           phoneNumber: user.phoneNumber
         }
       } else {
+        let uid = Vue.cookie.get('uid')
+        if (uid === null) {
+          uid = GUID.guid()
+          Vue.cookie.set('uid', uid)
+        }
+
         state.user = {
-          isSignedIn: false
+          isSignedIn: false,
+          uid: uid
         }
       }
     },
@@ -89,6 +97,9 @@ const store = new Vuex.Store({
     },
     username: state => {
       return state.user.isSignedIn ? state.user.displayName : 'Guest'
+    },
+    uid: state => {
+      return state.user.uid
     },
     groups: state => {
       return [
