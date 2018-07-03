@@ -19,7 +19,7 @@ export default class ClientSocket {
   */
     ClientSocket.prototype.createNewSocket = function (socketName) {
       if (socketCollection[name] === undefined) {
-        let newSocket = {} // create an empty object
+        let newSocket = {tempProp: 0} // create an empty object
         socketCollection[name] = newSocket
       } else {
         console.log('cant create socket ' + socketName + ' if it already exist!')
