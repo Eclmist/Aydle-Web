@@ -56,7 +56,6 @@ export default {
       this.roomManager = new RoomManager(this.clientSocket)
     },
     onJoinRoomSuccess (lobbyObject, socket) {
-      alert('sdfdsf')
       this.$store.commit('setSocketConnectionObject', socket)
       this.lobbyObject = lobbyObject
       this.isLoading = false
