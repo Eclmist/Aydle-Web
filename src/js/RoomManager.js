@@ -5,28 +5,19 @@ export default class RoomManager {
     const AYDLE_LOBBY_API = 'https://api.aydle.com'
 
     clientSocket.createNewSocket(LOBBY_SOCKET)
-    let tempCode
-    let tempPlayerID
-    let tempLobbyName
 
-    RoomManager.prototype.joinRoom = function (code, playerID) {
-      tempCode = code
-      tempPlayerID = playerID
-      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryJoinRoom)
+    RoomManager.prototype.joinRoom = function (code, playerID, callback) {
+      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API,
+        function () {
+          clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', code, playerID, callback)
+        })
     }
 
-    function tryJoinRoom () {
-      clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', tempCode, tempPlayerID)
-    }
-
-    RoomManager.prototype.hostRoom = (playerID, lobbyName) => {
-      tempPlayerID = playerID
-      tempLobbyName = lobbyName
-      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryHostRoom)
-    }
-
-    function tryHostRoom () {
-      clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', tempPlayerID, tempLobbyName)
+    RoomManager.prototype.hostRoom = (playerID, lobbyName, callback) => {
+      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API,
+        function () {
+          clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', playerID, lobbyName, callback)
+        })
     }
 
     RoomManager.prototype.setName = (name, callback) => {
