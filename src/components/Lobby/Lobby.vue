@@ -115,7 +115,8 @@ export default {
       if (this.lobbyID === '2711') {
         this.self = {name: name, playerID: this.$store.getters.uid, isHost: true}
         this.onJoinRoomSuccess({
-          players: [this.self]
+          players: [this.self],
+          code: '2711'
         }, {})
         setInterval(() => {
           if (this.players.length > 50) {
