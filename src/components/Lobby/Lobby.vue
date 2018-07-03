@@ -8,13 +8,13 @@
       <div v-if="namePicked" class="section lobby">
         <div class="wrapper">
           <p class="has-text-centered has-text-white">
-            code: 
+            {{ lobbyName }}    
+          </p>
+          <h1 class="title is-3 has-text-white has-text-weight-light has-text-centered">
+            Lobby Code: 
             <span class="is-uppercase">
               {{ lobbyID }}
             </span>
-          </p>
-          <h1 class="title is-3 has-text-white has-text-weight-light has-text-centered">
-            {{ lobbyName }}
           </h1>
         </div>
         <div class="tags-container">
@@ -123,7 +123,7 @@ export default {
           }
           let guid = GUID.guid()
           this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
-        }, 500)
+        }, 100)
       } else {
         this.establishConnectionToLobbyServer(name)
       }
@@ -247,7 +247,7 @@ export default {
   max-width: 800px;
   min-width: 100%;
   padding-top: 2vh;
-  padding-bottom: 2vh;
+  padding-bottom: 50px;
   flex-grow: 1;
   display: flex;
   align-items: flex-start;
@@ -255,15 +255,10 @@ export default {
   overflow-y: auto;
 
   -webkit-mask-image: linear-gradient(to bottom,
-   rgba(0,0,0,0),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,1),
-   rgba(0,0,0,0))
+   rgba(0,0,0,0) 0%,
+   rgba(0,0,0,1) 5%,
+   rgba(0,0,0,1) 80%,
+   rgba(0,0,0,0) 100%)
 }
 
 .tags
