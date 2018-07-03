@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 export default class RoomManager {
   constructor (clientSocket) {
+    const LOBBY_SOCKET = 'lobby'
+    const AYDLE_LOBBY_API = 'https://api.aydle.com'
+
+    clientSocket.createNewSocket(LOBBY_SOCKET)
     let tempCode
     let tempPlayerID
     let tempName
@@ -9,25 +13,25 @@ export default class RoomManager {
       tempCode = code
       tempPlayerID = playerID
       tempName = name
-      clientSocket.initSocketConnection(tryJoinRoom)
+      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryJoinRoom)
     }
 
     function tryJoinRoom () {
-      clientSocket.getSocket().emit('requestJoin', tempCode, tempPlayerID, tempName)
+      clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', tempCode, tempPlayerID, tempName)
     }
 
     RoomManager.prototype.hostRoom = (playerID, name) => {
       tempPlayerID = playerID
       tempName = name
-      clientSocket.initSocketConnection(tryHostRoom)
+      clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryHostRoom)
     }
 
     function tryHostRoom () {
-      clientSocket.getSocket().emit('requestHost', tempPlayerID, tempName)
+      clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', tempPlayerID, tempName)
     }
 
     RoomManager.prototype.SetName = name => {
-      clientSocket.getSocket().emit('setName', name)
+      clientSocket.getSocket(LOBBY_SOCKET).emit('setName', name)
     }
   }
 }
