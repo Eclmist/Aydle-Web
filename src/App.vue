@@ -41,7 +41,12 @@ html, body
 {
   height: 100%;
   margin: 0;
-  overflow-y: hidden !important;
+  overflow-y: auto !important;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  optional: just make scrollbar invisible
 }
 
 #app

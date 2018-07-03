@@ -116,7 +116,7 @@ export default {
         setInterval(() => {
           let guid = GUID.guid()
           this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
-        }, 5000)
+        }, 300)
       } else {
         this.establishConnectionToLobbyServer(name)
       }
@@ -241,6 +241,8 @@ export default {
   align-items: flex-start;
   justify-content: center !important;
   overflow-y: auto;
+
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,0))
 }
 
 .tags
