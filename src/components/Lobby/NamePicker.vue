@@ -10,7 +10,7 @@
     <form @submit.prevent>
       <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
       <button 
-        class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
+        class="button is-medium is-fullwidth is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
         v-bind:class="{'is-loading': isLoading}">
         Continue as <br v-show="finalName().length > 8"> {{ finalName() }}
       </button>
@@ -30,10 +30,17 @@ export default {
   },
   mounted () {
     document.getElementById('name-input').focus()
+    let lobbyID = this.$route.params.id
+
+    let prevName = this.getPreviousName(lobbyID)
+    if (prevName !== '') {
+      this.nameInput = prevName
+      this.attemptJoinLobbyWithName()
+    }
   },
   methods: {
     attemptJoinLobbyWithName () {
-      this.$emit('setName', this.finalName())
+      this.$emit('setName', this.nameInput)
     },
     finalName () {
       if (this.nameInput !== '') {
@@ -41,6 +48,11 @@ export default {
       }
 
       return this.$store.getters.username.substr(0, 20)
+    },
+    getPreviousName (lobbyID) {
+      // check if lobby is valid again, to account for people entering
+      // this.$emit('setName',)
+      return ''
     }
   }
 

@@ -77,7 +77,6 @@ export default {
       })
     },
     promptDisplayName (code) {
-      this.$store.commit('setRouteParams', 'join')
       this.$router.push({
         path: '/lobby/' + code
       })
@@ -100,10 +99,6 @@ export default {
       if (lobbyId.length < 4) {
         this.onFailedJoinRoom()
       } else {
-        if (lobbyId === '2711') {
-          this.promptDisplayName(lobbyId)
-          return
-        }
         // Soft check lobby exists
         let res = new XMLHttpRequest()
         let url = 'https://api.aydle.com/room/' + lobbyId

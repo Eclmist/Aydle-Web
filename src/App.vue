@@ -5,9 +5,7 @@
       <header-bar></header-bar>
     </div>
     <div class="router-style">
-      <transition name="fade" enter-active-class="fadeIn" leave-active-class="">
-        <router-view></router-view>
-      </transition>
+      <router-view></router-view>
     </div>
     <div class="footer-style">
       <footer-bar></footer-bar>

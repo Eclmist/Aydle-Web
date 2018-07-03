@@ -9,10 +9,9 @@
       </p>
       <br>
       <form @submit.prevent>
-        <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
+        <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20">
         <button 
-          class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="hostLobbyWithName" 
-          v-bind:class="{'is-loading': isLoading}">
+          class="button is-medium is-fullwidth is-primary is-primary is-outlined" v-on:click="hostLobbyWithName">
           Confirm Room Name
         </button>
       </form>
@@ -22,9 +21,6 @@
 
 <script>
 export default {
-  props: {
-    'isLoading': Boolean
-  },
   data () {
     return {
       nameInput: ''

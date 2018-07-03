@@ -7,31 +7,30 @@ export default class RoomManager {
     clientSocket.createNewSocket(LOBBY_SOCKET)
     let tempCode
     let tempPlayerID
-    let tempName
+    let tempLobbyName
 
-    RoomManager.prototype.joinRoom = function (code, playerID, name) {
+    RoomManager.prototype.joinRoom = function (code, playerID) {
       tempCode = code
       tempPlayerID = playerID
-      tempName = name
       clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryJoinRoom)
     }
 
     function tryJoinRoom () {
-      clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', tempCode, tempPlayerID, tempName)
+      clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', tempCode, tempPlayerID)
     }
 
-    RoomManager.prototype.hostRoom = (playerID, name) => {
+    RoomManager.prototype.hostRoom = (playerID, lobbyName) => {
       tempPlayerID = playerID
-      tempName = name
+      tempLobbyName = lobbyName
       clientSocket.initSocketConnection(LOBBY_SOCKET, AYDLE_LOBBY_API, tryHostRoom)
     }
 
     function tryHostRoom () {
-      clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', tempPlayerID, tempName)
+      clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', tempPlayerID, tempLobbyName)
     }
 
-    RoomManager.prototype.SetName = name => {
-      clientSocket.getSocket(LOBBY_SOCKET).emit('setName', name)
+    RoomManager.prototype.setName = (name, callback) => {
+      clientSocket.getSocket(LOBBY_SOCKET).emit('setName', name, callback)
     }
   }
 }

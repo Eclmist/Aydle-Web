@@ -48,7 +48,7 @@ export default class ClientSocket {
         })
 
         socket.on('onJoinFail', () => {
-          callbacks.onFailure()
+          callbacks.onFailure('Something went wrong! Please try again later.')
         })
 
         // When the user has successfully hosted a room
