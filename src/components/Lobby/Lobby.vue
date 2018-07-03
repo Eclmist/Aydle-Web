@@ -114,6 +114,9 @@ export default {
           players: [this.self]
         }, {})
         setInterval(() => {
+          if (this.players.length > 50) {
+            return
+          }
           let guid = GUID.guid()
           this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
         }, 300)
