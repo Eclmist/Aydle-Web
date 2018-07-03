@@ -246,8 +246,8 @@ export default {
 {
   max-width: 800px;
   min-width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   flex-grow: 1;
   display: flex;
   align-items: flex-start;

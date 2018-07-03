@@ -82,7 +82,7 @@ export default {
     maximizeCanvas () {
       let canvas = document.getElementById('background')
 
-      if (window.innerWidth <= canvas.width || window.innerHeight <= canvas.height) {
+      if (window.innerWidth <= canvas.width && window.innerHeight <= canvas.height) {
         return
       }
 
