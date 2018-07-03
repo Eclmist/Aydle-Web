@@ -77,8 +77,10 @@ export default {
 
 .section
 {
-  max-width: 400px;
+  width: 255px;
+  max-width: 255px;
   margin: 0 auto;
+  padding: 0 !important;
 }
 
 .input.is-medium

@@ -1,8 +1,11 @@
 <template>
   <div class="section has-text-centered">
     <h1 class="title is-1 has-text-white has-text-weight-light">
-      Enter a nickname
+      Nickname
     </h1>
+    <p class="subtitle has-text-white has-text-weight-light">
+      Choose a display name
+    </p>
     <br>
     <form @submit.prevent>
       <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
@@ -47,8 +50,10 @@ export default {
 <style scoped>
 .section
 {
-  max-width: 400px;
+  width: 255px;
+  max-width: 255px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .input.is-medium
@@ -56,7 +61,7 @@ export default {
   padding-left: 9px !important
 }
 
-.section > h1
+.section > h1, p
 {
   transition: 1s;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5)

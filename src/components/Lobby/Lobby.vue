@@ -68,7 +68,8 @@ export default {
       lobbyName: '',
       hostName: '',
       players: [],
-      self: {}
+      self: {},
+      isTryingToHost: false
     }
   },
   created () {
@@ -82,6 +83,9 @@ export default {
     }
 
     if (this.$store.getters.routeParams !== '') {
+      if (this.$store.getters.routeParams === 'host') {
+        this.isTryingToHost = true
+      }
       this.$store.commit('setRouteParams', '')
     } else {
       // Check for debug lobby
@@ -139,15 +143,16 @@ export default {
       this.lobbyID = lobbyObject.code
       this.lobbyName = this.hostName + '\'s Lobby'
 
-      this.players.forEach(element => {
-        if (element.uid === this.$store.getters.uid) {
-          this.self = element
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i].playerID === this.$store.getters.uid) {
+          this.self = this.players[i]
 
           if (lobbyObject.isPlaying === true) {
             this.self.isSpectator = true
           }
+          break
         }
-      })
+      }
     },
     onPeerUpdate (player) {
       for (let i = 0; i < this.players.length; i++) {
@@ -202,7 +207,7 @@ export default {
       })
       let roomManager = new RoomManager(clientSocket)
 
-      if (this.$store.getters.routeParams === 'host') {
+      if (this.isTryingToHost) {
         roomManager.hostRoom(this.$store.getters.uid, name)
       } else {
         roomManager.joinRoom(this.lobbyID, this.$store.getters.uid, name)
@@ -258,7 +263,7 @@ export default {
   -webkit-mask-image: linear-gradient(to bottom,
    rgba(0,0,0,0) 0%,
    rgba(0,0,0,1) 5%,
-   rgba(0,0,0,1) 80%,
+   rgba(0,0,0,1) 90%,
    rgba(0,0,0,0) 100%)
 }
 
