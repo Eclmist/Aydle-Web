@@ -123,7 +123,7 @@ export default {
           }
           let guid = GUID.guid()
           this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
-        }, 2000)
+        }, 500)
       } else {
         this.establishConnectionToLobbyServer(name)
       }
@@ -246,13 +246,24 @@ export default {
 {
   max-width: 800px;
   min-width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
   flex-grow: 1;
   display: flex;
   align-items: flex-start;
   justify-content: center !important;
   overflow-y: auto;
 
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,0))
+  -webkit-mask-image: linear-gradient(to bottom,
+   rgba(0,0,0,0),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,1),
+   rgba(0,0,0,0))
 }
 
 .tags
