@@ -8,10 +8,9 @@
     </p>
     <br>
     <form @submit.prevent>
-      <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20" :disabled="isLoading">
+      <input id="name-input" class="input is-medium has-text-centered" :placeholder="finalName()" v-model="nameInput" maxlength="20">
       <button 
-        class="button is-medium is-fullwidth is-primary is-outlined" v-on:click="attemptJoinLobbyWithName" 
-        v-bind:class="{'is-loading': isLoading}">
+        class="button is-medium is-fullwidth is-primary is-outlined" v-on:click="attemptJoinLobbyWithName">
         Continue as <br v-show="finalName().length > 8"> {{ finalName() }}
       </button>
     </form>
@@ -20,9 +19,6 @@
 
 <script>
 export default {
-  props: {
-    'isLoading': Boolean
-  },
   data () {
     return {
       nameInput: ''
