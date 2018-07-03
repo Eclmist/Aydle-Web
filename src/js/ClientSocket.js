@@ -4,7 +4,6 @@ import io from 'socket.io-client'
 export default class ClientSocket {
   /* eslint-disable no-unused-vars */
   constructor (callbacks) {
-    var socket
     var socketCollection = {}
     // duck type interface
     /*
@@ -33,6 +32,8 @@ export default class ClientSocket {
 
     ClientSocket.prototype.initSocketConnection = (socketName, connectionAddress, callback) => {
       if (socketCollection[socketName] !== undefined) {
+        let socket = socketCollection[socketName]
+
         socket = io(connectionAddress, {})
         // socket = io('http://localhost:2000/')
 
@@ -45,7 +46,7 @@ export default class ClientSocket {
 
         // on your ownself join
         socket.on('onJoin', roomObject => {
-          callbacks.onJoin(roomObject, this.socket)
+          callbacks.onJoin(roomObject, socket)
         })
 
         socket.on('onJoinFail', () => {
