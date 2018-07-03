@@ -18,20 +18,20 @@
           </h1>
         </div>
         <div class="tags-container">
-          <transition-group appear name="bounceUp" tag="div" class="tags">
+          <transition-group appear name="zoomUp" tag="div" class="tags">
             <div v-for="(player, index) in players" :key="index" 
             class="pulse tags player-tag" :class="{ 'has-addons': player.isHost }">
               <span v-if="player.isHost" class="tag is-medium is-warning">
                 <b-icon icon="star" size="is-small" />
               </span>
-              <span class="tag is-medium is-info">
+              <span class="tag is-medium" :class="{'is-primary': player === self, 'is-info': player !== self}">
                 {{ player.name }}
               </span>
             </div>
           </transition-group>
         </div>
 
-        <button v-if="self.isHost" class="button is-medium is-fullwidth is-primary">
+        <button v-if="self.isHost" id="start-game-btn" class="button is-medium is-fullwidth is-primary">
           <span>Start Game!</span>
         </button>
         <div class="has-text-centered" v-if="!self.isHost">
@@ -54,7 +54,7 @@
 import NamePicker from './NamePicker'
 import ClientSocket from '@/js/ClientSocket'
 import RoomManager from '@/js/RoomManager'
-
+import GUID from '@/js/GUID'
 export default {
   data () {
     return {
@@ -109,12 +109,17 @@ export default {
       this.namePickerLoad = true
 
       if (this.lobbyID === '2711') {
+        this.self = {name: name, playerID: this.$store.getters.uid, isHost: true}
         this.onJoinRoomSuccess({
-          players: [
-            {name: name, uid: this.$store.getters.uid, isHost: true},
-            {name: 'placeholder', uid: '0', isHost: false}
-          ]
+          players: [this.self]
         }, {})
+        setInterval(() => {
+          if (this.players.length > 50) {
+            return
+          }
+          let guid = GUID.guid()
+          this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
+        }, 300)
       } else {
         this.establishConnectionToLobbyServer(name)
       }
@@ -232,10 +237,19 @@ export default {
 
 .tags-container
 {
+  max-width: 800px;
   min-width: 100%;
   flex-grow: 1;
   display: flex;
   align-items: flex-start;
+  justify-content: center !important;
+  overflow-y: auto;
+
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,0))
+}
+
+.tags
+{
   justify-content: center !important;
 }
 
@@ -247,6 +261,12 @@ export default {
 {
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   margin-top: 0;
+}
+
+#start-game-btn
+{
+  width: 280px !important;
+  align-self: center;
 }
 
 /* Spinners */
