@@ -23,7 +23,7 @@ export default class RoomManager {
         function () {
           clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost', playerID, lobbyName,
             function (roomObject) {
-              clientSocket.getCallbacks().onHost(roomObject)
+              clientSocket.getCallbacks().onJoin(roomObject)
             })
         })
     }
