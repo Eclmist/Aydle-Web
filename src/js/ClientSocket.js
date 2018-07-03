@@ -32,10 +32,8 @@ export default class ClientSocket {
 
     ClientSocket.prototype.initSocketConnection = (socketName, connectionAddress, callback) => {
       if (socketCollection[socketName] !== undefined) {
+        socketCollection[socketName] = io(connectionAddress, {})
         let socket = socketCollection[socketName]
-
-        socket = io(connectionAddress, {})
-        // socket = io('http://localhost:2000/')
 
         // YP's own callback, dont touch
         socket.on('onConnected', callback)
