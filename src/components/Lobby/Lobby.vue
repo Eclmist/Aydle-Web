@@ -31,8 +31,12 @@
           </transition-group>
         </div>
 
-        <button v-if="self.isHost" id="start-game-btn" class="button is-medium is-fullwidth is-primary">
-          <span>Start Game!</span>
+        <button 
+          v-if="self.isHost" 
+          :disabled="canStartGame()" 
+          id="start-game-btn" 
+          class="button is-medium is-fullwidth is-primary">
+          <span>{{ canStartGame() ? 'Not Enough Players' : 'Start Game!' }}</span>
         </button>
         <div class="has-text-centered" v-if="!self.isHost">
           <span class="has-text-white has-text-centered">
@@ -68,11 +72,11 @@ export default {
     }
   },
   created () {
-    let lobbyId = this.$route.params.id
-    this.lobbyID = lobbyId
+    let lobbyID = this.$route.params.id
+    this.lobbyID = lobbyID
 
     // check if lobby id is valid
-    if (lobbyId.length > 4) {
+    if (lobbyID.length > 4) {
       this.onJoinRoomFailure()
       return
     }
@@ -81,14 +85,14 @@ export default {
       this.$store.commit('setRouteParams', '')
     } else {
       // Check for debug lobby
-      if (lobbyId === '2711') {
+      if (lobbyID === '2711') {
         this.setNameAndJoinLobby('Debugger')
         return
       }
       // check if lobby is valid again, to account for people entering
       // aydle.com/lobby/code directly (invite links, etc)
       let res = new XMLHttpRequest()
-      let url = 'https://api.aydle.com/room/' + lobbyId
+      let url = 'https://api.aydle.com/room/' + lobbyID
       res.open('GET', url, true)
       res.send()
 
@@ -119,7 +123,7 @@ export default {
           }
           let guid = GUID.guid()
           this.onPeerUpdate({name: guid, playerID: guid, isHost: false})
-        }, 300)
+        }, 2000)
       } else {
         this.establishConnectionToLobbyServer(name)
       }
@@ -202,6 +206,9 @@ export default {
       } else {
         roomManager.joinRoom(this.lobbyID, this.$store.getters.uid, name)
       }
+    },
+    canStartGame () {
+      return this.players.length <= 1
     }
   },
   components: {
