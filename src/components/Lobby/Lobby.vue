@@ -6,6 +6,7 @@
         v-show="!isLoading"
         @failure="onJoinRoomFailure"
         @setName="setName"
+        @hostLobby="hostLobby"
         :lobby-object=lobbyObject
         ></router-view>
     </transition>
@@ -29,8 +30,9 @@ export default {
     this.initRoomManager()
     // if trying to host a lobby
     if (this.$route.params.isHost === true) {
-      this.roomManager.hostLobby(this.$store.getters.uid, name)
-    } else { // else if trying to join lobby
+      this.isLoading = false
+    } else {
+      // else if trying to join lobby
       let lobbyID = this.$route.params.id
 
       // Check if lobby code is valid
@@ -38,6 +40,7 @@ export default {
         this.onJoinRoomFailure()
         return
       }
+
       // Actually try joining the server
       this.roomManager.joinRoom(lobbyID, this.$store.getters.uid)
     }
@@ -79,6 +82,9 @@ export default {
         })
         this.isLoading = false
       })
+    },
+    hostLobby (name) {
+      this.roomManager.hostRoom(this.$store.getters.uid, name)
     },
     onPeerUpdate (player) {
       for (let i = 0; i < this.lobbyObject.players.length; i++) {

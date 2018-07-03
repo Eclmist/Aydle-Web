@@ -72,7 +72,13 @@ export default {
       }
     },
     hostLobby () {
-      this.$router.push('/host/')
+      this.$router.push({
+        name: 'Host',
+        params: {
+          isHost: true,
+          id: 'id'
+        }
+      })
     }
   }
 }

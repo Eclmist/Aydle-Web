@@ -29,24 +29,16 @@ export default {
   created () {
     // check if user is logged in
     if (this.$store.getters.isSignedIn === false) {
-      this.$snackbar.open({
-        message: 'You need to be logged in to host a lobby',
-        type: 'is-danger'
-      })
-    } else {
-      return
+      this.$emit('failure', 'You need to be logged in to host a lobby!')
     }
     // TODO: Check if user is allowed to host lobby
-
-    this.$router.push('/')
   },
   mounted () {
     document.getElementById('name-input').focus()
   },
   methods: {
     hostLobbyWithName () {
-      this.$store.commit('setRouteParams', 'host')
-      this.$router.push('/lobby/host')
+      this.$emit('hostLobby', this.finalName())
     },
     finalName () {
       if (this.nameInput !== '') {
@@ -61,16 +53,6 @@ export default {
 </script>
 
 <style scoped>
-.content
-{
-  padding: 20px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .section
 {
   width: 255px;
