@@ -17,6 +17,10 @@ export default class ClientSocket {
     return true;
   }
   */
+    ClientSocket.prototype.getCallbacks = function () {
+      return callbacks
+    }
+
     ClientSocket.prototype.createNewSocket = function (socketName) {
       if (socketCollection[socketName] === undefined) {
         let newSocket = {} // create an empty object
@@ -40,20 +44,6 @@ export default class ClientSocket {
 
         socket.on('onPeerUpdate', playerObject => {
           callbacks.onPeerUpdate(playerObject)
-        })
-
-        // on your ownself join
-        socket.on('onJoin', roomObject => {
-          callbacks.onJoin(roomObject, socket)
-        })
-
-        socket.on('onJoinFail', () => {
-          callbacks.onFailure('Something went wrong! Please try again later.')
-        })
-
-        // When the user has successfully hosted a room
-        socket.on('onHostCode', roomObject => {
-          callbacks.onHost(roomObject)
         })
       } else {
         console.log('the socket ' + socketName + ' does not exist!')
