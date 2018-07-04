@@ -105,10 +105,11 @@ export default {
       })
     },
     onLobbyUpdate (lobbyObject) {
-
+      console.log('OnLobbyUpdate emmited by server')
+      this.lobbyObject = lobbyObject
     },
     onPeerUpdate (player) {
-      alert('peer update ' + player.name)
+      console.log('OnPeerUpdate emmited by server, with name: ' + player.name)
       for (let i = 0; i < this.lobbyObject.players.length; i++) {
         if (this.lobbyObject.players[i].playerID === player.playerID) {
           if ('hasDisconnected' in player) {
