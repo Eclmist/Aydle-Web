@@ -3,19 +3,21 @@
     <div class="section lobby">
       <div class="wrapper">
         <p class="has-text-centered has-text-white">
-          {{ lobbyObject.lobbyName }}    
+          {{ lobbyObject.name }}    
         </p>
         <h1 class="title is-3 has-text-white has-text-weight-light has-text-centered">
           Lobby Code: 
           <span class="is-uppercase">
-            {{ lobbyObject.lobbyID }}
+            {{ lobbyObject.code }}
           </span>
         </h1>
       </div>
       <div class="tags-container">
         <transition-group appear name="zoomUp" tag="div" class="tags">
-          <div v-for="(player, index) in lobbyObject.players" :key="index" 
-          class="pulse tags player-tag" :class="{ 'has-addons': player.isHost }">
+          <div v-for="(player, index) in lobbyObject.players" :key="index"
+          v-if="player.isInitialized" 
+          class="pulse tags player-tag"
+          :class="{ 'has-addons': player.isHost }">
             <span v-if="player.isHost" class="tag is-medium is-warning">
               <b-icon icon="star" size="is-small" />
             </span>

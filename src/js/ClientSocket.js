@@ -36,13 +36,21 @@ export default class ClientSocket {
 
     ClientSocket.prototype.initSocketConnection = (socketName, connectionAddress, callback) => {
       if (socketCollection[socketName] !== undefined) {
-        socketCollection[socketName] = io(connectionAddress, {})
+        socketCollection[socketName] = io(connectionAddress, {
+          timeout: 10000
+        })
         let socket = socketCollection[socketName]
 
         // YP's own callback, dont touch
         socket.on('onConnected', callback)
 
+        socket.on('connect_error', () => {
+          callbacks.onFailure('Aydle\'s API servers seems to be down. Please try again later.')
+          socket.disconnect()
+        })
+
         socket.on('onPeerUpdate', playerObject => {
+          console.log(playerObject.name)
           callbacks.onPeerUpdate(playerObject)
         })
 

@@ -27,20 +27,21 @@ export default {
       nameInput: ''
     }
   },
-  mounted () {
-    document.getElementById('name-input').focus()
-
+  created () {
     if (this.previousName !== '') {
       this.nameInput = this.previousName
       this.attemptJoinLobbyWithName()
     }
   },
+  mounted () {
+    document.getElementById('name-input').focus()
+  },
   methods: {
     attemptJoinLobbyWithName () {
-      this.$emit('setName', this.nameInput)
+      this.$emit('setName', this.finalName())
     },
     finalName () {
-      if (this.nameInput !== '') {
+      if (this.nameInput !== '' && this.nameInput !== undefined) {
         return this.nameInput
       }
 

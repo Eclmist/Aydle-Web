@@ -9,7 +9,8 @@
         @setLobbyName="setLobbyName"
         @loadGame="loadGame"
         :lobby-object=lobbyObject
-        :previousName=previousName
+        :previous-name=previousName
+        :self=self
         ></router-view>
     </transition>
   </div>
@@ -24,6 +25,7 @@ export default {
     return {
       isLoading: true,
       lobbyObject: {},
+      self: {},
       previousName: '',
       clientSocket: {},
       roomManager: {},
@@ -57,16 +59,23 @@ export default {
     initRoomManager () {
       this.clientSocket = new ClientSocket({
         onJoin: this.onJoinRoomSuccess,
+        onHost: this.onHostSuccess,
         onLobbyUpdate: this.onLobbyUpdate,
         onPeerUpdate: this.onPeerUpdate,
         onFailure: this.onJoinRoomFailure
       })
       this.roomManager = new RoomManager(this.clientSocket)
     },
-    onJoinRoomSuccess (socket, name) {
-      this.$store.commit('setSocketConnectionObject', socket)
-      this.previousName = name
+    onJoinRoomSuccess (name) {
+      if (name !== undefined && name !== '') {
+        this.previousName = name
+      }
+
       this.isLoading = false
+    },
+    onHostSuccess (lobbyObject) {
+      this.lobbyObject = lobbyObject
+      this.onJoinRoomSuccess('')
     },
     onJoinRoomFailure (message) {
       this.$router.push({
@@ -102,7 +111,10 @@ export default {
         if (success) {
           this.$router.push({
             name: 'NamePicker',
-            params: {displayName: name}
+            params: {
+              displayName: name,
+              id: this.lobbyObject.code
+            }
           })
           this.isLoading = false
         } else {
@@ -116,6 +128,15 @@ export default {
     },
     onPeerUpdate (player) {
       console.log('OnPeerUpdate emmited by server, with name: ' + player.name)
+
+      if (player.playerID === this.$store.getters.uid) {
+        this.self = player
+      }
+
+      if (this.lobbyObject.players === undefined) {
+        return
+      }
+
       for (let i = 0; i < this.lobbyObject.players.length; i++) {
         if (this.lobbyObject.players[i].playerID === player.playerID) {
           if ('hasDisconnected' in player) {
@@ -143,6 +164,9 @@ export default {
 
           // name
           this.lobbyObject.players[i].name = ('name' in player) ? player.name : this.lobbyObject.players[i].name
+
+          // is Initialized
+          this.lobbyObject.players[i].isInitialized = ('isInitialized' in player) ? player.isInitialized : this.lobbyObject.players[i].isInitialized
           return
         }
       }

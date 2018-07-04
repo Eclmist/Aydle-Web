@@ -2,7 +2,8 @@
 export default class RoomManager {
   constructor (clientSocket) {
     const LOBBY_SOCKET = 'lobby'
-    const AYDLE_LOBBY_API = 'https://api.aydle.com'
+    // const AYDLE_LOBBY_API = 'https://api.aydle.com'
+    const AYDLE_LOBBY_API = 'http://localhost:2000'
 
     clientSocket.createNewSocket(LOBBY_SOCKET)
 
@@ -22,7 +23,7 @@ export default class RoomManager {
           clientSocket.getSocket(LOBBY_SOCKET).emit('requestHost',
             playerID,
             lobbyName,
-            clientSocket.getCallbacks().onJoin)
+            clientSocket.getCallbacks().onHost)
         })
     }
 

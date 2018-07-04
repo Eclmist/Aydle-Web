@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     hostLobbyWithName () {
-      this.$emit('hostLobby', this.finalName())
+      this.$emit('setLobbyName', this.finalName())
     },
     finalName () {
       if (this.nameInput !== '') {
