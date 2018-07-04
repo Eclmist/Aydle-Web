@@ -19,7 +19,9 @@
 
 <script>
 export default {
-  props: ['previousName'],
+  props: {
+    previousName: String
+  },
   data () {
     return {
       nameInput: ''
@@ -27,10 +29,9 @@ export default {
   },
   mounted () {
     document.getElementById('name-input').focus()
-    let lobbyID = this.$route.params.id
 
     if (this.previousName !== '') {
-      this.nameInput = prevName
+      this.nameInput = this.previousName
       this.attemptJoinLobbyWithName()
     }
   },

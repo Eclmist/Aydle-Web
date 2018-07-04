@@ -65,8 +65,8 @@ export default {
       return
     }
 
-    if (lobbyObject.isPlaying === true) {
-      startGame()
+    if (this.lobbyObject.isPlaying === true) {
+      this.startGame()
     }
   },
   methods: {
