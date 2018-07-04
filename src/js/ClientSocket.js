@@ -46,6 +46,10 @@ export default class ClientSocket {
           callbacks.onPeerUpdate(playerObject)
         })
 
+        socket.on('onLobbyUpdate', lobbyOnject => {
+          callbacks.onLobbyUpdate(lobbyOnject)
+        })
+
         // Fails if disconnected
         socket.on('disconnect', callbacks.onFailure)
       } else {

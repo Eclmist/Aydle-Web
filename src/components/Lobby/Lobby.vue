@@ -7,7 +7,9 @@
         @failure="onJoinRoomFailure"
         @setName="setName"
         @setLobbyName="setLobbyName"
+        @loadGame="loadGame"
         :lobby-object=lobbyObject
+        :previousName=previousName
         ></router-view>
     </transition>
   </div>
@@ -22,8 +24,10 @@ export default {
     return {
       isLoading: true,
       lobbyObject: {},
+      previousName: '',
       clientSocket: {},
-      roomManager: {}
+      roomManager: {},
+      gameManager: {}
     }
   },
   created () {
@@ -59,8 +63,9 @@ export default {
       })
       this.roomManager = new RoomManager(this.clientSocket)
     },
-    onJoinRoomSuccess (socket) {
+    onJoinRoomSuccess (socket, name) {
       this.$store.commit('setSocketConnectionObject', socket)
+      this.previousName = name
       this.isLoading = false
     },
     onJoinRoomFailure (message) {
@@ -134,6 +139,11 @@ export default {
 
       // player does not exist
       this.lobbyObject.players.push(player)
+    },
+    loadGame () {
+      this.$router.push({
+        name: 'PassTheBomb'
+      })
     }
   }
 }

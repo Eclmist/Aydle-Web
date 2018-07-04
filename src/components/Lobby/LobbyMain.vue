@@ -30,6 +30,7 @@
         v-if="self.isHost" 
         :disabled="!canStartGame()"
         :class="{ 'pulse-btn': canStartGame() }"
+        @click="startGame()"
         id="start-game-btn" 
         class="button is-medium is-fullwidth is-primary">
         <span>{{ canStartGame() ? 'Start Game!' : 'Not Enough Players' }}</span>
@@ -52,30 +53,36 @@
 <script>
 export default {
   props: {
-    lobbyObject: {}
-  },
-  data () {
-    return {
-      self: {}
-    }
+    lobbyObject: {},
+    self: {}
   },
   created () {
     // Check if name has already been set
-    if (!this.isNameSet()) {
+    if (this.getDisplayName === undefined) {
       this.$router.push({
         name: 'NamePicker'
       })
+      return
+    }
+
+    if (lobbyObject.isPlaying === true) {
+      startGame()
     }
   },
   methods: {
-    isNameSet () {
-      return (this.$route.params.displayName !== undefined)
+    getDisplayName () {
+      return this.$route.params.displayName
     },
     canStartGame () {
       if (this.lobbyOnject.players.length > 1) {
         return true
       }
       return false
+    },
+    startGame () {
+      if (this.canStartGame()) {
+        this.$emit('loadGame')
+      }
     }
   }
 }

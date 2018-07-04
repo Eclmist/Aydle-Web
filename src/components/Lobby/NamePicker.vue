@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  props: ['previousName'],
   data () {
     return {
       nameInput: ''
@@ -28,8 +29,7 @@ export default {
     document.getElementById('name-input').focus()
     let lobbyID = this.$route.params.id
 
-    let prevName = this.getPreviousName(lobbyID)
-    if (prevName !== '') {
+    if (this.previousName !== '') {
       this.nameInput = prevName
       this.attemptJoinLobbyWithName()
     }
@@ -44,11 +44,6 @@ export default {
       }
 
       return this.$store.getters.username.substr(0, 20)
-    },
-    getPreviousName (lobbyID) {
-      // check if lobby is valid again, to account for people entering
-      // this.$emit('setName',)
-      return ''
     }
   }
 
