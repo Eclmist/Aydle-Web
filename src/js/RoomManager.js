@@ -29,5 +29,9 @@ export default class RoomManager {
     RoomManager.prototype.setName = (name, callback) => {
       clientSocket.getSocket(LOBBY_SOCKET).emit('setName', name, callback)
     }
+
+    RoomManager.prototype.setLobbyName = (lobbyName, callback) => {
+      clientSocket.getSocket(LOBBY_SOCKET).emit('setLobbyName', lobbyName, callback)
+    }
   }
 }

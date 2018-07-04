@@ -6,7 +6,7 @@
         v-show="!isLoading"
         @failure="onJoinRoomFailure"
         @setName="setName"
-        @hostLobby="hostLobby"
+        @setLobbyName="setLobbyName"
         :lobby-object=lobbyObject
         ></router-view>
     </transition>
@@ -30,7 +30,7 @@ export default {
     this.initRoomManager()
     // if trying to host a lobby
     if (this.$route.params.isHost === true) {
-      this.isLoading = false
+      this.roomManager.hostRoom(this.$store.getters.uid, name)
     } else {
       // else if trying to join lobby
       let lobbyID = this.$route.params.id
@@ -53,20 +53,24 @@ export default {
     initRoomManager () {
       this.clientSocket = new ClientSocket({
         onJoin: this.onJoinRoomSuccess,
+        onLobbyUpdate: this.onLobbyUpdate,
         onPeerUpdate: this.onPeerUpdate,
         onFailure: this.onJoinRoomFailure
       })
       this.roomManager = new RoomManager(this.clientSocket)
     },
-    onJoinRoomSuccess (lobbyObject, socket) {
+    onJoinRoomSuccess (socket) {
       this.$store.commit('setSocketConnectionObject', socket)
-      this.lobbyObject = lobbyObject
       this.isLoading = false
     },
     onJoinRoomFailure (message) {
       this.$router.push({
         path: '/'
       })
+
+      if (message === '') {
+        message = 'Something went wrong! Please try again later.'
+      }
 
       // if room doesnt exist
       this.$snackbar.open({
@@ -75,18 +79,36 @@ export default {
       })
     },
     setName (name) {
-      this.roomManager.setName(name, () => {
-        this.$router.push({
-          name: 'LobbyMain',
-          params: {displayName: name}
-        })
-        this.isLoading = false
+      this.roomManager.setName(name, (success) => {
+        if (success) {
+          this.$router.push({
+            name: 'LobbyMain',
+            params: {displayName: name}
+          })
+          this.isLoading = false
+        } else {
+          this.onJoinRoomFailure()
+        }
       })
     },
-    hostLobby (name) {
-      this.roomManager.hostRoom(this.$store.getters.uid, name)
+    setLobbyName (name) {
+      this.roomManager.setLobbyName(name, (success) => {
+        if (success) {
+          this.$router.push({
+            name: 'NamePicker',
+            params: {displayName: name}
+          })
+          this.isLoading = false
+        } else {
+          this.onJoinRoomFailure()
+        }
+      })
+    },
+    onLobbyUpdate (lobbyObject) {
+
     },
     onPeerUpdate (player) {
+      alert('peer update ' + player.name)
       for (let i = 0; i < this.lobbyObject.players.length; i++) {
         if (this.lobbyObject.players[i].playerID === player.playerID) {
           if ('hasDisconnected' in player) {
