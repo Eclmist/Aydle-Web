@@ -1,9 +1,10 @@
+
 /* eslint-disable no-unused-vars */
 export default class RoomManager {
   constructor (clientSocket) {
     const LOBBY_SOCKET = 'lobby'
-    const AYDLE_LOBBY_API = 'https://api.aydle.com'
-    // const AYDLE_LOBBY_API = 'http://localhost:2000'
+    const AYDLE_LOBBY_API = 'http://localhost:2000'
+    // const AYDLE_LOBBY_API = 'https://api.aydle.com'
 
     clientSocket.createNewSocket(LOBBY_SOCKET)
 
@@ -33,6 +34,10 @@ export default class RoomManager {
 
     RoomManager.prototype.setLobbyName = (lobbyName, callback) => {
       clientSocket.getSocket(LOBBY_SOCKET).emit('setLobbyName', lobbyName, callback)
+    }
+
+    RoomManager.prototype.startDebugGame = () => {
+      clientSocket.getSocket(LOBBY_SOCKET).emit('startDebugGame')
     }
   }
 }

@@ -27,14 +27,16 @@ export default {
       nameInput: ''
     }
   },
-  created () {
-    if (this.previousName !== '') {
-      this.nameInput = this.previousName
-      this.attemptJoinLobbyWithName()
-    }
-  },
   mounted () {
     document.getElementById('name-input').focus()
+  },
+  watch: {
+    previousName: (newVal, oldVal) => {
+      if (newVal !== '' && newVal !== undefined) {
+        this.nameInput = newVal
+        this.attemptJoinLobbyWithName()
+      }
+    }
   },
   methods: {
     attemptJoinLobbyWithName () {

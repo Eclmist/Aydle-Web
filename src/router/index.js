@@ -46,6 +46,7 @@ export default new Router({
         },
         {
           path: 'PassTheBomb',
+          name: 'PassTheBomb',
           component: PassTheBomb
         }
       ]

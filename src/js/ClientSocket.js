@@ -57,6 +57,10 @@ export default class ClientSocket {
           callbacks.onLobbyUpdate(lobbyOnject)
         })
 
+        socket.on('onStartGame', gameObject => {
+          callbacks.onStartGame(gameObject)
+        })
+
         // Fails if disconnected
         socket.on('disconnect', callbacks.onFailure)
       } else {

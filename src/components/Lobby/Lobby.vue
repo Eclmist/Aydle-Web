@@ -11,6 +11,7 @@
         :lobby-object=lobbyObject
         :previous-name=previousName
         :self=self
+        :game-object=gameObject
         ></router-view>
     </transition>
   </div>
@@ -19,6 +20,7 @@
 <script>
 import ClientSocket from '@/js/ClientSocket'
 import RoomManager from '@/js/RoomManager'
+// import GameManager from '@/js/GameManager'
 
 export default {
   data () {
@@ -29,7 +31,8 @@ export default {
       previousName: '',
       clientSocket: {},
       roomManager: {},
-      gameManager: {}
+      gameManager: {},
+      gameObject: {}
     }
   },
   created () {
@@ -62,6 +65,7 @@ export default {
         onHost: this.onHostSuccess,
         onLobbyUpdate: this.onLobbyUpdate,
         onPeerUpdate: this.onPeerUpdate,
+        onStartGame: this.onStartGame,
         onFailure: this.onJoinRoomFailure
       })
       this.roomManager = new RoomManager(this.clientSocket)
@@ -173,10 +177,15 @@ export default {
       // player does not exist
       this.lobbyObject.players.push(player)
     },
-    loadGame () {
+    onStartGame (gameObject) {
       this.$router.push({
-        name: 'PassTheBomb'
+        name: gameObject.routeName
       })
+
+      this.gameObject = gameObject
+    },
+    loadGame () {
+      this.roomManager.startDebugGame()
     }
   }
 }

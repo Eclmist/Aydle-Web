@@ -18,12 +18,12 @@
           v-if="player.isInitialized" 
           class="pulse tags player-tag"
           :class="{ 'has-addons': player.isHost }">
-            <span v-if="player.isHost" class="tag is-medium is-warning">
-              <b-icon icon="star" size="is-small" />
-            </span>
-            <span class="tag is-medium" :class="{'is-primary': player === self, 'is-info': player !== self}">
-              {{ player.name }}
-            </span>
+          <span v-if="player.isHost" class="tag is-medium is-warning">
+            <b-icon icon="star" size="is-small" />
+          </span>
+          <span class="tag is-medium" :class="{'is-primary': player.playerID === self.playerID, 'is-info': player !== self}">
+            {{ player.name }}
+          </span>
           </div>
         </transition-group>
       </div>
@@ -76,7 +76,7 @@ export default {
       return this.$route.params.displayName
     },
     canStartGame () {
-      if (this.lobbyOnject.players.length > 1) {
+      if (this.lobbyObject.players.length > 1) {
         return true
       }
       return false
