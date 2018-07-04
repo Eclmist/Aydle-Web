@@ -80,7 +80,8 @@ export default {
       // if room doesnt exist
       this.$snackbar.open({
         message: message,
-        type: 'is-info'
+        type: 'is-info',
+        duration: 7000
       })
     },
     setName (name) {
@@ -118,6 +119,15 @@ export default {
       for (let i = 0; i < this.lobbyObject.players.length; i++) {
         if (this.lobbyObject.players[i].playerID === player.playerID) {
           if ('hasDisconnected' in player) {
+            if (player.playerID === this.$store.getters.uid) {
+              if (player.hasDisconnected === 'multiple-clients-detected') {
+                this.onJoinRoomFailure('Multiple clients detected!')
+              } else {
+                this.onJoinRoomFailure('You have been kicked from the lobby.')
+              }
+              return
+            }
+            // Other player got disconnected
             this.lobbyObject.players.splice(i, 1)
             return
           }
