@@ -123,12 +123,9 @@ export default {
       })
     },
     onLobbyUpdate (lobbyObject) {
-      console.log('OnLobbyUpdate emmited by server')
       this.lobbyObject = lobbyObject
     },
     onPeerUpdate (player) {
-      console.log('OnPeerUpdate emmited by server, with name: ' + player.name)
-
       if (player.playerID === this.$store.getters.uid) {
         this.self = player
       }
