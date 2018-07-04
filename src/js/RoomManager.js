@@ -11,7 +11,6 @@ export default class RoomManager {
         LOBBY_SOCKET, AYDLE_LOBBY_API, () => {
           clientSocket.getSocket(LOBBY_SOCKET).emit('requestJoin', code, playerID,
             clientSocket.getCallbacks().onJoin
-            // clientSocket.getCallbacks().onFailure)
           )
         }
       )

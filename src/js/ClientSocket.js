@@ -45,6 +45,9 @@ export default class ClientSocket {
         socket.on('onPeerUpdate', playerObject => {
           callbacks.onPeerUpdate(playerObject)
         })
+
+        // Fails if disconnected
+        socket.on('disconnect', callbacks.onFailure)
       } else {
         console.log('the socket ' + socketName + ' does not exist!')
       }
