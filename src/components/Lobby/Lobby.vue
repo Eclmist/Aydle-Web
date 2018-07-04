@@ -124,12 +124,14 @@ export default {
     },
     onLobbyUpdate (lobbyObject) {
       this.lobbyObject = lobbyObject
+
+      for (let i = 0; i < lobbyObject.players.length; i++) {
+        if (lobbyObject.players[i].playerID === this.$store.getters.uid) {
+          this.self = lobbyObject.players[i]
+        }
+      }
     },
     onPeerUpdate (player) {
-      if (player.playerID === this.$store.getters.uid) {
-        this.self = player
-      }
-
       if (this.lobbyObject.players === undefined) {
         return
       }

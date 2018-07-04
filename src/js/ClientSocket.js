@@ -50,7 +50,6 @@ export default class ClientSocket {
         })
 
         socket.on('onPeerUpdate', playerObject => {
-          console.log(playerObject.name)
           callbacks.onPeerUpdate(playerObject)
         })
 
