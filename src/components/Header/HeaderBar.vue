@@ -22,7 +22,7 @@
         </a>
       </div>
       
-      <div ref="dropdownMenu" class="navbar-menu" id="nav-menu">
+      <div ref="dropdownMenu" class="navbar-menu" id="nav-menu" :class="{ 'is-active': menuActive}">
         <div class="navbar-end">
           <a @click="hostLobby" class="navbar-item">
             Host a Lobby

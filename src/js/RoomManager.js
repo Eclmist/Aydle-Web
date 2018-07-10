@@ -3,8 +3,8 @@
 export default class RoomManager {
   constructor (clientSocket) {
     const LOBBY_SOCKET = 'lobby'
-    const AYDLE_LOBBY_API = 'http://localhost:2000'
-    // const AYDLE_LOBBY_API = 'https://api.aydle.com'
+    // const AYDLE_LOBBY_API = 'http://localhost:2000'
+    const AYDLE_LOBBY_API = 'https://api.aydle.com'
 
     clientSocket.createNewSocket(LOBBY_SOCKET)
 

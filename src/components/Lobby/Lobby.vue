@@ -12,6 +12,7 @@
         :previous-name=previousName
         :self=self
         :game-object=gameObject
+        :client-socket=clientSocket
         ></router-view>
     </transition>
   </div>
