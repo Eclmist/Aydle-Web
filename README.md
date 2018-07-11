@@ -1,6 +1,7 @@
 # Aydle
 
-> The browser-based solution for multiplayer games. Master branch currently auto deploys to www.aydle.com.
+> The browser-based solution for multiplayer games. 
+> Master branch currently auto deploys to www.aydle.com.
 
 ## Build Setup
 
