@@ -3,7 +3,7 @@
     <div class="section lobby">
       <div class="wrapper">
         <p class="has-text-centered has-text-white">
-          {{ lobbyObject.name }}    
+          {{ lobbyObject.name }}
         </p>
         <h1 class="title is-3 has-text-white has-text-weight-light has-text-centered">
           Lobby Code: 
@@ -113,7 +113,7 @@ export default {
   padding-bottom: 50px;
   flex-grow: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center !important;
   overflow-y: auto;
 
